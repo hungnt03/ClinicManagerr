@@ -1,35 +1,8 @@
-﻿@* @model List<ClinicManager.ViewModels.ChamCong.ChamCongThangVm>
-
-<h2>Lich su cham cong</h2>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Ngay</th>
-            <th>Trang thai</th>
-            <th>Gio vao</th>
-            <th>Gio ra</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var i in Model)
-        {
-            <tr>
-                <td>@i.Ngay.ToString("dd/MM/yyyy")</td>
-                <td>@i.TrangThai</td>
-                <td>@i.GioVao</td>
-                <td>@i.GioRa</td>
-            </tr>
-        }
-    </tbody>
-</table>
- *@
-@{
+﻿@{
     ViewData["Title"] = "Lich su cham cong";
 }
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 @if (User.IsInRole("Admin"))
 {
@@ -41,85 +14,5 @@
 
 <div id="calendar"></div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        let calendarEl = document.getElementById('calendar');
-        let nhanVienSelect = document.getElementById('nhanVienSelect');
-
-        // ============================
-        // LOAD NHAN VIEN (ADMIN)
-        // ============================
-        if (nhanVienSelect) {
-            fetch('/ChamCong/DanhSachNhanVien')
-                .then(res => res.json())
-                .then(data => {
-                    data.forEach(nv => {
-                        let opt = document.createElement('option');
-                        opt.value = nv.id;
-                        opt.text = nv.text;
-                        nhanVienSelect.appendChild(opt);
-                    });
-
-                    // sau khi load xong -> render calendar
-                    renderCalendar();
-                });
-
-            nhanVienSelect.addEventListener('change', function () {
-                calendar.refetchEvents();
-            });
-        } else {
-            // user thường
-            renderCalendar();
-        }
-
-        let calendar;
-
-        // ============================
-        // RENDER CALENDAR
-        // ============================
-        function renderCalendar() {
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                height: 'auto',
-
-                events: function (info, successCallback) {
-
-                    let url = `/ChamCong/CalendarData?
-                        month=${info.start.getMonth() + 1}
-                        &year=${info.start.getFullYear()}`;
-
-                    if (nhanVienSelect) {
-                        url += `&nhanVienId=${nhanVienSelect.value}`;
-                    }
-
-                    fetch(url)
-                        .then(res => res.json())
-                        .then(data => successCallback(data));
-                },
-
-                eventClick: function (info) {
-                    window.location.href =
-                        `/ChamCong/ChiTiet/${info.event.id}`;
-                },
-
-                eventContent: function (arg) {
-                    let smallScreen = window.innerWidth < 576;
-
-                    if (smallScreen) {
-                        return { html: `<div>${arg.event.title}</div>` };
-                    }
-
-                    let gioVao = arg.event.extendedProps.gioVao || '';
-                    let gioRa = arg.event.extendedProps.gioRa || '';
-
-                    return {
-                        html: `<div>${gioVao} - ${gioRa}</div>`
-                    };
-                }
-            });
-
-            calendar.render();
-        }
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.global.min.js"></script>

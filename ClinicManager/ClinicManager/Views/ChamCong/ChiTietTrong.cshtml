@@ -1,0 +1,19 @@
+﻿<h3>Chua co cham cong</h3>
+
+<p>
+    Ngay: @ViewBag.Ngay.ToString("dd/MM/yyyy")
+</p>
+
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary"
+       asp-action="Index">
+        Tao cham cong moi
+    </a>
+}
+else
+{
+    <p class="text-muted">
+        Chua co du lieu cham cong cho ngay nay
+    </p>
+}

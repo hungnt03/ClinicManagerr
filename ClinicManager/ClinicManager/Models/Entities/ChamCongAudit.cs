@@ -4,6 +4,8 @@
     {
         public int chamCongAuditId { get; set; }
         public int chamCongId { get; set; }
+
+        // admin thực hiện sửa (NHÂN VIÊN, không phải userId)
         public int adminNhanVienId { get; set; }
 
         public DateTime? thoiGianVaoCu { get; set; }

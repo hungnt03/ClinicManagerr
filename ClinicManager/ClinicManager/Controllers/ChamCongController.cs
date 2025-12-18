@@ -191,6 +191,7 @@ namespace ClinicManager.Controllers
         // ===============================
         // 3. CHI TIẾT 1 NGÀY
         // ===============================
+        [HttpGet("ChamCong/ChiTiet/{id:int}")]
         public async Task<IActionResult> ChiTiet(int id)
         {
             var chamCong = await _context.ChamCongs
@@ -238,5 +239,129 @@ namespace ClinicManager.Controllers
 
             return Json(nhanViens);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> GetChamCongForEdit(int id)
+        {
+            var cc = await _context.ChamCongs
+                .FirstOrDefaultAsync(x => x.chamCongId == id);
+
+            if (cc == null)
+                return NotFound();
+
+            return Json(new SuaChamCongVm
+            {
+                ChamCongId = cc.chamCongId,
+                ThoiGianVao = cc.thoiGianVao,
+                ThoiGianRa = cc.thoiGianRa,
+                NghiPhep = cc.nghiPhep,
+                NghiPhepCoLuong = cc.nghiPhepCoLuong
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateChamCong([FromBody] SuaChamCongVm vm)
+        {
+            // ===== VALIDATE NGHIỆP VỤ =====
+            // nghỉ phép mà vẫn có giờ → SAI
+            if (vm.NghiPhep &&
+                (vm.ThoiGianVao != default || vm.ThoiGianRa.HasValue))
+            {
+                return BadRequest("Nghi phep khong duoc co gio vao/ra");
+            }
+
+            // đi làm mà không có giờ vào → SAI
+            if (!vm.NghiPhep && vm.ThoiGianVao == default)
+            {
+                return BadRequest("Di lam phai co gio vao");
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest("Du lieu khong hop le");
+
+            var chamCong = await _context.ChamCongs
+                .FirstOrDefaultAsync(x => x.chamCongId == vm.ChamCongId);
+
+            if (chamCong == null)
+                return NotFound();
+
+            // lấy adminNhanVienId từ user đăng nhập
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var adminUser = await _userManager.FindByIdAsync(userId);
+
+            if (adminUser?.nhanVienId == null)
+                return Forbid();
+
+            var adminNhanVienId = adminUser.nhanVienId.Value;
+
+            // ============================
+            // 1. LƯU AUDIT (ĐÚNG MODEL)
+            // ============================
+            var audit = new ChamCongAudit
+            {
+                chamCongId = chamCong.chamCongId,
+                adminNhanVienId = adminNhanVienId,
+
+                // trạng thái cũ
+                thoiGianVaoCu = chamCong.thoiGianVao,
+                thoiGianRaCu = chamCong.thoiGianRa,
+                nghiPhepCu = chamCong.nghiPhep,
+                nghiPhepCoLuongCu = chamCong.nghiPhepCoLuong,
+
+                // trạng thái mới
+                thoiGianVaoMoi = vm.ThoiGianVao,
+                thoiGianRaMoi = vm.ThoiGianRa,
+                nghiPhepMoi = vm.NghiPhep,
+                nghiPhepCoLuongMoi = vm.NghiPhepCoLuong,
+
+                lyDo = vm.LyDo,
+                suaLuc = DateTime.Now
+            };
+
+            // ============================
+            // 2. UPDATE CHẤM CÔNG
+            // ============================
+            chamCong.thoiGianVao = vm.ThoiGianVao;
+            chamCong.thoiGianRa = vm.ThoiGianRa;
+            chamCong.nghiPhep = vm.NghiPhep;
+            chamCong.nghiPhepCoLuong = vm.NghiPhepCoLuong;
+
+            _context.ChamCongAudits.Add(audit);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpGet("ChamCong/ChiTietTheoNgay")]
+        public async Task<IActionResult> ChiTiet(DateTime ngay, int? nhanVienId)
+        {
+            // xác định nhân viên
+            if (!User.IsInRole("Admin"))
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await _userManager.FindByIdAsync(userId);
+                nhanVienId = user!.nhanVienId;
+            }
+
+            if (nhanVienId == null)
+                return BadRequest();
+
+            var chamCong = await _context.ChamCongs.FirstOrDefaultAsync(x =>
+                x.nhanVienId == nhanVienId &&
+                x.thoiGianVao.Date == ngay.Date);
+
+            if (chamCong == null)
+            {
+                // chưa có chấm công ngày này
+                ViewBag.Ngay = ngay;
+                ViewBag.NhanVienId = nhanVienId;
+                return View("ChiTietTrong"); // view thông báo chưa có dữ liệu
+            }
+
+            return RedirectToAction("ChiTiet", new { id = chamCong.chamCongId });
+        }
+
     }
 }
