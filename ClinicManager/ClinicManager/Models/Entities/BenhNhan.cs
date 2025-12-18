@@ -8,6 +8,7 @@
         public string gioiTinh { get; set; }
         public string soDienThoai { get; set; }
         public string diaChi { get; set; }
+        // người giới thiệu (nhân viên)
         public int? nguoiGioiThieuId { get; set; }
         public DateTime taoLuc { get; set; }
     }

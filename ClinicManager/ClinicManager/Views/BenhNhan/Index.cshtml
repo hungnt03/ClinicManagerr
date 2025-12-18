@@ -1,0 +1,41 @@
+﻿@model List<ClinicManager.ViewModels.BenhNhan.BenhNhanListItemVm>
+
+<h2>Danh sach benh nhan</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Tao">
+        + Them benh nhan
+    </a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Ho ten</th>
+            <th>Gioi tinh</th>
+            <th>Tuoi</th>
+            <th>Dien thoai</th>
+            <th>Nguoi gioi thieu</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr>
+                <td>@b.HoTen</td>
+                <td>@b.GioiTinh</td>
+                <td>@b.Tuoi</td>
+                <td>@b.SoDienThoai</td>
+                <td>@b.NguoiGioiThieu</td>
+                <td>
+                    <a asp-action="Sua"
+                       asp-route-id="@b.BenhNhanId"
+                       class="btn btn-sm btn-info">
+                        Sua
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

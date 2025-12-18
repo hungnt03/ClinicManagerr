@@ -12,63 +12,36 @@ namespace ClinicManager.Services
     //❌ Cho check-in nhiều lần
     //❌ Nghỉ phép vẫn check-in
     //❌ Không gắn login với nhân viên
+    /// <summary>
+    /// Mỗi nhân viên – mỗi ngày – tối đa 1 bản ghi
+    //Check-in = tạo bản ghi
+    //Check-out = cập nhật thoiGianRa
+    //Nghỉ phép = tạo bản ghi với:
+    //nghiPhep = true
+    //thoiGianVao = ngày nghỉ + 00:00
+    //Mọi kiểm tra theo thoiGianVao.Date
     /// </summary>
     public class ChamCongService : IChamCongService
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ChamCongService(
-            ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager)
+        public ChamCongService(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // Lấy chấm công hôm nay theo user login
-        public async Task<ChamCong?> LayChamCongHomNayAsync(string userId)
+        // 1. CHECK-IN
+        public async Task CheckInAsync(int nhanVienId, bool anTrua)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || !user.nhanVienId.HasValue)
-                return null;
-
             var today = DateTime.Today;
 
-            return await _context.ChamCongs.FirstOrDefaultAsync(x =>
-                x.nhanVienId == user.nhanVienId.Value &&
-                x.thoiGianVao.Date == today
-            );
-        }
-
-        // CHECK-IN
-        public async Task<ChamCong> CheckInAsync(string userId, bool anTrua)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || !user.nhanVienId.HasValue)
-                throw new Exception("Tai khoan chua gan nhan vien");
-
-            var nhanVienId = user.nhanVienId.Value;
-            var today = DateTime.Today;
-
-            // Đã chấm công hôm nay chưa
-            var daChamCong = await _context.ChamCongs.AnyAsync(x =>
+            var tonTai = await _context.ChamCongs.AnyAsync(x =>
                 x.nhanVienId == nhanVienId &&
                 x.thoiGianVao.Date == today
             );
 
-            if (daChamCong)
-                throw new Exception("Da check-in hom nay");
-
-            // Kiểm tra nghỉ phép
-            var nghiPhep = await _context.ChamCongs.AnyAsync(x =>
-                x.nhanVienId == nhanVienId &&
-                x.nghiPhep &&
-                x.thoiGianVao.Date == today
-            );
-
-            if (nghiPhep)
-                throw new Exception("Hom nay dang nghi phep");
+            if (tonTai)
+                throw new Exception("Da cham cong hom nay");
 
             var chamCong = new ChamCong
             {
@@ -81,23 +54,17 @@ namespace ClinicManager.Services
 
             _context.ChamCongs.Add(chamCong);
             await _context.SaveChangesAsync();
-
-            return chamCong;
         }
 
-        // CHECK-OUT
-        public async Task<ChamCong> CheckOutAsync(string userId)
+        // 2. CHECK-OUT
+        public async Task CheckOutAsync(int nhanVienId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || !user.nhanVienId.HasValue)
-                throw new Exception("Tai khoan chua gan nhan vien");
-
-            var nhanVienId = user.nhanVienId.Value;
             var today = DateTime.Today;
 
             var chamCong = await _context.ChamCongs.FirstOrDefaultAsync(x =>
                 x.nhanVienId == nhanVienId &&
-                x.thoiGianVao.Date == today
+                x.thoiGianVao.Date == today &&
+                !x.nghiPhep
             );
 
             if (chamCong == null)
@@ -108,49 +75,68 @@ namespace ClinicManager.Services
 
             chamCong.thoiGianRa = DateTime.Now;
             await _context.SaveChangesAsync();
-
-            return chamCong;
         }
 
-        // Đăng ký nghỉ phép (Admin / HR)
-        public async Task DangKyNghiPhepAsync(
-            int nhanVienId,
-            DateTime ngay,
-            bool nghiPhepCoLuong)
+        // 3. ĐĂNG KÝ NGHỈ PHÉP
+        public async Task DangKyNghiPhepAsync(int nhanVienId, DateTime ngay, bool coLuong)
         {
-            var date = ngay.Date;
+            ngay = ngay.Date;
 
             var tonTai = await _context.ChamCongs.AnyAsync(x =>
                 x.nhanVienId == nhanVienId &&
-                x.thoiGianVao.Date == date
+                x.thoiGianVao.Date == ngay
             );
 
             if (tonTai)
-                throw new Exception("Da co cham cong trong ngay");
+                throw new Exception("Ngay nay da co cham cong");
 
             var chamCong = new ChamCong
             {
                 nhanVienId = nhanVienId,
-                thoiGianVao = date,
+                thoiGianVao = ngay, // 00:00
                 nghiPhep = true,
-                nghiPhepCoLuong = nghiPhepCoLuong,
+                nghiPhepCoLuong = coLuong,
                 anTrua = false
             };
 
             _context.ChamCongs.Add(chamCong);
             await _context.SaveChangesAsync();
         }
+
+        // 4. LẤY CHẤM CÔNG HÔM NAY
+        public async Task<ChamCong?> LayChamCongHomNayAsync(int nhanVienId)
+        {
+            var today = DateTime.Today;
+
+            return await _context.ChamCongs.FirstOrDefaultAsync(x =>
+                x.nhanVienId == nhanVienId &&
+                x.thoiGianVao.Date == today
+            );
+        }
+
+        // 5. LẤY CHẤM CÔNG THEO THÁNG
+        public async Task<List<ChamCong>> LayChamCongTheoThangAsync(
+            int nhanVienId, int thang, int nam)
+        {
+            return await _context.ChamCongs
+                .Where(x =>
+                    x.nhanVienId == nhanVienId &&
+                    x.thoiGianVao.Month == thang &&
+                    x.thoiGianVao.Year == nam
+                )
+                .OrderBy(x => x.thoiGianVao)
+                .ToListAsync();
+        }
     }
 
     public interface IChamCongService
     {
-        Task<ChamCong> CheckInAsync(string userId, bool anTrua);
-        Task<ChamCong> CheckOutAsync(string userId);
-        Task<ChamCong?> LayChamCongHomNayAsync(string userId);
-        Task DangKyNghiPhepAsync(
-            int nhanVienId,
-            DateTime ngay,
-            bool nghiPhepCoLuong
-        );
+        Task CheckInAsync(int nhanVienId, bool anTrua);
+        Task CheckOutAsync(int nhanVienId);
+        Task DangKyNghiPhepAsync(int nhanVienId, DateTime ngay, bool coLuong);
+
+        Task<ChamCong?> LayChamCongHomNayAsync(int nhanVienId);
+        Task<List<ChamCong>> LayChamCongTheoThangAsync(int nhanVienId, int thang, int nam);
     }
+
 }

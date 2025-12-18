@@ -50,6 +50,11 @@ builder.Services.AddScoped<IKhamBenhService, KhamBenhService>();
 builder.Services.AddScoped<IBuoiDieuTriService, BuoiDieuTriService>();
 builder.Services.AddScoped<IChamCongService, ChamCongService>();
 builder.Services.AddScoped<IChamCongAdminService, ChamCongAdminService>();
+builder.Services.AddScoped<INhanVienTaiKhoanService, NhanVienTaiKhoanService>();
+builder.Services.AddScoped<INhanVienUpdateService, NhanVienUpdateService>();
+builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
+builder.Services.AddScoped<IResetMatKhauService, ResetMatKhauService>();
+
 #endregion
 
 var app = builder.Build();

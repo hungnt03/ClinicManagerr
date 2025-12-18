@@ -1,0 +1,39 @@
+﻿@model ClinicManager.ViewModels.ChamCong.ChamCongHomNayVm
+
+<h2>Cham cong hom nay</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (Model.NghiPhep)
+{
+    <div class="alert alert-warning">
+        Hom nay ban dang nghi phep
+    </div>
+}
+else
+{
+    <p>Gio vao: @Model.GioVao</p>
+    <p>Gio ra: @Model.GioRa</p>
+
+    @if (!Model.DaCheckIn)
+    {
+        <form asp-action="CheckIn" method="post">
+            @Html.AntiForgeryToken()
+            <label>
+                <input type="checkbox" name="anTrua" /> An trua
+            </label>
+            <br />
+            <button class="btn btn-primary">Check In</button>
+        </form>
+    }
+    else if (!Model.DaCheckOut)
+    {
+        <form asp-action="CheckOut" method="post">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-danger">Check Out</button>
+        </form>
+    }
+}

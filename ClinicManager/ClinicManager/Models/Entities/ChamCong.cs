@@ -1,5 +1,6 @@
 ﻿namespace ClinicManager.Models.Entities
 {
+    /// </summary>
     public class ChamCong
     {
         public int chamCongId { get; set; }

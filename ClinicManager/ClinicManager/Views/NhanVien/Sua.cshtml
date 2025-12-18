@@ -1,0 +1,66 @@
+﻿@model ClinicManager.ViewModels.NhanVien.SuaNhanVienVm
+
+@{
+    ViewData["Title"] = "Sua nhan vien";
+}
+
+<h2>Sua nhan vien</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form asp-action="Sua" method="post">
+    <input type="hidden" asp-for="NhanVienId" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label>Ho ten</label>
+        <input asp-for="HoTen" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Vai tro nhan vien</label>
+        <select asp-for="VaiTroNhanVien" class="form-control">
+            @foreach (var v in Model.DanhSachVaiTroNhanVien)
+            {
+                <option value="@v">@v</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Luong co ban</label>
+        <input asp-for="LuongCoBan" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Trang thai</label>
+        <select asp-for="HoatDong" class="form-control">
+            <option value="true">Hoat dong</option>
+            <option value="false">Khoa</option>
+        </select>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <label>Role dang nhap</label>
+        <select asp-for="RoleDangNhap" class="form-control">
+            @foreach (var r in Model.DanhSachRoleDangNhap)
+            {
+                <option value="@r">@r</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Luu thay doi
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Quay lai
+    </a>
+</form>

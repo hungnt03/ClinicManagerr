@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Khong du quyen truy cap";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+
+            <h1 class="text-danger">
+                🚫 Khong du quyen truy cap
+            </h1>
+
+            <p class="mt-4">
+                Ban khong co quyen de truy cap chuc nang nay.
+            </p>
+
+            @if (ViewBag.ReturnUrl != null)
+            {
+                <p class="text-muted">
+                    Duong dan ban vua truy cap:
+                    <br />
+                    <code>@ViewBag.ReturnUrl</code>
+                </p>
+            }
+
+            <div class="mt-4">
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Quay ve trang chu
+                </a>
+
+                <a asp-controller="Account"
+                   asp-action="Logout"
+                   class="btn btn-outline-secondary ml-2">
+                    Dang xuat
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

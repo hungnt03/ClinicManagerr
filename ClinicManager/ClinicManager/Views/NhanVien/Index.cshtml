@@ -1,0 +1,97 @@
+﻿@model List<ClinicManager.ViewModels.NhanVien.NhanVienListItemVm>
+
+@{
+    ViewData["Title"] = "Danh sach nhan vien";
+}
+
+<h2>Danh sach nhan vien</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Tao">
+        + Tao nhan vien
+    </a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Ho ten</th>
+            <th>Vai tro</th>
+            <th>Luong co ban</th>
+            <th>Tai khoan</th>
+            <th>Trang thai</th>
+            <th style="width:120px">Thao tac</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.HoTen</td>
+                <td>@item.VaiTro</td>
+                <td>@item.LuongCoBan.ToString("N0")</td>
+                <td>
+                    @if (item.CoTaiKhoan)
+                    {
+                        <span class="text-success">
+                            @item.EmailDangNhap
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">
+                            Chua co tai khoan
+                        </span>
+                    }
+                </td>
+                <td>
+                    @if (item.HoatDong)
+                    {
+                        <span class="badge badge-success">Hoat dong</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-secondary">Khoa</span>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-info"
+                       asp-action="Sua"
+                       asp-route-id="@item.NhanVienId">
+                        Sua
+                    </a>
+
+                    @if (item.CoTaiKhoan)
+                    {
+                        <form asp-action="@(item.BiKhoaTaiKhoan ? "MoKhoaTaiKhoan" : "KhoaTaiKhoan")"
+                              method="post"
+                              style="display:inline">
+                            <input type="hidden" name="nhanVienId" value="@item.NhanVienId" />
+                            @Html.AntiForgeryToken()
+
+                            @if (item.BiKhoaTaiKhoan)
+                            {
+                                <button class="btn btn-sm btn-success">
+                                    Mo
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Khoa tai khoan nay?')">
+                                    Khoa
+                                </button>
+                            }
+                        </form>
+                        <a class="btn btn-sm btn-warning"
+                           asp-action="ResetMatKhau"
+                           asp-route-id="@item.NhanVienId">
+                            Reset MK
+                        </a>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
