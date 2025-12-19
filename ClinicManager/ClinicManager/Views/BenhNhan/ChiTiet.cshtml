@@ -1,0 +1,82 @@
+﻿@model ClinicManager.ViewModels.BenhNhan.BenhNhanChiTietVm
+@{
+    ViewData["Title"] = "Chi tiet benh nhan";
+}
+
+<h3>Thong tin benh nhan</h3>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><b>Ho ten:</b> @Model.HoTen</p>
+        <p><b>Ngay sinh:</b> @(Model.NgaySinh?.ToString("dd/MM/yyyy") ?? "—")</p>
+        <p><b>Gioi tinh:</b> @Model.GioiTinh</p>
+        <p><b>Dien thoai:</b> @Model.SoDienThoai</p>
+        <p><b>Dia chi:</b> @Model.DiaChi</p>
+    </div>
+</div>
+
+<h4>Cac dot dieu tri</h4>
+<a class="btn btn-success"
+   asp-controller="DotDieuTri"
+   asp-action="Create"
+   asp-route-benhNhanId="@Model.BenhNhanId">
+    + Tao dot dieu tri moi
+</a>
+<br />
+@if (!Model.DotDieuTris.Any())
+{
+    <p class="text-muted">Chua co dot dieu tri nao</p>
+}
+else
+{
+    <div class="accordion" id="accordionDotDieuTri">
+
+        @for (int i = 0; i < Model.DotDieuTris.Count; i++)
+        {
+            var dot = Model.DotDieuTris[i];
+            var headingId = $"heading{i}";
+            var collapseId = $"collapse{i}";
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button @(i > 0 ? "collapsed" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@collapseId">
+                        Dot kham @dot.NgayKham.ToString("dd/MM/yyyy")
+                        — @dot.TrangThai
+                    </button>
+                </h2>
+
+                <div id="@collapseId"
+                     class="accordion-collapse collapse @(i == 0 ? "show" : "")"
+                     data-bs-parent="#accordionDotDieuTri">
+                    <div class="accordion-body">
+
+                        <p><b>Chan doan:</b> @dot.ChanDoan</p>
+                        <p><b>Phac do:</b> @dot.PhacDoDieuTri</p>
+
+                        <p>
+                            <b>So buoi:</b>
+                            @dot.SoBuoiDaDung / @dot.TongSoBuoi
+                        </p>
+
+                        <p>
+                            <b>Thanh toan:</b>
+                            @dot.DaThanhToan.ToString("N0")
+                            /
+                            @dot.TongTien.ToString("N0")
+                        </p>
+
+                        <a class="btn btn-sm btn-primary"
+                           asp-controller="DotDieuTri"
+                           asp-action="ChiTiet"
+                           asp-route-id="@dot.DotDieuTriId">
+                            Xem cac buoi dieu tri
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

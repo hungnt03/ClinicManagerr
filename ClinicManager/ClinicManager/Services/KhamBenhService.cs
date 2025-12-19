@@ -65,7 +65,7 @@ namespace ClinicManager.Services
             else
             {
                 goi = await _context.GoiDieuTris
-                    .FirstOrDefaultAsync(x => x.macDinh && x.hoatDong);
+                    .FirstOrDefaultAsync(x => x.hoatDong);
 
                 if (goi == null)
                     throw new Exception("Khong tim thay goi dieu tri mac dinh");
@@ -98,7 +98,7 @@ namespace ClinicManager.Services
                     benhNhanId = benhNhanId,
                     khamBenhId = khamBenh.khamBenhId,
                     goiDieuTriId = goi.goiDieuTriId,
-                    tongSoBuoi = goi.tongSoBuoi,
+                    tongSoBuoi = goi.soBuoi,
                     soBuoiDaDung = 0,
                     ngayMua = DateTime.Now,
                     trangThai = "DangSuDung"

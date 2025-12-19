@@ -24,6 +24,8 @@ namespace ClinicManager.Data
         public DbSet<ThuocVatTuBuoiDieuTri> ThuocVatTuBuoiDieuTris { get; set; }
         public DbSet<ChamCong> ChamCongs { get; set; }
         public DbSet<ChamCongAudit> ChamCongAudits { get; set; }
+        public DbSet<DotDieuTri> DotDieuTris { get; set; }
+        public DbSet<DotDieuTriMuaThem> DotDieuTriMuaThems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

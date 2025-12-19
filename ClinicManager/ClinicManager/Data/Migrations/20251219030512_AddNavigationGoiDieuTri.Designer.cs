@@ -4,6 +4,7 @@ using ClinicManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251219030512_AddNavigationGoiDieuTri")]
+    partial class AddNavigationGoiDieuTri
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,6 +181,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("chiDinhDacBiet")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("chiPhiThuocVatTu")
@@ -193,9 +197,11 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("noiDungDieuTriTay")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("noiDungTap")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("taoLuc")
@@ -544,10 +550,6 @@ namespace ClinicManager.Data.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("buoiDieuTriId");
-
-                    b.HasIndex("vatTuId");
-
                     b.ToTable("ThuocVatTuBuoiDieuTris");
                 });
 
@@ -728,25 +730,6 @@ namespace ClinicManager.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("GoiDieuTri");
-                });
-
-            modelBuilder.Entity("ClinicManager.Models.Entities.ThuocVatTuBuoiDieuTri", b =>
-                {
-                    b.HasOne("ClinicManager.Models.Entities.BuoiDieuTri", "BuoiDieuTri")
-                        .WithMany()
-                        .HasForeignKey("buoiDieuTriId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicManager.Models.Entities.VatTu", "VatTu")
-                        .WithMany()
-                        .HasForeignKey("vatTuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BuoiDieuTri");
-
-                    b.Navigation("VatTu");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

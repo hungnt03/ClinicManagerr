@@ -5,140 +5,94 @@ using Microsoft.EntityFrameworkCore;
 namespace ClinicManager.Services
 {
     /// <summary>
-    /// ❌ Trừ buổi khi hoàn thành → sai (dễ gian lận)
-    //❌ Cho sửa buổi đã hoàn thành
-    //❌ Không khóa gói khi hết buổi
-    //❌ Cho tạo nhiều buổi 1 ngày
-    //❌ Không dùng transaction
+    //✔ Không tạo buổi nếu đợt đã HoanThanh
+    //✔ Không tạo buổi nếu đã hết buổi
+    //✔ Không dùng vật tư nếu không đủ tồn kho
+    //✔ Snapshot giá tại thời điểm dùng
+    //✔ Không cho sửa chiPhiThuocVatTu bằng tay
+    //✔ Mọi thay đổi vật tư đều cập nhật tồn kho
     /// </summary>
     public class BuoiDieuTriService : IBuoiDieuTriService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDotDieuTriService _dotDieuTriService;
 
-        public BuoiDieuTriService(ApplicationDbContext context)
+        public BuoiDieuTriService(
+            ApplicationDbContext context,
+            IDotDieuTriService dotDieuTriService)
         {
             _context = context;
+            _dotDieuTriService = dotDieuTriService;
         }
 
-        // 1. Tạo buổi điều trị – ÉP NGHIỆP VỤ
-        public async Task<BuoiDieuTri> TaoBuoiDieuTriAsync(
+        // ==================================================
+        // 1. TẠO BUỔI ĐIỀU TRỊ
+        // ==================================================
+        public async Task<int> TaoBuoiDieuTriAsync(
+            int dotDieuTriId,
             int benhNhanId,
-            int benhNhanGoiDieuTriId,
             DateTime ngayDieuTri,
-            TimeSpan gioBatDau,
-            TimeSpan gioKetThuc,
-            string chiDinhDacBiet
-        )
+            int? bacSiDieuTriTayId,
+            int? kyThuatVienTapId,
+            string noiDungTap,
+            string noiDungDieuTriTay,
+            string chiDinhDacBiet)
         {
-            var goi = await _context.BenhNhanGoiDieuTris
-                .FirstOrDefaultAsync(x => x.benhNhanGoiDieuTriId == benhNhanGoiDieuTriId);
+            var dot = await _context.DotDieuTris
+                .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
 
-            if (goi == null)
-                throw new Exception("Khong tim thay goi dieu tri");
+            if (dot == null)
+                throw new Exception("Khong tim thay dot dieu tri");
 
-            if (goi.trangThai != "DangSuDung")
-                throw new Exception("Goi dieu tri khong con su dung");
+            // ❗ ép nghiệp vụ
+            if (dot.trangThai == TrangThaiDotDieuTri.HoanThanh)
+                throw new Exception("Dot dieu tri da hoan thanh");
 
-            if (goi.soBuoiDaDung >= goi.tongSoBuoi)
-                throw new Exception("Goi dieu tri da het buoi");
+            if (dot.soBuoiDaDung >= dot.tongSoBuoi)
+                throw new Exception("Da het so buoi dieu tri");
 
-            // Không cho 1 ngày điều trị 2 buổi
-            var daCoBuoi = await _context.BuoiDieuTris.AnyAsync(x =>
-                x.benhNhanId == benhNhanId &&
-                x.ngayDieuTri.Date == ngayDieuTri.Date &&
-                x.trangThai != "Huy"
-            );
-
-            if (daCoBuoi)
-                throw new Exception("Benh nhan da dieu tri trong ngay");
-
-            using var tran = await _context.Database.BeginTransactionAsync();
-
-            try
+            var buoi = new BuoiDieuTri
             {
-                var buoi = new BuoiDieuTri
-                {
-                    benhNhanId = benhNhanId,
-                    benhNhanGoiDieuTriId = benhNhanGoiDieuTriId,
-                    ngayDieuTri = ngayDieuTri.Date,
-                    gioBatDau = gioBatDau,
-                    gioKetThuc = gioKetThuc,
-                    chiDinhDacBiet = chiDinhDacBiet,
-                    trangThai = "DangThucHien"
-                };
+                dotDieuTriId = dotDieuTriId,
+                benhNhanId = benhNhanId,
+                ngayDieuTri = ngayDieuTri,
 
-                _context.BuoiDieuTris.Add(buoi);
-                await _context.SaveChangesAsync();
+                bacSiDieuTriTayId = bacSiDieuTriTayId,
+                kyThuatVienTapId = kyThuatVienTapId,
 
-                // Trừ buổi
-                goi.soBuoiDaDung += 1;
+                noiDungTap = noiDungTap,
+                noiDungDieuTriTay = noiDungDieuTriTay,
+                chiDinhDacBiet = chiDinhDacBiet,
 
-                if (goi.soBuoiDaDung >= goi.tongSoBuoi)
-                    goi.trangThai = "HetBuoi";
+                chiPhiThuocVatTu = 0,
+                taoLuc = DateTime.Now
+            };
 
-                _context.BenhNhanGoiDieuTris.Update(goi);
-                await _context.SaveChangesAsync();
-
-                await tran.CommitAsync();
-                return buoi;
-            }
-            catch
-            {
-                await tran.RollbackAsync();
-                throw;
-            }
-        }
-
-        // 2. Thêm nhân viên vào buổi
-        public async Task ThemNhanVienAsync(
-            int buoiDieuTriId,
-            int nhanVienId,
-            string vaiTro
-        )
-        {
-            var buoi = await _context.BuoiDieuTris
-                .FirstOrDefaultAsync(x => x.buoiDieuTriId == buoiDieuTriId);
-
-            if (buoi == null)
-                throw new Exception("Buoi dieu tri khong ton tai");
-
-            if (buoi.trangThai == "HoanThanh")
-                throw new Exception("Khong the sua buoi da hoan thanh");
-
-            var tonTai = await _context.BuoiDieuTriNhanViens.AnyAsync(x =>
-                x.buoiDieuTriId == buoiDieuTriId &&
-                x.nhanVienId == nhanVienId &&
-                x.vaiTro == vaiTro
-            );
-
-            if (tonTai)
-                return;
-
-            _context.BuoiDieuTriNhanViens.Add(new BuoiDieuTriNhanVien
-            {
-                buoiDieuTriId = buoiDieuTriId,
-                nhanVienId = nhanVienId,
-                vaiTro = vaiTro
-            });
-
+            _context.BuoiDieuTris.Add(buoi);
             await _context.SaveChangesAsync();
+
+            // ❗ trừ buổi + cập nhật trạng thái đợt
+            await _dotDieuTriService.TangSoBuoiDaDungAsync(dotDieuTriId);
+
+            return buoi.buoiDieuTriId;
         }
 
-        // 3. Thêm vật tư / thuốc
+        // ==================================================
+        // 2. THÊM VẬT TƯ / THUỐC CHO BUỔI
+        // ==================================================
         public async Task ThemVatTuAsync(
             int buoiDieuTriId,
             int vatTuId,
-            int soLuong
-        )
+            int soLuong)
         {
+            if (soLuong <= 0)
+                throw new Exception("So luong phai > 0");
+
             var buoi = await _context.BuoiDieuTris
                 .FirstOrDefaultAsync(x => x.buoiDieuTriId == buoiDieuTriId);
 
             if (buoi == null)
-                throw new Exception("Buoi dieu tri khong ton tai");
-
-            if (buoi.trangThai == "HoanThanh")
-                throw new Exception("Khong the them vat tu cho buoi da hoan thanh");
+                throw new Exception("Khong tim thay buoi dieu tri");
 
             var vatTu = await _context.VatTus
                 .FirstOrDefaultAsync(x => x.vatTuId == vatTuId);
@@ -147,61 +101,132 @@ namespace ClinicManager.Services
                 throw new Exception("Vat tu khong ton tai");
 
             if (vatTu.tonKho < soLuong)
-                throw new Exception("Khong du ton kho");
+                throw new Exception("Ton kho khong du");
 
+            // trừ tồn kho
             vatTu.tonKho -= soLuong;
 
-            _context.ThuocVatTuBuoiDieuTris.Add(new ThuocVatTuBuoiDieuTri
+            var dong = new ThuocVatTuBuoiDieuTri
             {
                 buoiDieuTriId = buoiDieuTriId,
                 vatTuId = vatTuId,
                 soLuong = soLuong,
                 donGia = vatTu.donGia
-            });
+            };
+
+            _context.ThuocVatTuBuoiDieuTris.Add(dong);
+
+            // cập nhật tổng chi phí
+            buoi.chiPhiThuocVatTu += soLuong * vatTu.donGia;
 
             await _context.SaveChangesAsync();
         }
 
-        // 4. Hoàn thành buổi điều trị
-        public async Task HoanThanhBuoiAsync(int buoiDieuTriId)
+        // ==================================================
+        // 3. SỬA SỐ LƯỢNG VẬT TƯ
+        // ==================================================
+        public async Task SuaVatTuAsync(
+            int thuocVatTuBuoiDieuTriId,
+            int soLuongMoi)
         {
+            if (soLuongMoi <= 0)
+                throw new Exception("So luong moi phai > 0");
+
+            var dong = await _context.ThuocVatTuBuoiDieuTris
+                .FirstOrDefaultAsync(x => x.id == thuocVatTuBuoiDieuTriId);
+
+            if (dong == null)
+                throw new Exception("Khong tim thay dong vat tu");
+
+            var vatTu = await _context.VatTus
+                .FirstOrDefaultAsync(x => x.vatTuId == dong.vatTuId);
+
+            if (vatTu == null)
+                throw new Exception("Vat tu khong ton tai");
+
             var buoi = await _context.BuoiDieuTris
-                .FirstOrDefaultAsync(x => x.buoiDieuTriId == buoiDieuTriId);
+                .FirstOrDefaultAsync(x => x.buoiDieuTriId == dong.buoiDieuTriId);
 
             if (buoi == null)
-                throw new Exception("Buoi dieu tri khong ton tai");
+                throw new Exception("Khong tim thay buoi dieu tri");
 
-            if (buoi.trangThai == "HoanThanh")
-                return;
+            var chenhlech = soLuongMoi - dong.soLuong;
 
-            buoi.trangThai = "HoanThanh";
+            // kiểm tra tồn kho nếu tăng
+            if (chenhlech > 0 && vatTu.tonKho < chenhlech)
+                throw new Exception("Ton kho khong du");
+
+            // cập nhật tồn kho
+            vatTu.tonKho -= chenhlech;
+
+            // cập nhật tổng chi phí
+            buoi.chiPhiThuocVatTu += chenhlech * dong.donGia;
+
+            dong.soLuong = soLuongMoi;
+
+            await _context.SaveChangesAsync();
+        }
+
+        // ==================================================
+        // 4. XOÁ VẬT TƯ KHỎI BUỔI
+        // ==================================================
+        public async Task XoaVatTuAsync(int thuocVatTuBuoiDieuTriId)
+        {
+            var dong = await _context.ThuocVatTuBuoiDieuTris
+                .FirstOrDefaultAsync(x => x.id == thuocVatTuBuoiDieuTriId);
+
+            if (dong == null)
+                throw new Exception("Khong tim thay dong vat tu");
+
+            var vatTu = await _context.VatTus
+                .FirstOrDefaultAsync(x => x.vatTuId == dong.vatTuId);
+
+            var buoi = await _context.BuoiDieuTris
+                .FirstOrDefaultAsync(x => x.buoiDieuTriId == dong.buoiDieuTriId);
+
+            if (vatTu != null)
+            {
+                // hoàn tồn kho
+                vatTu.tonKho += dong.soLuong;
+            }
+
+            if (buoi != null)
+            {
+                // trừ chi phí snapshot
+                buoi.chiPhiThuocVatTu -= dong.soLuong * dong.donGia;
+            }
+
+            _context.ThuocVatTuBuoiDieuTris.Remove(dong);
             await _context.SaveChangesAsync();
         }
     }
 
     public interface IBuoiDieuTriService
     {
-        Task<BuoiDieuTri> TaoBuoiDieuTriAsync(
+        // ===== TẠO BUỔI ĐIỀU TRỊ =====
+        Task<int> TaoBuoiDieuTriAsync(
+            int dotDieuTriId,
             int benhNhanId,
-            int benhNhanGoiDieuTriId,
             DateTime ngayDieuTri,
-            TimeSpan gioBatDau,
-            TimeSpan gioKetThuc,
+            int? bacSiDieuTriTayId,
+            int? kyThuatVienTapId,
+            string noiDungTap,
+            string noiDungDieuTriTay,
             string chiDinhDacBiet
         );
 
-        Task ThemNhanVienAsync(
-            int buoiDieuTriId,
-            int nhanVienId,
-            string vaiTro
-        );
-
+        // ===== THÊM VẬT TƯ / THUỐC =====
         Task ThemVatTuAsync(
             int buoiDieuTriId,
             int vatTuId,
             int soLuong
         );
 
-        Task HoanThanhBuoiAsync(int buoiDieuTriId);
+        Task SuaVatTuAsync(
+            int thuocVatTuBuoiDieuTriId,
+            int soLuongMoi
+        );
+
+        Task XoaVatTuAsync(int thuocVatTuBuoiDieuTriId);
     }
 }

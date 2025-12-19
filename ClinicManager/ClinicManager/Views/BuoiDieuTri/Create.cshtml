@@ -1,0 +1,56 @@
+﻿@using ClinicManager.ViewModels.BuoiDieuTri
+@model BuoiDieuTriCreateVm
+@{
+    ViewData["Title"] = "Tao buoi dieu tri";
+}
+
+<h3>Tao buoi dieu tri</h3>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="DotDieuTriId" />
+    <input type="hidden" asp-for="BenhNhanId" />
+
+    <div class="form-group">
+        <label>Ngay dieu tri</label>
+        <input asp-for="NgayDieuTri" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label>Bac si dieu tri tay</label>
+        <select asp-for="BacSiDieuTriTayId"
+                asp-items="Model.DanhSachBacSi"
+                class="form-control">
+            <option value="">-- Chon bac si --</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label>Ky thuat vien tap</label>
+        <select asp-for="KyThuatVienTapId"
+                asp-items="Model.DanhSachKyThuatVien"
+                class="form-control">
+            <option value="">-- Chon ky thuat vien --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Noi dung tap</label>
+        <textarea asp-for="NoiDungTap" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Noi dung dieu tri tay</label>
+        <textarea asp-for="NoiDungDieuTriTay" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Chi dinh dac biet</label>
+        <textarea asp-for="ChiDinhDacBiet" class="form-control"></textarea>
+    </div>
+
+    <button class="btn btn-primary mt-3">
+        Luu buoi dieu tri
+    </button>
+</form>

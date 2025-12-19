@@ -23,7 +23,12 @@
         @foreach (var b in Model)
         {
             <tr>
-                <td>@b.HoTen</td>
+                <td><a asp-controller="BenhNhan"
+                   asp-action="ChiTiet"
+                   asp-route-id="@b.BenhNhanId"
+                   class="fw-bold text-decoration-none">
+                    @b.HoTen
+                </a></td>                
                 <td>@b.GioiTinh</td>
                 <td>@b.Tuoi</td>
                 <td>@b.SoDienThoai</td>

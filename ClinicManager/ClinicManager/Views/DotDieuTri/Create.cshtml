@@ -1,0 +1,53 @@
+﻿@using ClinicManager.ViewModels.DotDieuTri
+@model DotDieuTriCreateVm
+@{
+    ViewData["Title"] = "Kham & Tao dot dieu tri";
+}
+
+<h3>Kham & Tao dot dieu tri</h3>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="BenhNhanId" />
+    <input type="hidden" asp-for="TenBenhNhan" />
+
+    <div class="form-group">
+        <label>Benh nhan</label>
+        <input class="form-control" value="@Model.TenBenhNhan" readonly />
+
+    </div>
+
+    <div class="form-group">
+        <label>Bac si kham</label>
+        <select asp-for="BacSiKhamId" asp-items="Model.BacSiList" class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Ngay kham</label>
+        <input asp-for="NgayKham" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Chan doan</label>
+        <textarea asp-for="ChanDoan" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Phac do dieu tri</label>
+        <textarea asp-for="PhacDoDieuTri" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Goi dieu tri</label>
+        <select asp-for="GoiDieuTriId" asp-items="Model.GoiDieuTriList" class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Da thanh toan</label>
+        <input asp-for="DaThanhToan" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary mt-3">
+        Tao dot dieu tri
+    </button>
+</form>

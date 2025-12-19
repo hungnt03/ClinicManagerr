@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClinicManager.ViewModels.NhanVien
 {
@@ -19,11 +20,13 @@ namespace ClinicManager.ViewModels.NhanVien
         public bool HoatDong { get; set; }
 
         // login
-        public string EmailDangNhap { get; set; }
+        //public string EmailDangNhap { get; set; }
         public string RoleDangNhap { get; set; }
 
         // dropdown
+        [ValidateNever]
         public string[] DanhSachVaiTroNhanVien { get; set; }
+        [ValidateNever]
         public string[] DanhSachRoleDangNhap { get; set; }
     }
 }

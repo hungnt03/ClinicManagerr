@@ -4,6 +4,7 @@ using ClinicManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251219023641_AddDotDieuTri")]
+    partial class AddDotDieuTri
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,6 +181,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("chiDinhDacBiet")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("chiPhiThuocVatTu")
@@ -193,9 +197,11 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("noiDungDieuTriTay")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("noiDungTap")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("taoLuc")
@@ -351,84 +357,6 @@ namespace ClinicManager.Data.Migrations
                     b.ToTable("DatLichKhams");
                 });
 
-            modelBuilder.Entity("ClinicManager.Models.Entities.DotDieuTri", b =>
-                {
-                    b.Property<int>("dotDieuTriId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("dotDieuTriId"));
-
-                    b.Property<int>("bacSiKhamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("benhNhanId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("chanDoan")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("daThanhToan")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("goiDieuTriId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ngayKham")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("phacDoDieuTri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("soBuoiDaDung")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("taoLuc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("tongSoBuoi")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("tongTien")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("trangThai")
-                        .HasColumnType("int");
-
-                    b.HasKey("dotDieuTriId");
-
-                    b.HasIndex("goiDieuTriId");
-
-                    b.ToTable("DotDieuTris");
-                });
-
-            modelBuilder.Entity("ClinicManager.Models.Entities.DotDieuTriMuaThem", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("dotDieuTriId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("muaLuc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("soBuoiThem")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("soTien")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("DotDieuTriMuaThems");
-                });
-
             modelBuilder.Entity("ClinicManager.Models.Entities.GoiDieuTri", b =>
                 {
                     b.Property<int>("goiDieuTriId")
@@ -543,10 +471,6 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
-
-                    b.HasIndex("buoiDieuTriId");
-
-                    b.HasIndex("vatTuId");
 
                     b.ToTable("ThuocVatTuBuoiDieuTris");
                 });
@@ -717,36 +641,6 @@ namespace ClinicManager.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ClinicManager.Models.Entities.DotDieuTri", b =>
-                {
-                    b.HasOne("ClinicManager.Models.Entities.GoiDieuTri", "GoiDieuTri")
-                        .WithMany()
-                        .HasForeignKey("goiDieuTriId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GoiDieuTri");
-                });
-
-            modelBuilder.Entity("ClinicManager.Models.Entities.ThuocVatTuBuoiDieuTri", b =>
-                {
-                    b.HasOne("ClinicManager.Models.Entities.BuoiDieuTri", "BuoiDieuTri")
-                        .WithMany()
-                        .HasForeignKey("buoiDieuTriId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicManager.Models.Entities.VatTu", "VatTu")
-                        .WithMany()
-                        .HasForeignKey("vatTuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BuoiDieuTri");
-
-                    b.Navigation("VatTu");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

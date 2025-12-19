@@ -171,5 +171,46 @@ namespace ClinicManager.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // GET: /BenhNhan/ChiTiet/5
+        public async Task<IActionResult> ChiTiet(int id)
+        {
+            var bn = await _context.BenhNhans
+                .FirstOrDefaultAsync(x => x.benhNhanId == id);
+
+            if (bn == null)
+                return NotFound();
+
+            var dotDieuTris = await _context.DotDieuTris
+                .Where(x => x.benhNhanId == id)
+                .OrderByDescending(x => x.ngayKham)
+                .Select(x => new DotDieuTriItemVm
+                {
+                    DotDieuTriId = x.dotDieuTriId,
+                    NgayKham = x.ngayKham,
+                    ChanDoan = x.chanDoan,
+                    PhacDoDieuTri = x.phacDoDieuTri,
+                    TongSoBuoi = x.tongSoBuoi,
+                    SoBuoiDaDung = x.soBuoiDaDung,
+                    TongTien = x.tongTien,
+                    DaThanhToan = x.daThanhToan,
+                    TrangThai = x.trangThai.ToString()
+                })
+                .ToListAsync();
+
+            var vm = new BenhNhanChiTietVm
+            {
+                BenhNhanId = bn.benhNhanId,
+                HoTen = bn.hoTen,
+                NgaySinh = bn.ngaySinh,
+                GioiTinh = bn.gioiTinh,
+                SoDienThoai = bn.soDienThoai,
+                DiaChi = bn.diaChi,
+                DotDieuTris = dotDieuTris
+            };
+
+            return View(vm);
+        }
+
     }
 }

@@ -1,0 +1,21 @@
+﻿<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Vat tu</th>
+            <th>So luong</th>
+            <th>Don gia</th>
+            <th>Thanh tien</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.tenVatTu</td>
+                <td>@x.soLuong</td>
+                <td>@x.donGia.ToString("N0")</td>
+                <td>@(x.soLuong* x.donGia).ToString("N0")</td>
+            </tr>
+        }
+    </tbody>
+</table>

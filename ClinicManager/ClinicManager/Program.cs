@@ -46,14 +46,18 @@ builder.Services.AddRazorPages();
 #endregion
 
 #region SERVICES (BUSINESS)
-builder.Services.AddScoped<IKhamBenhService, KhamBenhService>();
 builder.Services.AddScoped<IBuoiDieuTriService, BuoiDieuTriService>();
-builder.Services.AddScoped<IChamCongService, ChamCongService>();
 builder.Services.AddScoped<IChamCongAdminService, ChamCongAdminService>();
+builder.Services.AddScoped<IChamCongService, ChamCongService>();
+builder.Services.AddScoped<IDotDieuTriService, DotDieuTriService>();
+builder.Services.AddScoped<IKhamBenhService, KhamBenhService>();
 builder.Services.AddScoped<INhanVienTaiKhoanService, NhanVienTaiKhoanService>();
 builder.Services.AddScoped<INhanVienUpdateService, NhanVienUpdateService>();
-builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
 builder.Services.AddScoped<IResetMatKhauService, ResetMatKhauService>();
+builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
+builder.Services.AddScoped<IBenhNhanService, BenhNhanService>();
+builder.Services.AddScoped<INhanVienService, NhanVienService>();
+builder.Services.AddScoped<IGoiDieuTriService, GoiDieuTriService>();
 
 #endregion
 

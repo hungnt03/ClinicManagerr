@@ -1,0 +1,45 @@
+﻿@using ClinicManager.ViewModels.DotDieuTri
+@model DotDieuTriChiTietVm
+@{
+    ViewData["Title"] = "Chi tiet dot dieu tri";
+}
+
+<h3>Dot dieu tri</h3>
+
+<div class="card">
+    <div class="card-body">
+        <p><b>Chan doan:</b> @Model.ChanDoan</p>
+        <p><b>Phac do:</b> @Model.PhacDoDieuTri</p>
+        <p><b>Goi:</b> @Model.TenGoi</p>
+        <p>
+            <b>So buoi:</b>
+            @Model.SoBuoiDaDung / @Model.TongSoBuoi
+        </p>
+        <p>
+            <b>Trang thai:</b>
+            <span class="badge badge-info">@Model.TrangThai</span>
+        </p>
+
+        @if (Model.ConBuoi)
+        {
+            <a class="btn btn-success"
+               asp-controller="BuoiDieuTri"
+               asp-action="Create"
+               asp-route-dotDieuTriId="@Model.DotDieuTriId">
+                + Tao buoi dieu tri
+            </a>
+        }
+        else
+        {
+            <span class="text-danger">
+                Da het so buoi dieu tri
+            </span>
+        }
+
+        <a class="btn btn-warning ms-2"
+           asp-action="MuaThemBuoi"
+           asp-route-id="@Model.DotDieuTriId">
+            Mua them buoi
+        </a>
+    </div>
+</div>
