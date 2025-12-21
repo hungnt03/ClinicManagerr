@@ -23,7 +23,7 @@ namespace ClinicManager.ViewModels.DotDieuTri
         [Required]
         public int GoiDieuTriId { get; set; }
 
-        public decimal DaThanhToan { get; set; }
+        public decimal PhanTramGiamGia { get; set; }
 
         // ===== DÙNG CHO VIEW =====
         [ValidateNever]

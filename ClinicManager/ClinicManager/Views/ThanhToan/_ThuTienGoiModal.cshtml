@@ -1,0 +1,64 @@
+﻿@using ClinicManager.Models.Entities
+@model ClinicManager.ViewModels.ThanhToan.ThuTienGoiVm
+
+<div class="modal fade" id="modalThuTien" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formThuTien">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="DotDieuTriId" />
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Thu tien goi dieu tri</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label>Tong tien</label>
+                        <input class="form-control" value="@Model.TongTien.ToString("N0")" disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Da thanh toan</label>
+                        <input class="form-control" value="@Model.DaThanhToan.ToString("N0")" disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Con lai</label>
+                        <input class="form-control text-danger"
+                               value="@Model.ConLai.ToString("N0")" disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>So tien thu</label>
+                        <input asp-for="SoTienThu" class="form-control" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Hinh thuc</label>
+                        <select asp-for="HinhThuc"
+                                asp-items="Html.GetEnumSelectList<HinhThucThanhToan>()"
+                                class="form-control">
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Ghi chu</label>
+                        <textarea asp-for="GhiChu" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Thu tien
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Dong
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

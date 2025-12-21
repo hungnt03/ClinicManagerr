@@ -1,0 +1,70 @@
+﻿@using ClinicManager.Models.Entities
+@model ClinicManager.ViewModels.ThanhToan.ThuTienThuocVm
+
+<div class="modal fade" id="modalThuTienThuoc" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formThuTienThuoc">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="BuoiDieuTriId" />
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Thu tien thuoc / vat tu</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label>Tong chi phi</label>
+                        <input class="form-control"
+                               value="@Model.TongChiPhi.ToString("N0")"
+                               disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Da thu</label>
+                        <input class="form-control"
+                               value="@Model.DaThu.ToString("N0")"
+                               disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Con lai</label>
+                        <input class="form-control text-danger"
+                               value="@Model.ConLai.ToString("N0")"
+                               disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>So tien thu</label>
+                        <input asp-for="SoTienThu" class="form-control" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Hinh thuc</label>
+                        <select asp-for="HinhThuc"
+                                asp-items="Html.GetEnumSelectList<HinhThucThanhToan>()"
+                                class="form-control">
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Ghi chu</label>
+                        <textarea asp-for="GhiChu" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">
+                        Thu tien
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Dong
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

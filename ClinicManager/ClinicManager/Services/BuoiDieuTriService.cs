@@ -1,5 +1,6 @@
 ﻿using ClinicManager.Data;
 using ClinicManager.Models.Entities;
+using ClinicManager.ViewModels.BuoiDieuTri;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManager.Services
@@ -94,8 +95,7 @@ namespace ClinicManager.Services
             if (buoi == null)
                 throw new Exception("Khong tim thay buoi dieu tri");
 
-            var vatTu = await _context.VatTus
-                .FirstOrDefaultAsync(x => x.vatTuId == vatTuId);
+            var vatTu = await _context.VatTus.FirstOrDefaultAsync(x => x.vatTuId == vatTuId);
 
             if (vatTu == null)
                 throw new Exception("Vat tu khong ton tai");
@@ -199,6 +199,56 @@ namespace ClinicManager.Services
             _context.ThuocVatTuBuoiDieuTris.Remove(dong);
             await _context.SaveChangesAsync();
         }
+
+        public async Task CapNhatBuoiDieuTriAsync(
+    BuoiDieuTriEditVm vm,
+    int adminNhanVienId)
+        {
+            var buoi = await _context.BuoiDieuTris
+                .FirstOrDefaultAsync(x => x.buoiDieuTriId == vm.BuoiDieuTriId);
+
+            if (buoi == null)
+                throw new Exception("Khong tim thay buoi dieu tri");
+
+            // ===== LƯU AUDIT =====
+            var audit = new BuoiDieuTriAudit
+            {
+                buoiDieuTriId = buoi.buoiDieuTriId,
+                adminNhanVienId = adminNhanVienId,
+
+                ngayDieuTriCu = buoi.ngayDieuTri,
+                bacSiDieuTriTayIdCu = buoi.bacSiDieuTriTayId,
+                kyThuatVienTapIdCu = buoi.kyThuatVienTapId,
+                noiDungTapCu = buoi.noiDungTap,
+                noiDungDieuTriTayCu = buoi.noiDungDieuTriTay,
+                chiDinhDacBietCu = buoi.chiDinhDacBiet,
+                chiPhiThuocVatTuCu = buoi.chiPhiThuocVatTu,
+
+                ngayDieuTriMoi = vm.NgayDieuTri,
+                bacSiDieuTriTayIdMoi = vm.BacSiDieuTriTayId,
+                kyThuatVienTapIdMoi = vm.KyThuatVienTapId,
+                noiDungTapMoi = vm.NoiDungTap,
+                noiDungDieuTriTayMoi = vm.NoiDungDieuTriTay,
+                chiDinhDacBietMoi = vm.ChiDinhDacBiet,
+                chiPhiThuocVatTuMoi = buoi.chiPhiThuocVatTu,
+
+                lyDo = vm.LyDoSua,
+                suaLuc = DateTime.Now
+            };
+
+            _context.BuoiDieuTriAudits.Add(audit);
+
+            // ===== UPDATE BUỔI =====
+            buoi.ngayDieuTri = vm.NgayDieuTri;
+            buoi.bacSiDieuTriTayId = vm.BacSiDieuTriTayId;
+            buoi.kyThuatVienTapId = vm.KyThuatVienTapId;
+            buoi.noiDungTap = vm.NoiDungTap;
+            buoi.noiDungDieuTriTay = vm.NoiDungDieuTriTay;
+            buoi.chiDinhDacBiet = vm.ChiDinhDacBiet;
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 
     public interface IBuoiDieuTriService
@@ -228,5 +278,9 @@ namespace ClinicManager.Services
         );
 
         Task XoaVatTuAsync(int thuocVatTuBuoiDieuTriId);
+
+        Task CapNhatBuoiDieuTriAsync(
+            BuoiDieuTriEditVm vm,
+            int adminNhanVienId);
     }
 }

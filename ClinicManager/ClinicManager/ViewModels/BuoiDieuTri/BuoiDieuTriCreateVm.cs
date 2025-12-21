@@ -27,5 +27,8 @@ namespace ClinicManager.ViewModels.BuoiDieuTri
         public List<SelectListItem> DanhSachBacSi { get; set; } = new();
         [ValidateNever]
         public List<SelectListItem> DanhSachKyThuatVien { get; set; } = new();
+
+        // ===== CHỈ SET SAU KHI TẠO BUỔI =====
+        public int? BuoiDieuTriId { get; set; }
     }
 }

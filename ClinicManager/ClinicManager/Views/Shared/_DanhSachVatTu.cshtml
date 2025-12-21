@@ -14,7 +14,7 @@
                 <td>@x.tenVatTu</td>
                 <td>@x.soLuong</td>
                 <td>@x.donGia.ToString("N0")</td>
-                <td>@(x.soLuong* x.donGia).ToString("N0")</td>
+                <td>@(((decimal)x.soLuong * (decimal)x.donGia).ToString("N0"))</td>
             </tr>
         }
     </tbody>

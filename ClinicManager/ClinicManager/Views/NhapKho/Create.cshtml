@@ -1,0 +1,100 @@
+﻿@model ClinicManager.ViewModels.NhapKho.NhapKhoCreateVm
+
+<h3>Nhap kho</h3>
+
+<form method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Ngay nhap</label>
+            <input asp-for="NgayNhap" type="date" class="form-control" />
+        </div>
+        <div class="col-md-8">
+            <label>Hoa don (PDF / Anh)</label>
+            <input asp-for="HoaDonFile" type="file"
+                   class="form-control"
+                   accept=".pdf,.jpg,.jpeg,.png" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Ghi chu</label>
+        <textarea asp-for="GhiChu" class="form-control"></textarea>
+    </div>
+
+    <!-- ===== BUTTON ADD ===== -->
+    <button type="button"
+            class="btn btn-outline-primary mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#modalVatTu">
+        + Them vat tu
+    </button>
+
+    <!-- ===== TABLE CHI TIET ===== -->
+    <table class="table table-bordered" id="tblVatTu">
+        <thead>
+            <tr>
+                <th>Vat tu</th>
+                <th>So luong</th>
+                <th>Don gia nhap</th>
+                <th>Thanh tien</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div class="text-end mb-3">
+        <strong>Tong tien: </strong>
+        <span id="tongTien">0</span>
+    </div>
+
+    <!-- ===== HIDDEN ITEMS ===== -->
+    <div id="itemsContainer"></div>
+
+    <button class="btn btn-primary">
+        Luu phieu nhap
+    </button>
+
+    <a class="btn btn-secondary"
+       asp-controller="VatTu"
+       asp-action="Index">
+        Quay lai
+    </a>
+</form>
+
+<!-- ================= MODAL VAT TU ================= -->
+<div class="modal fade" id="modalVatTu" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Them vat tu</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-2">
+                    <label>Vat tu</label>
+                    <select id="vatTuId" class="form-control"></select>
+                </div>
+
+                <div class="mb-2">
+                    <label>So luong</label>
+                    <input id="soLuong" type="number" class="form-control" />
+                </div>
+
+                <div class="mb-2">
+                    <label>Don gia nhap</label>
+                    <input id="donGiaNhap" type="number" class="form-control" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnThem">
+                    Them
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

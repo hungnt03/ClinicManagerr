@@ -1,7 +1,9 @@
-﻿using ClinicManager.Services;
+﻿using ClinicManager.Data;
+using ClinicManager.Services;
 using ClinicManager.ViewModels.DotDieuTri;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManager.Controllers
 {
@@ -12,17 +14,20 @@ namespace ClinicManager.Controllers
         private readonly IBenhNhanService _benhNhanService;
         private readonly INhanVienService _nhanVienService;
         private readonly IGoiDieuTriService _goiDieuTriService;
+        private readonly ApplicationDbContext _context;
 
         public DotDieuTriController(
             IDotDieuTriService dotDieuTriService,
             IBenhNhanService benhNhanService,
             INhanVienService nhanVienService,
-            IGoiDieuTriService goiDieuTriService)
+            IGoiDieuTriService goiDieuTriService, 
+            ApplicationDbContext context)
         {
             _dotDieuTriService = dotDieuTriService;
             _benhNhanService = benhNhanService;
             _nhanVienService = nhanVienService;
             _goiDieuTriService = goiDieuTriService;
+            _context = context;
         }
 
         // ==================================================
@@ -64,22 +69,60 @@ namespace ClinicManager.Controllers
                 vm.ChanDoan,
                 vm.PhacDoDieuTri,
                 vm.GoiDieuTriId,
-                vm.DaThanhToan
+                vm.PhanTramGiamGia
             );
 
             // 👉 sau khi khám xong → sang chi tiết đợt
             return RedirectToAction("ChiTiet", new { id = dotId });
         }
 
-        // ==================================================
-        // 2. CHI TIẾT ĐỢT ĐIỀU TRỊ
-        // ==================================================
         public async Task<IActionResult> ChiTiet(int id)
         {
-            var dot = await _benhNhanService.GetChiTietDotDieuTriAsync(id);
+            var dot = await _context.DotDieuTris
+                .Where(x => x.dotDieuTriId == id)
+                .Select(x => new DotDieuTriChiTietVm
+                {
+                    DotDieuTriId = x.dotDieuTriId,
+                    BenhNhanId = x.benhNhanId,
+
+                    NgayKham = x.ngayKham,
+                    ChanDoan = x.chanDoan,
+                    PhacDoDieuTri = x.phacDoDieuTri,
+
+                    TongSoBuoi = x.tongSoBuoi,
+                    SoBuoiDaDung = x.soBuoiDaDung,
+
+                    TrangThai = x.trangThai.ToString(),
+
+                    BuoiDieuTris = x.BuoiDieuTris
+                        .OrderByDescending(b => b.ngayDieuTri) // ⭐ gần nhất trước
+                        .Select(b => new BuoiDieuTriItemVm
+                        {
+                            BuoiDieuTriId = b.buoiDieuTriId,
+                            NgayDieuTri = b.ngayDieuTri,
+
+                            NoiDungTap = b.noiDungTap,
+                            NoiDungDieuTriTay = b.noiDungDieuTriTay,
+                            ChiDinhDacBiet = b.chiDinhDacBiet,
+
+                            TenBacSiDieuTriTay = b.BacSiDieuTriTay != null
+                                ? b.BacSiDieuTriTay.hoTen
+                                : null,
+
+                            TenNguoiTap = b.NguoiTap != null
+                                ? b.NguoiTap.hoTen
+                                : null,
+
+                            ChiPhiThuocVatTu = b.chiPhiThuocVatTu
+                        })
+                        .ToList()
+                })
+                .FirstOrDefaultAsync();
+
             if (dot == null) return NotFound();
 
             return View(dot);
         }
+
     }
 }

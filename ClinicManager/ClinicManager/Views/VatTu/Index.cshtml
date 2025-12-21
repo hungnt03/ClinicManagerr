@@ -1,0 +1,76 @@
+﻿@model ClinicManager.ViewModels.VatTu.VatTuIndexVm
+
+<h3>Quan ly vat tu</h3>
+
+<!-- ===== SEARCH ===== -->
+<form method="get" class="row mb-3">
+    <div class="col-md-4">
+        <input name="keyword"
+               value="@Model.Keyword"
+               class="form-control"
+               placeholder="Tim theo ten vat tu..." />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary">
+            Tim
+        </button>
+    </div>
+</form>
+
+<a class="btn btn-primary mb-2" asp-action="Create">
+    + Them vat tu
+</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ten</th>
+            <th>Loai</th>
+            <th>Don vi</th>
+            <th>Don gia</th>
+            <th>Ton kho</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.Items)
+        {
+            <tr>
+                <td>@x.TenVatTu</td>
+                <td>@x.TenLoai</td>
+                <td>@x.DonViTinh</td>
+                <td>@x.DonGia.ToString("N0")</td>
+                <td>@x.TonKho</td>
+                <td>
+                    <a class="btn btn-sm btn-warning"
+                       asp-action="Edit"
+                       asp-route-id="@x.VatTuId">
+                        Sua
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- ===== PAGINATION ===== -->
+@if (Model.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@i"
+                       asp-route-keyword="@Model.Keyword">
+                        @i
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+}

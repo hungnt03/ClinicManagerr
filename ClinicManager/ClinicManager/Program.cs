@@ -58,7 +58,10 @@ builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
 builder.Services.AddScoped<IBenhNhanService, BenhNhanService>();
 builder.Services.AddScoped<INhanVienService, NhanVienService>();
 builder.Services.AddScoped<IGoiDieuTriService, GoiDieuTriService>();
-
+builder.Services.AddScoped<IVatTuService, VatTuService>();
+builder.Services.AddScoped<INhapKhoService, NhapKhoService>();
+builder.Services.AddScoped<ILuongConfigService, LuongConfigService>();
+builder.Services.AddScoped<IThanhToanService, ThanhToanService>();
 #endregion
 
 var app = builder.Build();

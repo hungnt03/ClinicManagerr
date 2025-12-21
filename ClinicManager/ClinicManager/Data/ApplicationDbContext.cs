@@ -1,4 +1,5 @@
-﻿using ClinicManager.Models;
+﻿using System.Reflection.Emit;
+using ClinicManager.Models;
 using ClinicManager.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,18 @@ namespace ClinicManager.Data
         public DbSet<ChamCongAudit> ChamCongAudits { get; set; }
         public DbSet<DotDieuTri> DotDieuTris { get; set; }
         public DbSet<DotDieuTriMuaThem> DotDieuTriMuaThems { get; set; }
+        public DbSet<BuoiDieuTriAudit> BuoiDieuTriAudits { get; set; }
+        public DbSet<PhieuNhapKho> PhieuNhapKhos { get; set; }
+        public DbSet<PhieuNhapKhoChiTiet> PhieuNhapKhoChiTiets { get; set; }
+        public DbSet<CauHinhLuong> CauHinhLuongs { get; set; }
+        public DbSet<NgayLe> NgayLes { get; set; }
+        public DbSet<BangLuongThang> BangLuongThangs { get; set; }
+        public DbSet<BangLuongThangChiTiet> BangLuongThangChiTiets { get; set; }
+        public DbSet<ThanhToan> ThanhToans { get; set; }
+
+
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +47,29 @@ namespace ClinicManager.Data
             builder.Entity<KhamBenh>()
                 .Property(x => x.goiDieuTriId)
                 .IsRequired();
+
+            builder.Entity<BuoiDieuTri>()
+                .HasOne(b => b.BacSiDieuTriTay)
+                .WithMany()
+                .HasForeignKey(b => b.bacSiDieuTriTayId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<BuoiDieuTri>()
+                .HasOne(b => b.NguoiTap)
+                .WithMany()
+                .HasForeignKey(b => b.kyThuatVienTapId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<BuoiDieuTri>()
+                .HasOne(b => b.DotDieuTri)
+                .WithMany(d => d.BuoiDieuTris)
+                .HasForeignKey(b => b.dotDieuTriId);
+
+            builder.Entity<BuoiDieuTri>()
+                .HasOne(b => b.DotDieuTri)
+                .WithMany(d => d.BuoiDieuTris)
+                .HasForeignKey(b => b.dotDieuTriId);
+
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@model ClinicManager.ViewModels.Luong.NgayLeVm
+
+@{
+    ViewData["Title"] = "Them ngay le";
+}
+
+<h3>Them ngay le</h3>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-4 mb-2 p-0">
+        <label>Ngay</label>
+        <input asp-for="Ngay" type="date" class="form-control" />
+    </div>
+
+    <div class="col-md-6 mb-2 p-0">
+        <label>Ten ngay le</label>
+        <input asp-for="Ten" class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="CoTinhLuong" class="form-check-input" />
+        <label class="form-check-label">
+            Nghi nhung van tinh luong
+        </label>
+    </div>
+
+    <button class="btn btn-primary">Luu</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lai</a>
+</form>

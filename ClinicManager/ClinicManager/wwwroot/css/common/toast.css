@@ -1,0 +1,34 @@
+﻿#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast-custom {
+    min-width: 300px;
+    margin-bottom: 10px;
+    padding: 15px 20px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0.95;
+}
+
+.toast-success {
+    background-color: #28a745; /* xanh */
+}
+
+.toast-error {
+    background-color: #dc3545; /* đỏ */
+}
+
+.toast-warning {
+    background-color: #ffc107; /* vàng */
+    color: #000;
+}
+
+.toast-info {
+    background-color: #17a2b8; /* xanh dương */
+}

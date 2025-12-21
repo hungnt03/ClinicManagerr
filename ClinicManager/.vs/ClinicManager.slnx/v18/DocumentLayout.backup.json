@@ -3,56 +3,16 @@
   "WorkspaceRootPath": "D:\\SRC\\ClinicManagerr\\ClinicManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\data\\migrations\\20251219044318_modifyentitiesbuoidieutri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\data\\migrations\\20251219044318_modifyentitiesbuoidieutri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\controllers\\bangluongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\controllers\\bangluongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\models\\entities\\buoidieutri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\models\\entities\\buoidieutri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\models\\entities\\bangluongthang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\models\\entities\\bangluongthang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\controllers\\buoidieutricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\controllers\\buoidieutricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\controllers\\nhanviencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\controllers\\nhanviencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\viewmodels\\buoidieutri\\buoidieutricreatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\viewmodels\\buoidieutri\\buoidieutricreatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\controllers\\dotdieutricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\controllers\\dotdieutricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\views\\dotdieutri\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\views\\dotdieutri\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\viewmodels\\dotdieutri\\dotdieutricreatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\viewmodels\\dotdieutri\\dotdieutricreatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\viewmodels\\benhnhan\\benhnhanchitietvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\viewmodels\\benhnhan\\benhnhanchitietvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\views\\benhnhan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\views\\benhnhan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\views\\benhnhan\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\views\\benhnhan\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\controllers\\benhnhancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\controllers\\benhnhancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\services\\nhanvienservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\services\\nhanvienservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|d:\\src\\clinicmanagerr\\clinicmanager\\clinicmanager\\models\\entities\\bangluongthangchitiet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0628EA7-A6FE-BBFC-6613-3691CA0BC271}|ClinicManager\\ClinicManager.csproj|solutionrelative:clinicmanager\\models\\entities\\bangluongthangchitiet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,175 +22,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20251219044318_ModifyEntitiesBuoiDieuTri.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Data\\Migrations\\20251219044318_ModifyEntitiesBuoiDieuTri.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Data\\Migrations\\20251219044318_ModifyEntitiesBuoiDieuTri.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Data\\Migrations\\20251219044318_ModifyEntitiesBuoiDieuTri.cs",
-              "RelativeToolTip": "ClinicManager\\Data\\Migrations\\20251219044318_ModifyEntitiesBuoiDieuTri.cs",
+              "DocumentIndex": 2,
+              "Title": "BangLuongThangChiTiet.cs",
+              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Models\\Entities\\BangLuongThangChiTiet.cs",
+              "RelativeDocumentMoniker": "ClinicManager\\Models\\Entities\\BangLuongThangChiTiet.cs",
+              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Models\\Entities\\BangLuongThangChiTiet.cs",
+              "RelativeToolTip": "ClinicManager\\Models\\Entities\\BangLuongThangChiTiet.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T04:43:19.523Z",
+              "WhenOpened": "2025-12-21T15:54:49.927Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BuoiDieuTri.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Models\\Entities\\BuoiDieuTri.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Models\\Entities\\BuoiDieuTri.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Models\\Entities\\BuoiDieuTri.cs",
-              "RelativeToolTip": "ClinicManager\\Models\\Entities\\BuoiDieuTri.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAcAAAAAAAAAA==",
+              "Title": "BangLuongThang.cs",
+              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Models\\Entities\\BangLuongThang.cs",
+              "RelativeDocumentMoniker": "ClinicManager\\Models\\Entities\\BangLuongThang.cs",
+              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Models\\Entities\\BangLuongThang.cs",
+              "RelativeToolTip": "ClinicManager\\Models\\Entities\\BangLuongThang.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T04:42:29.195Z",
+              "WhenOpened": "2025-12-21T15:54:25.306Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "NhanVienController.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\NhanVienController.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Controllers\\NhanVienController.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\NhanVienController.cs",
-              "RelativeToolTip": "ClinicManager\\Controllers\\NhanVienController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAAAlAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "BangLuongController.cs",
+              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\BangLuongController.cs",
+              "RelativeDocumentMoniker": "ClinicManager\\Controllers\\BangLuongController.cs",
+              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\BangLuongController.cs",
+              "RelativeToolTip": "ClinicManager\\Controllers\\BangLuongController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowDUAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T04:29:09.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DotDieuTriCreateVm.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\ViewModels\\DotDieuTri\\DotDieuTriCreateVm.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\ViewModels\\DotDieuTri\\DotDieuTriCreateVm.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\ViewModels\\DotDieuTri\\DotDieuTriCreateVm.cs",
-              "RelativeToolTip": "ClinicManager\\ViewModels\\DotDieuTri\\DotDieuTriCreateVm.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAowB4AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T04:21:04.103Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Views\\DotDieuTri\\Create.cshtml",
-              "RelativeDocumentMoniker": "ClinicManager\\Views\\DotDieuTri\\Create.cshtml",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Views\\DotDieuTri\\Create.cshtml",
-              "RelativeToolTip": "ClinicManager\\Views\\DotDieuTri\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-19T04:19:34.263Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Views\\BenhNhan\\Index.cshtml",
-              "RelativeDocumentMoniker": "ClinicManager\\Views\\BenhNhan\\Index.cshtml",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Views\\BenhNhan\\Index.cshtml",
-              "RelativeToolTip": "ClinicManager\\Views\\BenhNhan\\Index.cshtml",
-              "ViewState": "AgIAABMAAAAAAAAAAAAAACkAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-19T03:59:22.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ChiTiet.cshtml",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Views\\BenhNhan\\ChiTiet.cshtml",
-              "RelativeDocumentMoniker": "ClinicManager\\Views\\BenhNhan\\ChiTiet.cshtml",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Views\\BenhNhan\\ChiTiet.cshtml",
-              "RelativeToolTip": "ClinicManager\\Views\\BenhNhan\\ChiTiet.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-19T03:51:13.904Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BenhNhanChiTietVm.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\ViewModels\\BenhNhan\\BenhNhanChiTietVm.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\ViewModels\\BenhNhan\\BenhNhanChiTietVm.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\ViewModels\\BenhNhan\\BenhNhanChiTietVm.cs",
-              "RelativeToolTip": "ClinicManager\\ViewModels\\BenhNhan\\BenhNhanChiTietVm.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAA8wBUAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:50:14.562Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "BenhNhanController.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\BenhNhanController.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Controllers\\BenhNhanController.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\BenhNhanController.cs",
-              "RelativeToolTip": "ClinicManager\\Controllers\\BenhNhanController.cs",
-              "ViewState": "AgIAAKAAAAAAAAAAAAAiwNUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:46:44.299Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DotDieuTriController.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\DotDieuTriController.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Controllers\\DotDieuTriController.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\DotDieuTriController.cs",
-              "RelativeToolTip": "ClinicManager\\Controllers\\DotDieuTriController.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAiwDsAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:43:47.027Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BuoiDieuTriCreateVm.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\ViewModels\\BuoiDieuTri\\BuoiDieuTriCreateVm.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\ViewModels\\BuoiDieuTri\\BuoiDieuTriCreateVm.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\ViewModels\\BuoiDieuTri\\BuoiDieuTriCreateVm.cs",
-              "RelativeToolTip": "ClinicManager\\ViewModels\\BuoiDieuTri\\BuoiDieuTriCreateVm.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABEAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:36:19.364Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BuoiDieuTriController.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\BuoiDieuTriController.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Controllers\\BuoiDieuTriController.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Controllers\\BuoiDieuTriController.cs",
-              "RelativeToolTip": "ClinicManager\\Controllers\\BuoiDieuTriController.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAawDwAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:36:05.775Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "NhanVienService.cs",
-              "DocumentMoniker": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Services\\NhanVienService.cs",
-              "RelativeDocumentMoniker": "ClinicManager\\Services\\NhanVienService.cs",
-              "ToolTip": "D:\\SRC\\ClinicManagerr\\ClinicManager\\ClinicManager\\Services\\NhanVienService.cs",
-              "RelativeToolTip": "ClinicManager\\Services\\NhanVienService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:27:09.77Z",
+              "WhenOpened": "2025-12-21T15:49:32.551Z",
               "EditorCaption": ""
             }
           ]

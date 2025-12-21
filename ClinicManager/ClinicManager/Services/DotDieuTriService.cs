@@ -4,6 +4,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManager.Services
 {
+    public interface IDotDieuTriService
+    {
+        // ===== KHÁM – TẠO ĐỢT =====
+        Task<int> TaoDotDieuTriAsync(
+            int benhNhanId,
+            int bacSiKhamId,
+            DateTime ngayKham,
+            string chanDoan,
+            string phacDoDieuTri,
+            int goiDieuTriId,
+            decimal phanTramGiamGia
+        );
+
+        // ===== LẤY ĐỢT ĐANG ĐIỀU TRỊ =====
+        Task<DotDieuTri?> LayDotDangDieuTriAsync(int benhNhanId);
+
+        // ===== MUA THÊM BUỔI =====
+        Task MuaThemBuoiAsync(
+            int dotDieuTriId,
+            int soBuoiThem,
+            decimal soTien
+        );
+
+        // ===== CẬP NHẬT TRẠNG THÁI SAU MỖI BUỔI =====
+        Task TangSoBuoiDaDungAsync(int dotDieuTriId);
+        Task<DotDieuTri?> GetByIdAsync(int dotDieuTriId);
+    }
     public class DotDieuTriService : IDotDieuTriService
     {
         private readonly ApplicationDbContext _context;
@@ -23,7 +50,7 @@ namespace ClinicManager.Services
             string chanDoan,
             string phacDoDieuTri,
             int goiDieuTriId,
-            decimal daThanhToan)
+            decimal phanTramGiamGia)
         {
             // ❗ Không cho tạo đợt mới nếu còn đợt đang điều trị
             var dotDangMo = await _context.DotDieuTris.AnyAsync(x =>
@@ -52,7 +79,7 @@ namespace ClinicManager.Services
                 soBuoiDaDung = 0,
 
                 tongTien = goi.gia,
-                daThanhToan = daThanhToan,
+                phanTramGiamGia = phanTramGiamGia,
 
                 trangThai = TrangThaiDotDieuTri.MoiTao,
                 taoLuc = DateTime.Now
@@ -147,32 +174,14 @@ namespace ClinicManager.Services
 
             await _context.SaveChangesAsync();
         }
-    }
 
-    public interface IDotDieuTriService
-    {
-        // ===== KHÁM – TẠO ĐỢT =====
-        Task<int> TaoDotDieuTriAsync(
-            int benhNhanId,
-            int bacSiKhamId,
-            DateTime ngayKham,
-            string chanDoan,
-            string phacDoDieuTri,
-            int goiDieuTriId,
-            decimal daThanhToan
-        );
-
-        // ===== LẤY ĐỢT ĐANG ĐIỀU TRỊ =====
-        Task<DotDieuTri?> LayDotDangDieuTriAsync(int benhNhanId);
-
-        // ===== MUA THÊM BUỔI =====
-        Task MuaThemBuoiAsync(
-            int dotDieuTriId,
-            int soBuoiThem,
-            decimal soTien
-        );
-
-        // ===== CẬP NHẬT TRẠNG THÁI SAU MỖI BUỔI =====
-        Task TangSoBuoiDaDungAsync(int dotDieuTriId);
+        // ==================================================
+        // GET BY ID
+        // ==================================================
+        public async Task<DotDieuTri?> GetByIdAsync(int dotDieuTriId)
+        {
+            return await _context.DotDieuTris
+                .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
+        }
     }
 }

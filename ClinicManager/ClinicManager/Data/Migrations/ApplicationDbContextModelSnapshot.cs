@@ -90,6 +90,65 @@ namespace ClinicManager.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ClinicManager.Models.Entities.BangLuongThang", b =>
+                {
+                    b.Property<int>("bangLuongThangId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bangLuongThangId"));
+
+                    b.Property<bool>("daChot")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("nam")
+                        .HasColumnType("int");
+
+                    b.Property<int>("nhanVienId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("taoLuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("thang")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("tongLuong")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("bangLuongThangId");
+
+                    b.ToTable("BangLuongThangs");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.BangLuongThangChiTiet", b =>
+                {
+                    b.Property<int>("bangLuongThangChiTietId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bangLuongThangChiTietId"));
+
+                    b.Property<int>("bangLuongThangId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("dienGiai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("loai")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("soTien")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("bangLuongThangChiTietId");
+
+                    b.HasIndex("bangLuongThangId");
+
+                    b.ToTable("BangLuongThangChiTiets");
+                });
+
             modelBuilder.Entity("ClinicManager.Models.Entities.BenhNhan", b =>
                 {
                     b.Property<int>("benhNhanId")
@@ -203,7 +262,81 @@ namespace ClinicManager.Data.Migrations
 
                     b.HasKey("buoiDieuTriId");
 
+                    b.HasIndex("bacSiDieuTriTayId");
+
+                    b.HasIndex("dotDieuTriId");
+
+                    b.HasIndex("kyThuatVienTapId");
+
                     b.ToTable("BuoiDieuTris");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.BuoiDieuTriAudit", b =>
+                {
+                    b.Property<int>("buoiDieuTriAuditId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("buoiDieuTriAuditId"));
+
+                    b.Property<int>("adminNhanVienId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("bacSiDieuTriTayIdCu")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("bacSiDieuTriTayIdMoi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("buoiDieuTriId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("chiDinhDacBietCu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("chiDinhDacBietMoi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("chiPhiThuocVatTuCu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("chiPhiThuocVatTuMoi")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("kyThuatVienTapIdCu")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("kyThuatVienTapIdMoi")
+                        .HasColumnType("int");
+
+                    b.Property<string>("lyDo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ngayDieuTriCu")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ngayDieuTriMoi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("noiDungDieuTriTayCu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("noiDungDieuTriTayMoi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("noiDungTapCu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("noiDungTapMoi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("suaLuc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("buoiDieuTriAuditId");
+
+                    b.ToTable("BuoiDieuTriAudits");
                 });
 
             modelBuilder.Entity("ClinicManager.Models.Entities.BuoiDieuTriNhanVien", b =>
@@ -227,6 +360,70 @@ namespace ClinicManager.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("BuoiDieuTriNhanViens");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.CauHinhLuong", b =>
+                {
+                    b.Property<int>("cauHinhLuongId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cauHinhLuongId"));
+
+                    b.Property<DateTime>("apDungTuNgay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("gioBatDauChieu")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("gioBatDauSang")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("gioKetThucChieu")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("gioKetThucSang")
+                        .HasColumnType("time");
+
+                    b.Property<decimal>("heSoTangCaNgayLe")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("heSoTangCaNgayThuong")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("phanTramGioiThieu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("soGioLamChuanNgay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("soPhutLamTronTangCa")
+                        .HasColumnType("int");
+
+                    b.Property<int>("soPhutToiThieuTinhTangCa")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("taoLuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("tienAnTruaNgay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("tienChuyenCan")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("tienDieuTriTayMoiBuoi")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("tienTapMoiBuoi")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("tienXangXeThang")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("cauHinhLuongId");
+
+                    b.ToTable("CauHinhLuongs");
                 });
 
             modelBuilder.Entity("ClinicManager.Models.Entities.ChamCong", b =>
@@ -378,9 +575,15 @@ namespace ClinicManager.Data.Migrations
                     b.Property<DateTime>("ngayKham")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ngayThanhToan")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("phacDoDieuTri")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("phanTramGiamGia")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("soBuoiDaDung")
                         .HasColumnType("int");
@@ -495,6 +698,32 @@ namespace ClinicManager.Data.Migrations
                     b.ToTable("KhamBenhs");
                 });
 
+            modelBuilder.Entity("ClinicManager.Models.Entities.NgayLe", b =>
+                {
+                    b.Property<int>("ngayLeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ngayLeId"));
+
+                    b.Property<bool>("coTinhLuong")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ngay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("taoLuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ten")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ngayLeId");
+
+                    b.ToTable("NgayLes");
+                });
+
             modelBuilder.Entity("ClinicManager.Models.Entities.NhanVien", b =>
                 {
                     b.Property<int>("nhanVienId")
@@ -520,6 +749,107 @@ namespace ClinicManager.Data.Migrations
                     b.HasKey("nhanVienId");
 
                     b.ToTable("NhanViens");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.PhieuNhapKho", b =>
+                {
+                    b.Property<int>("phieuNhapKhoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("phieuNhapKhoId"));
+
+                    b.Property<string>("duongDanHoaDon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ghiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ngayNhap")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("nhanVienNhapId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("taoLuc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("tongTien")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("phieuNhapKhoId");
+
+                    b.ToTable("PhieuNhapKhos");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.PhieuNhapKhoChiTiet", b =>
+                {
+                    b.Property<int>("phieuNhapKhoChiTietId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("phieuNhapKhoChiTietId"));
+
+                    b.Property<decimal>("donGiaNhap")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("phieuNhapKhoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("soLuong")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("thanhTien")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("vatTuId")
+                        .HasColumnType("int");
+
+                    b.HasKey("phieuNhapKhoChiTietId");
+
+                    b.HasIndex("vatTuId");
+
+                    b.ToTable("PhieuNhapKhoChiTiets");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.ThanhToan", b =>
+                {
+                    b.Property<int>("thanhToanId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("thanhToanId"));
+
+                    b.Property<int?>("buoiDieuTriId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("daChot")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("dotDieuTriId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ghiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("hinhThuc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("loai")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ngayThu")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("soTien")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("taoLuc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("thanhToanId");
+
+                    b.ToTable("ThanhToans");
                 });
 
             modelBuilder.Entity("ClinicManager.Models.Entities.ThuocVatTuBuoiDieuTri", b =>
@@ -566,9 +896,8 @@ namespace ClinicManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("loai")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("loai")
+                        .HasColumnType("int");
 
                     b.Property<string>("tenVatTu")
                         .IsRequired()
@@ -719,6 +1048,40 @@ namespace ClinicManager.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ClinicManager.Models.Entities.BangLuongThangChiTiet", b =>
+                {
+                    b.HasOne("ClinicManager.Models.Entities.BangLuongThang", null)
+                        .WithMany("ChiTiets")
+                        .HasForeignKey("bangLuongThangId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.BuoiDieuTri", b =>
+                {
+                    b.HasOne("ClinicManager.Models.Entities.NhanVien", "BacSiDieuTriTay")
+                        .WithMany()
+                        .HasForeignKey("bacSiDieuTriTayId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ClinicManager.Models.Entities.DotDieuTri", "DotDieuTri")
+                        .WithMany("BuoiDieuTris")
+                        .HasForeignKey("dotDieuTriId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManager.Models.Entities.NhanVien", "NguoiTap")
+                        .WithMany()
+                        .HasForeignKey("kyThuatVienTapId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("BacSiDieuTriTay");
+
+                    b.Navigation("DotDieuTri");
+
+                    b.Navigation("NguoiTap");
+                });
+
             modelBuilder.Entity("ClinicManager.Models.Entities.DotDieuTri", b =>
                 {
                     b.HasOne("ClinicManager.Models.Entities.GoiDieuTri", "GoiDieuTri")
@@ -728,6 +1091,17 @@ namespace ClinicManager.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("GoiDieuTri");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.PhieuNhapKhoChiTiet", b =>
+                {
+                    b.HasOne("ClinicManager.Models.Entities.VatTu", "vatTu")
+                        .WithMany()
+                        .HasForeignKey("vatTuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("vatTu");
                 });
 
             modelBuilder.Entity("ClinicManager.Models.Entities.ThuocVatTuBuoiDieuTri", b =>
@@ -798,6 +1172,16 @@ namespace ClinicManager.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.BangLuongThang", b =>
+                {
+                    b.Navigation("ChiTiets");
+                });
+
+            modelBuilder.Entity("ClinicManager.Models.Entities.DotDieuTri", b =>
+                {
+                    b.Navigation("BuoiDieuTris");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,45 +1,155 @@
-﻿@using ClinicManager.ViewModels.DotDieuTri
-@model DotDieuTriChiTietVm
+﻿@model ClinicManager.ViewModels.DotDieuTri.DotDieuTriChiTietVm
+
 @{
     ViewData["Title"] = "Chi tiet dot dieu tri";
+
+    int soBuoiConLai = Model.TongSoBuoi - Model.SoBuoiDaDung;
+
+    // ===== MAU CANH BAO =====
+    string cssCanhBao =
+        soBuoiConLai <= 0 ? "bg-secondary text-white" :
+        soBuoiConLai < 2 ? "bg-warning" :
+        "";
 }
 
-<h3>Dot dieu tri</h3>
+<h3>Chi tiet dot dieu tri</h3>
 
-<div class="card">
+<!-- ================== THONG TIN DOT ================== -->
+<div class="card mb-3 @cssCanhBao">
     <div class="card-body">
+
         <p><b>Chan doan:</b> @Model.ChanDoan</p>
-        <p><b>Phac do:</b> @Model.PhacDoDieuTri</p>
-        <p><b>Goi:</b> @Model.TenGoi</p>
+        <p><b>Phac do dieu tri:</b> @Model.PhacDoDieuTri</p>
+
         <p>
             <b>So buoi:</b>
             @Model.SoBuoiDaDung / @Model.TongSoBuoi
         </p>
+
         <p>
             <b>Trang thai:</b>
-            <span class="badge badge-info">@Model.TrangThai</span>
+            <span class="badge bg-info">@Model.TrangThai</span>
         </p>
 
-        @if (Model.ConBuoi)
+        <!-- ===== NUT TAO BUOI ===== -->
+        @if (soBuoiConLai > 0)
         {
             <a class="btn btn-success"
                asp-controller="BuoiDieuTri"
                asp-action="Create"
-               asp-route-dotDieuTriId="@Model.DotDieuTriId">
+               asp-route-dotDieuTriId="@Model.DotDieuTriId"
+               asp-route-benhNhanId="@Model.BenhNhanId">
                 + Tao buoi dieu tri
             </a>
         }
         else
         {
-            <span class="text-danger">
+            <button class="btn btn-secondary" disabled>
                 Da het so buoi dieu tri
-            </span>
+            </button>
         }
 
-        <a class="btn btn-warning ms-2"
-           asp-action="MuaThemBuoi"
-           asp-route-id="@Model.DotDieuTriId">
-            Mua them buoi
-        </a>
+        <button class="btn btn-success"
+                id="btnThuTien"
+                data-dotid="@Model.DotDieuTriId">
+            Thu tien goi
+        </button>
+
+        <div id="modalContainer"></div>
     </div>
 </div>
+
+<!-- ================== DANH SACH BUOI ================== -->
+
+<h4>Cac buoi dieu tri</h4>
+
+@if (Model.BuoiDieuTris == null || !Model.BuoiDieuTris.Any())
+{
+    <p class="text-muted">Chua co buoi dieu tri nao</p>
+}
+else
+{
+    <div class="accordion" id="accordionBuoiDieuTri">
+
+        @for (int i = 0; i < Model.BuoiDieuTris.Count; i++)
+        {
+            var buoi = Model.BuoiDieuTris[i];
+            var headingId = $"headingBuoi{i}";
+            var collapseId = $"collapseBuoi{i}";
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button @(i > 0 ? "collapsed" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@collapseId">
+                        Buoi dieu tri - @buoi.NgayDieuTri.ToString("dd/MM/yyyy")
+                    </button>
+                </h2>
+
+                <div id="@collapseId"
+                     class="accordion-collapse collapse @(i == 0 ? "show" : "")"
+                     data-bs-parent="#accordionBuoiDieuTri">
+
+                    <div class="accordion-body">
+
+                        <p>
+                            <b>Bac si dieu tri tay:</b>
+                            @(string.IsNullOrEmpty(buoi.TenBacSiDieuTriTay)
+                                                ? "—"
+                                                : buoi.TenBacSiDieuTriTay)
+                        </p>
+
+                        <p>
+                            <b>Nguoi tap:</b>
+                            @(string.IsNullOrEmpty(buoi.TenNguoiTap)
+                                                ? "—"
+                                                : buoi.TenNguoiTap)
+                        </p>
+
+                        @if (!string.IsNullOrEmpty(buoi.NoiDungTap))
+                        {
+                            <p>
+                                <b>Noi dung tap:</b>
+                                @buoi.NoiDungTap
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(buoi.NoiDungDieuTriTay))
+                        {
+                            <p>
+                                <b>Noi dung dieu tri tay:</b>
+                                @buoi.NoiDungDieuTriTay
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(buoi.ChiDinhDacBiet))
+                        {
+                            <p class="text-danger">
+                                <b>Chi dinh dac biet:</b>
+                                @buoi.ChiDinhDacBiet
+                            </p>
+                        }
+
+                        <p>
+                            <b>Chi phi thuoc / vat tu:</b>
+                            @buoi.ChiPhiThuocVatTu.ToString("N0")
+                        </p>
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("BacSi"))
+                        {
+                            <a class="btn btn-sm btn-outline-secondary"
+                               asp-controller="BuoiDieuTri"
+                               asp-action="Edit"
+                               asp-route-buoiDieuTriId="@buoi.BuoiDieuTriId">
+                                Quan ly buoi
+                            </a>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+}

@@ -11,6 +11,7 @@
 
         // ===== LIÊN KẾT =====
         public int benhNhanId { get; set; }
+        public  BenhNhan BenhNhan { get; set; }
         public int bacSiKhamId { get; set; }
 
         // ===== KHÁM =====
@@ -31,8 +32,15 @@
         // ===== TRẠNG THÁI =====
         public TrangThaiDotDieuTri trangThai { get; set; }
 
+        public decimal phanTramGiamGia { get; set; } // 0–100
+
+        public DateTime? ngayThanhToan { get; set; }
+
         // ===== THEO DÕI =====
         public DateTime taoLuc { get; set; }
+
+        public ICollection<BuoiDieuTri> BuoiDieuTris { get; set; }
+            = new List<BuoiDieuTri>();
     }
 
     public enum TrangThaiDotDieuTri

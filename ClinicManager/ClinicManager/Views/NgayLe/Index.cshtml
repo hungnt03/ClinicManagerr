@@ -1,0 +1,40 @@
+﻿@model List<ClinicManager.ViewModels.Luong.NgayLeVm>
+
+@{
+    ViewData["Title"] = "Ngay le";
+}
+
+<h3>Danh sach ngay le</h3>
+
+<a class="btn btn-primary mb-2" asp-action="Create">
+    + Them ngay le
+</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ngay</th>
+            <th>Ten</th>
+            <th>Tinh luong</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.Ngay.ToString("dd/MM/yyyy")</td>
+                <td>@x.Ten</td>
+                <td>
+                    @if (x.CoTinhLuong)
+                    {
+                        <span class="badge bg-success">Co</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Khong</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+﻿@model ClinicManager.ViewModels.Luong.BangLuongThangChiTietVm
+
+<h3>Bang luong thang @Model.Thang/@Model.Nam</h3>
+
+@foreach (var nv in Model.NhanViens)
+{
+    <div class="card mb-3">
+        <div class="card-header">
+            <strong>@nv.TenNhanVien</strong>
+            <span class="float-end text-danger">
+                @nv.TongLuong.ToString("N0")
+            </span>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-sm mb-0">
+                <thead>
+                    <tr>
+                        <th>Khoan</th>
+                        <th>Dien giai</th>
+                        <th>So tien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ct in nv.ChiTiets)
+                    {
+                        <tr>
+                            <td>@ct.loai</td>
+                            <td>@ct.dienGiai</td>
+                            <td>@ct.soTien.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

@@ -1,7 +1,7 @@
-﻿@using ClinicManager.ViewModels.BuoiDieuTri
-@model BuoiDieuTriCreateVm
+﻿@model ClinicManager.ViewModels.BuoiDieuTri.BuoiDieuTriCreateVm
 @{
     ViewData["Title"] = "Tao buoi dieu tri";
+    bool daTaoBuoi = ViewBag.DaTaoBuoi == true;
 }
 
 <h3>Tao buoi dieu tri</h3>
@@ -11,46 +11,93 @@
 
     <input type="hidden" asp-for="DotDieuTriId" />
     <input type="hidden" asp-for="BenhNhanId" />
+    <input type="hidden" asp-for="BuoiDieuTriId" />
 
-    <div class="form-group">
+    <div class="mb-2">
         <label>Ngay dieu tri</label>
         <input asp-for="NgayDieuTri" type="date" class="form-control" />
     </div>
 
-    <div class="form-group mb-2">
+    <div class="mb-2">
         <label>Bac si dieu tri tay</label>
         <select asp-for="BacSiDieuTriTayId"
                 asp-items="Model.DanhSachBacSi"
                 class="form-control">
-            <option value="">-- Chon bac si --</option>
+            <option value="">-- Chon --</option>
         </select>
     </div>
 
-    <div class="form-group mb-2">
+    <div class="mb-2">
         <label>Ky thuat vien tap</label>
         <select asp-for="KyThuatVienTapId"
                 asp-items="Model.DanhSachKyThuatVien"
                 class="form-control">
-            <option value="">-- Chon ky thuat vien --</option>
+            <option value="">-- Chon --</option>
         </select>
     </div>
 
-    <div class="form-group">
-        <label>Noi dung tap</label>
-        <textarea asp-for="NoiDungTap" class="form-control"></textarea>
-    </div>
-
-    <div class="form-group">
+    <div class="mb-2">
         <label>Noi dung dieu tri tay</label>
         <textarea asp-for="NoiDungDieuTriTay" class="form-control"></textarea>
     </div>
 
-    <div class="form-group">
+    <div class="mb-2">
+        <label>Noi dung tap</label>
+        <textarea asp-for="NoiDungTap" class="form-control"></textarea>
+    </div>    
+
+    <div class="mb-3">
         <label>Chi dinh dac biet</label>
         <textarea asp-for="ChiDinhDacBiet" class="form-control"></textarea>
     </div>
 
-    <button class="btn btn-primary mt-3">
-        Luu buoi dieu tri
-    </button>
+    <div class="mt-3">
+        <button class="btn btn-primary">
+            Luu buoi dieu tri
+        </button>
+
+        <a class="btn btn-secondary ms-2"
+           asp-controller="BenhNhan"
+           asp-action="ChiTiet"
+           asp-route-id="@Model.BenhNhanId">
+            Quay lai benh nhan
+        </a>
+    </div>
+
 </form>
+
+@if (daTaoBuoi && Model.BuoiDieuTriId.HasValue)
+{
+    <hr />
+    <h4>Vat tu / Thuoc</h4>
+
+    <button class="btn btn-outline-primary mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#modalVatTu">
+        + Them vat tu
+    </button>
+
+    <div id="vatTuContainer"></div>
+
+    <input type="hidden" id="buoiDieuTriId"
+           value="@Model.BuoiDieuTriId.Value" />
+}
+
+<!-- ================= MODAL ================= -->
+<div class="modal fade" id="modalVatTu" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Them vat tu</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <select id="vatTuId" class="form-control" style="width:100%"></select>
+                <input id="soLuong" type="number" class="form-control" value="1" min="1" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnThemVatTu">Them</button>
+            </div>
+        </div>
+    </div>
+</div>

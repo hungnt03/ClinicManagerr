@@ -31,5 +31,7 @@
 
         // ===== THEO DÕI =====
         public DateTime TaoLuc { get; set; }
+
+        public List<BuoiDieuTriItemVm> BuoiDieuTris { get; set; } = new();
     }
 }

@@ -6,14 +6,18 @@
 
         // ===== LIÊN KẾT =====
         public int dotDieuTriId { get; set; }
+        public DotDieuTri DotDieuTri { get; set; }
         public int benhNhanId { get; set; }
+        public BenhNhan BenhNhan { get; set; }
 
         // ===== THỜI GIAN =====
         public DateTime ngayDieuTri { get; set; }
 
         // ===== NHÂN SỰ =====
         public int? bacSiDieuTriTayId { get; set; }
+        public NhanVien BacSiDieuTriTay { get; set; }
         public int? kyThuatVienTapId { get; set; }
+        public NhanVien NguoiTap { get; set; }
 
         // ===== NỘI DUNG =====
         public string? noiDungTap { get; set; }

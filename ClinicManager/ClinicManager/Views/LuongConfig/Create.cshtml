@@ -1,0 +1,108 @@
+﻿@model ClinicManager.ViewModels.Luong.CauHinhLuongVm
+
+@{
+    ViewData["Title"] = "Them cau hinh luong";
+}
+
+<h3>Them cau hinh luong</h3>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+
+    <fieldset class="border p-3 mb-3">
+        <legend class="w-auto px-2">Gio lam chuan</legend>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label>Bat dau sang</label>
+                <input asp-for="GioBatDauSang" type="time" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>Ket thuc sang</label>
+                <input asp-for="GioKetThucSang" type="time" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>Bat dau chieu</label>
+                <input asp-for="GioBatDauChieu" type="time" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>Ket thuc chieu</label>
+                <input asp-for="GioKetThucChieu" type="time" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mt-2 col-md-3 p-0">
+            <label>So gio lam chuan / ngay</label>
+            <input asp-for="SoGioLamChuanNgay" class="form-control" />
+        </div>
+    </fieldset>
+
+    <fieldset class="border p-3 mb-3">
+        <legend class="w-auto px-2">Phu cap co dinh</legend>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Tien an trua / ngay</label>
+                <input asp-for="TienAnTruaNgay" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>Tien xang xe / thang</label>
+                <input asp-for="TienXangXeThang" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>Tien chuyen can</label>
+                <input asp-for="TienChuyenCan" class="form-control" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border p-3 mb-3">
+        <legend class="w-auto px-2">Hoa hong</legend>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Dieu tri tay / buoi</label>
+                <input asp-for="TienDieuTriTayMoiBuoi" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>Tien tap / buoi</label>
+                <input asp-for="TienTapMoiBuoi" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label>% gioi thieu</label>
+                <input asp-for="PhanTramGioiThieu" class="form-control" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border p-3 mb-3">
+        <legend class="w-auto px-2">Tang ca</legend>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label>He so ngay thuong</label>
+                <input asp-for="HeSoTangCaNgayThuong" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>He so ngay le / CN</label>
+                <input asp-for="HeSoTangCaNgayLe" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>Lam tron (phut)</label>
+                <input asp-for="SoPhutLamTronTangCa" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>Toi thieu tinh TC (phut)</label>
+                <input asp-for="SoPhutToiThieuTinhTangCa" class="form-control" />
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="col-md-3 p-0 mb-3">
+        <label>Ap dung tu ngay</label>
+        <input asp-for="ApDungTuNgay" type="date" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary">Luu cau hinh</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lai</a>
+</form>

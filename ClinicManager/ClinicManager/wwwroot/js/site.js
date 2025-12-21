@@ -2,3 +2,11 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$(function () {
+    $('.modal').on('hidden.bs.modal', function () {
+        let trigger = $('[data-bs-target="#' + this.id + '"]');
+        if (trigger.length) {
+            trigger.focus();
+        }
+    });
+});

@@ -1,0 +1,39 @@
+﻿@model ClinicManager.ViewModels.VatTu.VatTuCreateEditVm
+@using ClinicManager.Models.Entities
+
+<h3>@(Model.VatTuId == null ? "Them vat tu" : "Sua vat tu")</h3>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-2">
+        <label>Ten vat tu</label>
+        <input asp-for="TenVatTu" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Loai</label>
+        <select asp-for="Loai"
+                asp-items="Html.GetEnumSelectList<LoaiVatTu>()"
+                class="form-control">
+        </select>
+    </div>
+
+    <div class="mb-2">
+        <label>Don vi tinh</label>
+        <input asp-for="DonViTinh" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Don gia</label>
+        <input asp-for="DonGia" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Ton kho</label>
+        <input asp-for="TonKho" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary">Luu</button>
+    <a class="btn btn-secondary" asp-action="Index">Quay lai</a>
+</form>

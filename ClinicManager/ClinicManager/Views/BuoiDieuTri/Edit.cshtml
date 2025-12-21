@@ -1,0 +1,102 @@
+﻿@model ClinicManager.ViewModels.BuoiDieuTri.BuoiDieuTriEditVm
+
+@{
+    ViewData["Title"] = "Sua buoi dieu tri";
+}
+
+<h3>Sua buoi dieu tri</h3>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- ===== HIDDEN ===== -->
+    <input type="hidden" asp-for="BuoiDieuTriId" />
+    <input type="hidden" asp-for="DotDieuTriId" />
+    <input type="hidden" asp-for="BenhNhanId" />
+
+    <!-- ===== THỜI GIAN ===== -->
+    <div class="mb-3">
+        <label class="form-label">Ngay dieu tri</label>
+        <input asp-for="NgayDieuTri" type="date" class="form-control" />
+        <span asp-validation-for="NgayDieuTri" class="text-danger"></span>
+    </div>
+
+    <!-- ===== NHÂN SỰ ===== -->
+    <div class="mb-3">
+        <label class="form-label">Bac si dieu tri tay</label>
+        <select asp-for="BacSiDieuTriTayId"
+                asp-items="Model.DanhSachBacSiDieuTriTay"
+                class="form-control">
+            <option value="">-- Khong co --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nguoi tap</label>
+        <select asp-for="KyThuatVienTapId"
+                asp-items="Model.DanhSachNguoiTap"
+                class="form-control">
+            <option value="">-- Khong co --</option>
+        </select>
+    </div>
+
+    <!-- ===== NỘI DUNG ===== -->
+    <div class="mb-3">
+        <label class="form-label">Noi dung tap</label>
+        <textarea asp-for="NoiDungTap" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Noi dung dieu tri tay</label>
+        <textarea asp-for="NoiDungDieuTriTay" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Chi dinh dac biet</label>
+        <textarea asp-for="ChiDinhDacBiet" class="form-control"></textarea>
+    </div>
+
+    <!-- ===== CHI PHÍ ===== -->
+    <div class="mb-3">
+        <label class="form-label">Chi phi thuoc / vat tu</label>
+        <input class="form-control"
+               value="@Model.ChiPhiThuocVatTu.ToString("N0")"
+               readonly />
+    </div>
+
+    <!-- ===== AUDIT ===== -->
+    <div class="mb-3">
+        <label class="form-label text-danger">
+            Ly do sua (bat buoc)
+        </label>
+        <textarea asp-for="LyDoSua"
+                  class="form-control"
+                  required></textarea>
+        <span asp-validation-for="LyDoSua" class="text-danger"></span>
+    </div>
+
+    <button type="button"
+            class="btn btn-warning"
+            id="btnThuTienThuoc"
+            data-buoiid="@Model.BuoiDieuTriId">
+        Thu tien thuoc / vat tu
+    </button>
+
+    <!-- ===== ACTION ===== -->
+    <button class="btn btn-primary">
+        Luu thay doi
+    </button>
+
+    <a class="btn btn-secondary"
+       asp-controller="DotDieuTri"
+       asp-action="ChiTiet"
+       asp-route-id="@Model.DotDieuTriId">
+        Huy
+    </a>
+</form>
+
+<div id="modalThuocContainer"></div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

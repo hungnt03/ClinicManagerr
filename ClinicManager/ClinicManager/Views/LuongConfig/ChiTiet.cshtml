@@ -1,0 +1,99 @@
+﻿@model ClinicManager.ViewModels.Luong.CauHinhLuongVm
+
+@{
+    ViewData["Title"] = "Chi tiet cau hinh luong";
+}
+
+<h3>Chi tiet cau hinh luong</h3>
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="table-secondary">
+            <th colspan="2">Hieu luc</th>
+        </tr>
+        <tr>
+            <td>Ap dung tu ngay</td>
+            <td>@Model.ApDungTuNgay.ToString("dd/MM/yyyy")</td>
+        </tr>
+
+        <tr class="table-secondary">
+            <th colspan="2">Gio lam viec</th>
+        </tr>
+        <tr>
+            <td>Sang</td>
+            <td>
+                @Model.GioBatDauSang.ToString(@"hh\:mm")
+                -
+                @Model.GioKetThucSang.ToString(@"hh\:mm")
+            </td>
+        </tr>
+        <tr>
+            <td>Chieu</td>
+            <td>
+                @Model.GioBatDauChieu.ToString(@"hh\:mm")
+                -
+                @Model.GioKetThucChieu.ToString(@"hh\:mm")
+            </td>
+        </tr>
+        <tr>
+            <td>So gio lam chuan / ngay</td>
+            <td>@Model.SoGioLamChuanNgay</td>
+        </tr>
+
+        <tr class="table-secondary">
+            <th colspan="2">Phu cap</th>
+        </tr>
+        <tr>
+            <td>An trua / ngay</td>
+            <td>@Model.TienAnTruaNgay.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>Xang xe / thang</td>
+            <td>@Model.TienXangXeThang.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>Chuyen can</td>
+            <td>@Model.TienChuyenCan.ToString("N0")</td>
+        </tr>
+
+        <tr class="table-secondary">
+            <th colspan="2">Hoa hong</th>
+        </tr>
+        <tr>
+            <td>Dieu tri tay / buoi</td>
+            <td>@Model.TienDieuTriTayMoiBuoi.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>Tien tap / buoi</td>
+            <td>@Model.TienTapMoiBuoi.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>% gioi thieu</td>
+            <td>@Model.PhanTramGioiThieu %</td>
+        </tr>
+
+        <tr class="table-secondary">
+            <th colspan="2">Tang ca</th>
+        </tr>
+        <tr>
+            <td>He so ngay thuong</td>
+            <td>@Model.HeSoTangCaNgayThuong</td>
+        </tr>
+        <tr>
+            <td>He so ngay le / Chu nhat</td>
+            <td>@Model.HeSoTangCaNgayLe</td>
+        </tr>
+        <tr>
+            <td>Lam tron tang ca</td>
+            <td>@Model.SoPhutLamTronTangCa phut</td>
+        </tr>
+        <tr>
+            <td>Toi thieu tinh tang ca</td>
+            <td>@Model.SoPhutToiThieuTinhTangCa phut</td>
+        </tr>
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">
+    Quay lai
+</a>

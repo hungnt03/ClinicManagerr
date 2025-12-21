@@ -1,0 +1,42 @@
+﻿@model List<ClinicManager.ViewModels.Luong.BangLuongThangListItemVm>
+
+<h3>Bang luong</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Thang</th>
+            <th>So nhan vien</th>
+            <th>Tong luong</th>
+            <th>Trang thai</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.Thang/@x.Nam</td>
+                <td>@x.SoNhanVien</td>
+                <td>@x.TongLuong.ToString("N0")</td>
+                <td>
+                    @if (x.DaChot)
+                    {
+                        <span class="badge bg-success">Da chot</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Tam tinh</span>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary"
+                       asp-action="ChiTiet"
+                       asp-route-id="@x.BangLuongThangId">
+                        Xem chi tiet
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+﻿@using ClinicManager.Models.Entities
+@model IEnumerable<BuoiDieuTriAudit>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Thoi gian</th>
+            <th>Nguoi sua</th>
+            <th>Ly do</th>
+            <th>Chi tiet</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.suaLuc</td>
+                <td>@a.adminNhanVienId</td>
+                <td>@a.lyDo</td>
+                <td>
+                    <details>
+                        <summary>Xem</summary>
+                        <pre>
+    Truoc:
+    Ngay: @a.ngayDieuTriCu
+    Chi phi: @a.chiPhiThuocVatTuCu
+
+    Sau:
+    Ngay: @a.ngayDieuTriMoi
+    Chi phi: @a.chiPhiThuocVatTuMoi
+                            </pre>
+                    </details>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
