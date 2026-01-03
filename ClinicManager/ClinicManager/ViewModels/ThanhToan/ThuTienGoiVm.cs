@@ -9,8 +9,19 @@ namespace ClinicManager.ViewModels.ThanhToan
         public int DotDieuTriId { get; set; }
 
         public decimal TongTien { get; set; }
+
+        public decimal PhanTramGiamGia { get; set; }
+
+        public decimal TienGiam =>
+            Math.Round(TongTien * PhanTramGiamGia / 100, 0);
+
+        public decimal TongTienSauGiam =>
+            TongTien - TienGiam;
+
         public decimal DaThanhToan { get; set; }
-        public decimal ConLai => TongTien - DaThanhToan;
+
+        public decimal ConLai =>
+            TongTienSauGiam - DaThanhToan;
 
         [Required]
         [Range(1, double.MaxValue)]
@@ -21,4 +32,5 @@ namespace ClinicManager.ViewModels.ThanhToan
 
         public string? GhiChu { get; set; }
     }
+
 }

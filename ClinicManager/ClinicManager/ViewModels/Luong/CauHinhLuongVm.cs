@@ -28,11 +28,12 @@ namespace ClinicManager.ViewModels.Luong
         public decimal TienTapMoiBuoi { get; set; }
         public decimal PhanTramGioiThieu { get; set; }
 
-        public decimal HeSoTangCaNgayThuong { get; set; }
-        public decimal HeSoTangCaNgayLe { get; set; }
+        //public decimal HeSoTangCaNgayThuong { get; set; }
+        //public decimal HeSoTangCaNgayLe { get; set; }
 
         public int SoPhutLamTronTangCa { get; set; }
         public int SoPhutToiThieuTinhTangCa { get; set; }
+        public decimal DonGiaTangCaMoiGio { get; set; }
 
         [Required]
         public DateTime ApDungTuNgay { get; set; }

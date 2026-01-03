@@ -1,8 +1,8 @@
 ﻿using ClinicManager.Models.Entities;
 
-namespace ClinicManager.Services
+namespace ClinicManager.Services.Luong
 {
-    public class LuongTangCaHelper
+    public static class LuongTangCaHelper
     {
         public static bool LaNgayLeHoacChuNhat(
         DateTime ngay,
@@ -18,7 +18,7 @@ namespace ClinicManager.Services
             int tongPhut,
             int buocLamTron)
         {
-            if (tongPhut < 60)
+            if (tongPhut < buocLamTron)
                 return 0;
 
             return Math.Floor(
@@ -26,47 +26,29 @@ namespace ClinicManager.Services
             ) * (buocLamTron / 60m);
         }
 
+        // Tính OT cho 1 ngày
         public static decimal TinhOTChoNgay(
             ChamCong cc,
-            CauHinhLuong cfg,
-            decimal luongMoiGio,
-            bool laNgayDacBiet)
+            CauHinhLuong cfg)
         {
             if (!cc.thoiGianRa.HasValue)
                 return 0;
 
-            int phutOT = 0;
-
-            // === ĐẾN SỚM ===
-            var gioBatDauChuan =
-                cc.thoiGianVao.Date + cfg.gioBatDauSang;
-
-            if (cc.thoiGianVao < gioBatDauChuan)
-            {
-                phutOT += (int)(gioBatDauChuan - cc.thoiGianVao).TotalMinutes;
-            }
-
-            // === VỀ MUỘN ===
             var gioKetThucChuan =
                 cc.thoiGianVao.Date + cfg.gioKetThucChieu;
 
-            if (cc.thoiGianRa.Value > gioKetThucChuan)
-            {
-                phutOT += (int)(cc.thoiGianRa.Value - gioKetThucChuan).TotalMinutes;
-            }
+            if (cc.thoiGianRa.Value <= gioKetThucChuan)
+                return 0;
+
+            int phutOT =
+                (int)(cc.thoiGianRa.Value - gioKetThucChuan)
+                .TotalMinutes;
 
             var gioOT = LamTronGioOT(
                 phutOT,
                 cfg.soPhutLamTronTangCa);
 
-            if (gioOT <= 0)
-                return 0;
-
-            var heSo = laNgayDacBiet
-                ? cfg.heSoTangCaNgayLe
-                : cfg.heSoTangCaNgayThuong;
-
-            return gioOT * luongMoiGio * heSo;
+            return gioOT * cfg.donGiaTangCaMoiGio;
         }
     }
 }

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using ClinicManager.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +15,17 @@ namespace ClinicManager.Controllers
 
         public IActionResult Index()
         {
+            // Admin → Dashboard
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            // Bacsy → Dashboard
+            if (User.IsInRole("BacSi") || User.IsInRole("KyThuatVien"))
+            {
+                return RedirectToAction("BacSi", "Dashboard");
+            }
+
             return View();
         }
 

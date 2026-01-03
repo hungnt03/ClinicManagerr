@@ -1,0 +1,173 @@
+﻿@model ClinicManager.ViewModels.Dashboard.AdminDashboardVm
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h3>Dashboard quản trị</h3>
+
+<!-- ================= QUICK ACTION (ADMIN) ================= -->
+<div class="row g-3 mb-4">
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/NhanVien" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">👥</div>
+                    <h6 class="mt-2">Nhân viên</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/BenhNhan" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">🧑‍⚕️</div>
+                    <h6 class="mt-2">Bệnh nhân</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/DotDieuTri" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">🩺</div>
+                    <h6 class="mt-2">Khám & điều trị</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/VatTu" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">💊</div>
+                    <h6 class="mt-2">Vật tư / thuốc</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/ThanhToan" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">💰</div>
+                    <h6 class="mt-2">Thu tiền</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/BangLuong" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">📊</div>
+                    <h6 class="mt-2">Bảng lương</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/LuongConfig" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">⚙️</div>
+                    <h6 class="mt-2">Cấu hình lương</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/NgayLe" class="text-decoration-none">
+            <div class="card shadow-sm h-100 dashboard-card">
+                <div class="card-body text-center">
+                    <div class="fs-2">📅</div>
+                    <h6 class="mt-2">Ngày lễ</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+
+<!-- ===== KPI ===== -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <h6>Doanh thu tháng</h6>
+                <h4>@Model.DoanhThuThang.ToString("N0")</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-bg-danger">
+            <div class="card-body">
+                <h6>Chi phí lương</h6>
+                <h4>@Model.ChiPhiLuongThang.ToString("N0")</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-bg-info">
+            <div class="card-body">
+                <h6>Bệnh nhân</h6>
+                <h4>@Model.SoBenhNhanThang</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-bg-warning">
+            <div class="card-body">
+                <h6>Buổi điều trị</h6>
+                <h4>@Model.SoBuoiDieuTriThang</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CHART ===== -->
+<canvas id="chartTongHop" height="120"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('chartTongHop');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Labels)),
+                datasets: [
+                    {
+                        label: 'Doanh thu',
+                        data: @Html.Raw(Json.Serialize(Model.DoanhThuSeries)),
+                        borderColor: 'green'
+                    },
+                    {
+                        label: 'Chi phí lương',
+                        data: @Html.Raw(Json.Serialize(Model.ChiPhiLuongSeries)),
+                        borderColor: 'red'
+                    },
+                    {
+                        label: 'Bệnh nhân',
+                        data: @Html.Raw(Json.Serialize(Model.BenhNhanSeries)),
+                        borderColor: 'blue'
+                    }
+                ]
+            }
+        });
+    </script>
+}

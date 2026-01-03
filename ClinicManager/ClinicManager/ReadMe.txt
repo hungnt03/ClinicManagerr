@@ -328,3 +328,8 @@ Sau đó mới tới:
 
 1️⃣ Màn hình bảng lương
 2️⃣ Chốt lương – khóa dữ liệu
+
+TODO
+1️⃣ Xuất bảng lương Excel/PDF
+2️⃣ Audit log khi chốt/mở chốt
+3️⃣ Dashboard lương – chi phí – doanh thu

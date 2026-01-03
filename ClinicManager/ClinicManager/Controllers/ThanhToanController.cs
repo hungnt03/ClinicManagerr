@@ -38,9 +38,14 @@ namespace ClinicManager.Controllers
             {
                 DotDieuTriId = dot.dotDieuTriId,
                 TongTien = dot.tongTien,
+                PhanTramGiamGia = dot.phanTramGiamGia,
                 DaThanhToan = dot.daThanhToan,
-                SoTienThu = dot.tongTien - dot.daThanhToan
+                SoTienThu =
+                    (dot.tongTien
+                        - (dot.tongTien * dot.phanTramGiamGia / 100))
+                        - dot.daThanhToan
             };
+
 
             return PartialView("_ThuTienGoiModal", vm);
         }
@@ -52,6 +57,14 @@ namespace ClinicManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ThuTienGoi(ThuTienGoiVm vm)
         {
+            var dot = await _dotDieuTriService.GetByIdAsync(vm.DotDieuTriId);
+            if (dot == null) return BadRequest("Dot dieu tri khong ton tai");
+            var tongSauGiam =
+                dot.tongTien - (dot.tongTien * dot.phanTramGiamGia / 100);
+            var conLai = tongSauGiam - dot.daThanhToan;
+            if (vm.SoTienThu > conLai)
+                return BadRequest("So tien thu vuot qua so tien con lai");
+
             if (!ModelState.IsValid)
                 return BadRequest("Du lieu khong hop le");
 

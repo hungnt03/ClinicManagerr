@@ -40,11 +40,9 @@ namespace ClinicManager.Data
                     tienTapMoiBuoi = 20000,
                     phanTramGioiThieu = 5,
 
-                    heSoTangCaNgayThuong = 1.25m,
-                    heSoTangCaNgayLe = 1.5m,
-
                     soPhutLamTronTangCa = 30,
                     soPhutToiThieuTinhTangCa = 60,
+                    donGiaTangCaMoiGio = 50000,
 
                     apDungTuNgay = new DateTime(2025, 1, 1),
                     taoLuc = DateTime.Now

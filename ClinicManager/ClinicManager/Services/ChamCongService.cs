@@ -1,6 +1,7 @@
 ﻿using ClinicManager.Data;
 using ClinicManager.Models;
 using ClinicManager.Models.Entities;
+using ClinicManager.Services.Luong;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,11 @@ namespace ClinicManager.Services
         // 1. CHECK-IN
         public async Task CheckInAsync(int nhanVienId, bool anTrua)
         {
+            if (await LuongLockHelper.DaChotLuongAsync(_context, DateTime.Now))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc sua cham cong");
+            }
+
             var today = DateTime.Today;
 
             var tonTai = await _context.ChamCongs.AnyAsync(x =>
@@ -59,6 +65,11 @@ namespace ClinicManager.Services
         // 2. CHECK-OUT
         public async Task CheckOutAsync(int nhanVienId)
         {
+            if (await LuongLockHelper.DaChotLuongAsync(_context, DateTime.Now))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc sua cham cong");
+            }
+
             var today = DateTime.Today;
 
             var chamCong = await _context.ChamCongs.FirstOrDefaultAsync(x =>
@@ -80,6 +91,11 @@ namespace ClinicManager.Services
         // 3. ĐĂNG KÝ NGHỈ PHÉP
         public async Task DangKyNghiPhepAsync(int nhanVienId, DateTime ngay, bool coLuong)
         {
+            if (await LuongLockHelper.DaChotLuongAsync(_context, ngay))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc sua cham cong");
+            }
+
             ngay = ngay.Date;
 
             var tonTai = await _context.ChamCongs.AnyAsync(x =>

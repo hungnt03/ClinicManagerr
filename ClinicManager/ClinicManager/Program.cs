@@ -1,6 +1,7 @@
 using ClinicManager.Data;
 using ClinicManager.Models;
 using ClinicManager.Services;
+using ClinicManager.Services.Luong;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,22 +47,24 @@ builder.Services.AddRazorPages();
 #endregion
 
 #region SERVICES (BUSINESS)
+builder.Services.AddScoped<IBenhNhanService, BenhNhanService>();
 builder.Services.AddScoped<IBuoiDieuTriService, BuoiDieuTriService>();
 builder.Services.AddScoped<IChamCongAdminService, ChamCongAdminService>();
 builder.Services.AddScoped<IChamCongService, ChamCongService>();
 builder.Services.AddScoped<IDotDieuTriService, DotDieuTriService>();
+builder.Services.AddScoped<IGoiDieuTriService, GoiDieuTriService>();
 builder.Services.AddScoped<IKhamBenhService, KhamBenhService>();
+builder.Services.AddScoped<INhanVienService, NhanVienService>();
 builder.Services.AddScoped<INhanVienTaiKhoanService, NhanVienTaiKhoanService>();
 builder.Services.AddScoped<INhanVienUpdateService, NhanVienUpdateService>();
+builder.Services.AddScoped<INhapKhoService, NhapKhoService>();
 builder.Services.AddScoped<IResetMatKhauService, ResetMatKhauService>();
 builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
-builder.Services.AddScoped<IBenhNhanService, BenhNhanService>();
-builder.Services.AddScoped<INhanVienService, NhanVienService>();
-builder.Services.AddScoped<IGoiDieuTriService, GoiDieuTriService>();
-builder.Services.AddScoped<IVatTuService, VatTuService>();
-builder.Services.AddScoped<INhapKhoService, NhapKhoService>();
-builder.Services.AddScoped<ILuongConfigService, LuongConfigService>();
 builder.Services.AddScoped<IThanhToanService, ThanhToanService>();
+builder.Services.AddScoped<IVatTuService, VatTuService>();
+builder.Services.AddScoped<ILuongConfigService, LuongConfigService>();
+builder.Services.AddScoped<ILuongService, LuongService>();
+
 #endregion
 
 var app = builder.Build();

@@ -27,11 +27,12 @@
         public decimal phanTramGioiThieu { get; set; }    // 5 (%)
 
         // ===== TĂNG CA =====
-        public decimal heSoTangCaNgayThuong { get; set; } // 1.25
-        public decimal heSoTangCaNgayLe { get; set; }     // 1.50
+        //public decimal heSoTangCaNgayThuong { get; set; } // 1.25
+        //public decimal heSoTangCaNgayLe { get; set; }     // 1.50
 
         public int soPhutLamTronTangCa { get; set; }      // 30 phút
         public int soPhutToiThieuTinhTangCa { get; set; } // 60 phút
+        public decimal donGiaTangCaMoiGio { get; set; }     // 50000
 
         // ===== HIỆU LỰC =====
         public DateTime apDungTuNgay { get; set; }

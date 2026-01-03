@@ -1,0 +1,15 @@
+﻿.card:hover {
+    transform: translateY(-3px);
+    transition: 0.2s;
+}
+
+.dashboard-card {
+    background-color: #ffffff;
+    transition: background-color 0.25s ease-in-out, transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+}
+
+.dashboard-card:hover {
+    background-color: #f1f1f1; /* xám rất nhạt */
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}

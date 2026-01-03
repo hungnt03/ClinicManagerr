@@ -1,11 +1,29 @@
 ﻿@model List<ClinicManager.ViewModels.Luong.BangLuongThangListItemVm>
 
-<h3>Bang luong</h3>
+@{
+    ViewData["Title"] = "Bang luong theo thang";
+}
 
-<table class="table table-bordered table-striped">
-    <thead>
+<h3>Bang luong theo thang</h3>
+
+<form asp-action="TinhLuong" method="post" class="row g-2 mb-3">
+    @Html.AntiForgeryToken()
+    <div class="col-auto">
+        <input type="number" name="thang" class="form-control" placeholder="Thang" min="1" max="12" required />
+    </div>
+    <div class="col-auto">
+        <input type="number" name="nam" class="form-control" placeholder="Nam" required />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary">Tinh luong</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
         <tr>
             <th>Thang</th>
+            <th>Nam</th>
             <th>So nhan vien</th>
             <th>Tong luong</th>
             <th>Trang thai</th>
@@ -16,7 +34,8 @@
         @foreach (var x in Model)
         {
             <tr>
-                <td>@x.Thang/@x.Nam</td>
+                <td>@x.Thang</td>
+                <td>@x.Nam</td>
                 <td>@x.SoNhanVien</td>
                 <td>@x.TongLuong.ToString("N0")</td>
                 <td>
@@ -26,14 +45,14 @@
                     }
                     else
                     {
-                        <span class="badge bg-warning text-dark">Tam tinh</span>
+                        <span class="badge bg-warning text-dark">Chua chot</span>
                     }
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-primary"
+                    <a class="btn btn-sm btn-outline-primary"
                        asp-action="ChiTiet"
                        asp-route-id="@x.BangLuongThangId">
-                        Xem chi tiet
+                        Chi tiet
                     </a>
                 </td>
             </tr>

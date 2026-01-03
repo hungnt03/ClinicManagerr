@@ -69,7 +69,42 @@ namespace ClinicManager.Data
                 .HasOne(b => b.DotDieuTri)
                 .WithMany(d => d.BuoiDieuTris)
                 .HasForeignKey(b => b.dotDieuTriId);
+            // ===== TIỀN – CHUẨN HÓA DECIMAL =====
+            builder.Entity<BangLuongThang>()
+                .Property(x => x.tongLuong)
+                .HasPrecision(18, 0);
 
+            builder.Entity<BangLuongThangChiTiet>()
+                .Property(x => x.soTien)
+                .HasPrecision(18, 0);
+
+            builder.Entity<CauHinhLuong>()
+                .Property(x => x.donGiaTangCaMoiGio)
+                .HasPrecision(18, 0);
+
+            builder.Entity<NhanVien>()
+                .Property(x => x.luongCoBan)
+                .HasPrecision(18, 0);
+
+            builder.Entity<DotDieuTri>()
+                .Property(x => x.tongTien)
+                .HasPrecision(18, 0);
+
+            builder.Entity<DotDieuTri>()
+                .Property(x => x.daThanhToan)
+                .HasPrecision(18, 0);
+
+            builder.Entity<BuoiDieuTri>()
+                .Property(x => x.chiPhiThuocVatTu)
+                .HasPrecision(18, 0);
+
+            builder.Entity<ThuocVatTuBuoiDieuTri>()
+                .Property(x => x.donGia)
+                .HasPrecision(18, 0);
+
+            builder.Entity<VatTu>()
+                .Property(x => x.donGia)
+                .HasPrecision(18, 0);
         }
     }
 }

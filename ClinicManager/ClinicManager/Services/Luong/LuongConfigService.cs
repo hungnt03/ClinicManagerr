@@ -3,7 +3,7 @@ using ClinicManager.Models.Entities;
 using ClinicManager.ViewModels.Luong;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicManager.Services
+namespace ClinicManager.Services.Luong
 {
     public interface ILuongConfigService
     {
@@ -41,8 +41,7 @@ namespace ClinicManager.Services
                     TienTapMoiBuoi = x.tienTapMoiBuoi,
                     PhanTramGioiThieu = x.phanTramGioiThieu,
 
-                    HeSoTangCaNgayThuong = x.heSoTangCaNgayThuong,
-                    HeSoTangCaNgayLe = x.heSoTangCaNgayLe,
+                    DonGiaTangCaMoiGio = x.donGiaTangCaMoiGio,
 
                     SoPhutLamTronTangCa = x.soPhutLamTronTangCa,
                     SoPhutToiThieuTinhTangCa = x.soPhutToiThieuTinhTangCa,
@@ -74,8 +73,7 @@ namespace ClinicManager.Services
                 TienTapMoiBuoi = x.tienTapMoiBuoi,
                 PhanTramGioiThieu = x.phanTramGioiThieu,
 
-                HeSoTangCaNgayThuong = x.heSoTangCaNgayThuong,
-                HeSoTangCaNgayLe = x.heSoTangCaNgayLe,
+                DonGiaTangCaMoiGio = x.donGiaTangCaMoiGio,
 
                 SoPhutLamTronTangCa = x.soPhutLamTronTangCa,
                 SoPhutToiThieuTinhTangCa = x.soPhutToiThieuTinhTangCa,
@@ -102,8 +100,7 @@ namespace ClinicManager.Services
                 tienTapMoiBuoi = vm.TienTapMoiBuoi,
                 phanTramGioiThieu = vm.PhanTramGioiThieu,
 
-                heSoTangCaNgayThuong = vm.HeSoTangCaNgayThuong,
-                heSoTangCaNgayLe = vm.HeSoTangCaNgayLe,
+                donGiaTangCaMoiGio = vm.DonGiaTangCaMoiGio,
 
                 soPhutLamTronTangCa = vm.SoPhutLamTronTangCa,
                 soPhutToiThieuTinhTangCa = vm.SoPhutToiThieuTinhTangCa,

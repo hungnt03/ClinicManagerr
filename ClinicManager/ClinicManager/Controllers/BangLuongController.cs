@@ -1,4 +1,5 @@
 ﻿using ClinicManager.Data;
+using ClinicManager.Services.Luong;
 using ClinicManager.ViewModels.Luong;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace ClinicManager.Controllers
     public class BangLuongController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILuongService _luongService;
 
-        public BangLuongController(ApplicationDbContext context)
+        public BangLuongController(ApplicationDbContext context, ILuongService luongService)
         {
             _context = context;
+            _luongService = luongService;
         }
 
         // ==================================================
@@ -77,6 +80,42 @@ namespace ClinicManager.Controllers
                 .ToList();
 
             return View(vm);
+        }
+
+        // ==================================================
+        // 3. TÍNH LƯƠNG THÁNG
+        // ==================================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TinhLuong(int thang, int nam)
+        {
+            await _luongService.TinhLuongThangAsync(thang, nam);
+            TempData["ToastSuccess"] = "Da tinh luong thang " + thang + "/" + nam;
+            return RedirectToAction(nameof(Index));
+        }
+
+        // ==================================================
+        // 4. CHỐT LƯƠNG
+        // ==================================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChotLuong(int id)
+        {
+            await _luongService.ChotLuongAsync(id);
+            TempData["ToastSuccess"] = "Da chot bang luong";
+            return RedirectToAction(nameof(ChiTiet), new { id });
+        }
+
+        // ==================================================
+        // 5. MỞ CHỐT (ADMIN)
+        // ==================================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MoChotLuong(int id)
+        {
+            await _luongService.MoChotLuongAsync(id);
+            TempData["ToastWarning"] = "Da mo chot bang luong";
+            return RedirectToAction(nameof(ChiTiet), new { id });
         }
     }
 }

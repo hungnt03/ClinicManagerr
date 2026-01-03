@@ -1,5 +1,6 @@
 ﻿using ClinicManager.Data;
 using ClinicManager.Models.Entities;
+using ClinicManager.Services.Luong;
 using ClinicManager.ViewModels.BuoiDieuTri;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +40,11 @@ namespace ClinicManager.Services
             string noiDungDieuTriTay,
             string chiDinhDacBiet)
         {
+            if (await LuongLockHelper.DaChotLuongAsync(_context, ngayDieuTri))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc sua buoi dieu tri");
+            }
+
             var dot = await _context.DotDieuTris
                 .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
 
@@ -206,6 +212,11 @@ namespace ClinicManager.Services
         {
             var buoi = await _context.BuoiDieuTris
                 .FirstOrDefaultAsync(x => x.buoiDieuTriId == vm.BuoiDieuTriId);
+
+            if (await LuongLockHelper.DaChotLuongAsync(_context, buoi.ngayDieuTri))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc sua buoi dieu tri");
+            }
 
             if (buoi == null)
                 throw new Exception("Khong tim thay buoi dieu tri");

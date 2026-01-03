@@ -1,0 +1,124 @@
+﻿@model ClinicManager.ViewModels.Dashboard.DashboardBacSiVm
+
+@{
+    ViewData["Title"] = "Dashboard bác sĩ";
+}
+
+<h3>Dashboard bác sĩ</h3>
+
+<!-- ===== QUICK ACTION ===== -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <a href="/DotDieuTri" class="text-decoration-none text-dark">
+            <div class="card shadow-sm dashboard-card h-100">
+                <div class="card-body text-center">
+                    <div class="fs-2">🩺</div>
+                    <h6 class="mt-2">Khám & điều trị</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/BenhNhan" class="text-decoration-none text-dark">
+            <div class="card shadow-sm dashboard-card h-100">
+                <div class="card-body text-center">
+                    <div class="fs-2">📂</div>
+                    <h6 class="mt-2">Hồ sơ bệnh nhân</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <a href="/ChamCong" class="text-decoration-none text-dark">
+            <div class="card shadow-sm dashboard-card h-100">
+                <div class="card-body text-center">
+                    <div class="fs-2">🕒</div>
+                    <h6 class="mt-2">Chấm công</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <a href="/Dashboard/BacSiCalendar" class="text-decoration-none text-dark">
+            <div class="card shadow-sm dashboard-card h-100">
+                <div class="card-body text-center">
+                    <div class="fs-2">📅</div>
+                    <h6 class="mt-2">Lịch làm việc</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<!-- ===== KPI ===== -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-bg-info">
+            <div class="card-body">
+                <h6>Bệnh nhân hôm nay</h6>
+                <h3>@Model.SoBenhNhanHomNay</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <h6>Buổi điều trị hôm nay</h6>
+                <h3>@Model.SoBuoiDieuTriHomNay</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== DANH SÁCH BUỔI HÔM NAY ===== -->
+<div class="card">
+    <div class="card-header">
+        <strong>Danh sách buổi điều trị hôm nay</strong>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Bệnh nhân</th>
+                    <th>Ngày</th>
+                    <th>Nội dung</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.BuoiHomNay.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">
+                            Hôm nay chưa có buổi điều trị
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var b in Model.BuoiHomNay)
+                    {
+                        <tr>
+                            <td>@b.TenBenhNhan</td>
+                            <td>@b.NgayDieuTri.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @(b.DieuTriTay ? "Điều trị tay" : "")
+                                @(b.Tap ? " + Tập" : "")
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary"
+                                   href="/BuoiDieuTri/Edit?buoiDieuTriId=@b.BuoiDieuTriId">
+                                    Mở buổi
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

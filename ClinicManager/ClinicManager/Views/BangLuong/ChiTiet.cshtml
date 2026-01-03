@@ -1,37 +1,74 @@
 ﻿@model ClinicManager.ViewModels.Luong.BangLuongThangChiTietVm
 
+@{
+    ViewData["Title"] = $"Bang luong {Model.Thang}/{Model.Nam}";
+}
+
 <h3>Bang luong thang @Model.Thang/@Model.Nam</h3>
 
-@foreach (var nv in Model.NhanViens)
+@if (User.IsInRole("Admin"))
 {
-    <div class="card mb-3">
-        <div class="card-header">
-            <strong>@nv.TenNhanVien</strong>
-            <span class="float-end text-danger">
-                @nv.TongLuong.ToString("N0")
-            </span>
-        </div>
+    <form asp-action="@(Model.DaChot ? "MoChotLuong" : "ChotLuong")"
+          method="post"
+          class="mb-3">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.BangLuongThangId" />
 
-        <div class="card-body p-0">
-            <table class="table table-sm mb-0">
-                <thead>
-                    <tr>
-                        <th>Khoan</th>
-                        <th>Dien giai</th>
-                        <th>So tien</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ct in nv.ChiTiets)
-                    {
-                        <tr>
-                            <td>@ct.loai</td>
-                            <td>@ct.dienGiai</td>
-                            <td>@ct.soTien.ToString("N0")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+        @if (!Model.DaChot)
+        {
+            <button class="btn btn-danger"
+                    onclick="return confirm('Chot bang luong? Sau khi chot se khong sua duoc!')">
+                🔒 Chot bang luong
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-warning"
+                    onclick="return confirm('Mo chot bang luong?')">
+                🔓 Mo chot
+            </button>
+        }
+    </form>
 }
+
+<div class="accordion" id="accordionLuong">
+    @for (int i = 0; i < Model.NhanViens.Count; i++)
+    {
+        var nv = Model.NhanViens[i];
+        var collapseId = $"collapse{i}";
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button @(i > 0 ? "collapsed" : "")"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#@collapseId">
+                    @nv.TenNhanVien — <strong>@nv.TongLuong.ToString("N0")</strong>
+                </button>
+            </h2>
+
+            <div id="@collapseId"
+                 class="accordion-collapse collapse @(i == 0 ? "show" : "")">
+                <div class="accordion-body">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Loai</th>
+                                <th>Dien giai</th>
+                                <th>So tien</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ct in nv.ChiTiets)
+                            {
+                                <tr>
+                                    <td>@ct.loai</td>
+                                    <td>@ct.dienGiai</td>
+                                    <td>@ct.soTien.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

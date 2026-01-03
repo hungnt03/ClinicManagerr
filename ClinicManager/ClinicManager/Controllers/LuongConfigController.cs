@@ -1,4 +1,4 @@
-﻿using ClinicManager.Services;
+﻿using ClinicManager.Services.Luong;
 using ClinicManager.ViewModels.Luong;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

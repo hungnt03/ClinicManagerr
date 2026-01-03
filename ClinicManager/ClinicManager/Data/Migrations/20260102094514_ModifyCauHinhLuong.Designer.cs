@@ -4,6 +4,7 @@ using ClinicManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260102094514_ModifyCauHinhLuong")]
+    partial class ModifyCauHinhLuong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,8 +114,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("tongLuong")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("bangLuongThangId");
 
@@ -141,8 +143,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("soTien")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("bangLuongThangChiTietId");
 
@@ -244,8 +245,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("chiPhiThuocVatTu")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("dotDieuTriId")
                         .HasColumnType("int");
@@ -381,8 +381,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("donGiaTangCaMoiGio")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<TimeSpan>("gioBatDauChieu")
                         .HasColumnType("time");
@@ -572,8 +571,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("daThanhToan")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("goiDieuTriId")
                         .HasColumnType("int");
@@ -601,8 +599,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("tongTien")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("trangThai")
                         .HasColumnType("int");
@@ -749,8 +746,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("luongCoBan")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("vaiTro")
                         .IsRequired()
@@ -874,8 +870,7 @@ namespace ClinicManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("donGia")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("soLuong")
                         .HasColumnType("int");
@@ -901,8 +896,7 @@ namespace ClinicManager.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("vatTuId"));
 
                     b.Property<decimal>("donGia")
-                        .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("donViTinh")
                         .IsRequired()

@@ -14,29 +14,61 @@
                 </div>
 
                 <div class="modal-body">
+
+                    <!-- ===== TỔNG TIỀN GỐC ===== -->
                     <div class="mb-2">
-                        <label>Tong tien</label>
-                        <input class="form-control" value="@Model.TongTien.ToString("N0")" disabled />
+                        <label>Tong tien goi</label>
+                        <input class="form-control"
+                               value="@Model.TongTien.ToString("N0")"
+                               disabled />
                     </div>
 
+                    <!-- ===== GIẢM GIÁ ===== -->
+                    @if (Model.PhanTramGiamGia > 0)
+                    {
+                        <div class="mb-2">
+                            <label>Giam gia (%)</label>
+                            <input class="form-control"
+                                   value="@Model.PhanTramGiamGia"
+                                   disabled />
+                        </div>
+
+                        <div class="mb-2">
+                            <label>Tien giam</label>
+                            <input class="form-control text-danger"
+                                   value="-@Model.TienGiam.ToString("N0")"
+                                   disabled />
+                        </div>
+                    }
+
+                    <!-- ===== ĐÃ THANH TOÁN ===== -->
                     <div class="mb-2">
                         <label>Da thanh toan</label>
-                        <input class="form-control" value="@Model.DaThanhToan.ToString("N0")" disabled />
+                        <input class="form-control"
+                               value="@Model.DaThanhToan.ToString("N0")"
+                               disabled />
                     </div>
 
+                    <!-- ===== CÒN LẠI ===== -->
                     <div class="mb-2">
-                        <label>Con lai</label>
-                        <input class="form-control text-danger"
-                               value="@Model.ConLai.ToString("N0")" disabled />
+                        <label>Con lai can thu</label>
+                        <input class="form-control fw-bold text-danger"
+                               value="@Model.ConLai.ToString("N0")"
+                               disabled />
                     </div>
 
+                    <hr />
+
+                    <!-- ===== NHẬP SỐ TIỀN THU ===== -->
                     <div class="mb-2">
                         <label>So tien thu</label>
-                        <input asp-for="SoTienThu" class="form-control" />
+                        <input asp-for="SoTienThu"
+                               class="form-control"
+                               value="@Model.ConLai" />
                     </div>
 
                     <div class="mb-2">
-                        <label>Hinh thuc</label>
+                        <label>Hinh thuc thanh toan</label>
                         <select asp-for="HinhThuc"
                                 asp-items="Html.GetEnumSelectList<HinhThucThanhToan>()"
                                 class="form-control">
@@ -45,15 +77,20 @@
 
                     <div class="mb-2">
                         <label>Ghi chu</label>
-                        <textarea asp-for="GhiChu" class="form-control"></textarea>
+                        <textarea asp-for="GhiChu"
+                                  class="form-control"
+                                  rows="2"></textarea>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit"
+                            class="btn btn-primary">
                         Thu tien
                     </button>
-                    <button type="button" class="btn btn-secondary"
+
+                    <button type="button"
+                            class="btn btn-secondary"
                             data-bs-dismiss="modal">
                         Dong
                     </button>

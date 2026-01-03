@@ -1,5 +1,6 @@
 ﻿using ClinicManager.Data;
 using ClinicManager.Models.Entities;
+using ClinicManager.Services.Luong;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManager.Services
@@ -42,6 +43,12 @@ namespace ClinicManager.Services
             string? ghiChu,
             DateTime? ngayThu = null)
         {
+            if (await LuongLockHelper.DaChotLuongAsync(_context, ngayThu ?? DateTime.Now))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc thu tien");
+            }
+
+
             if (soTien <= 0)
                 throw new Exception("So tien phai > 0");
 
@@ -95,6 +102,12 @@ namespace ClinicManager.Services
             string? ghiChu,
             DateTime? ngayThu = null)
         {
+            if (await LuongLockHelper.DaChotLuongAsync(_context, ngayThu ?? DateTime.Now))
+            {
+                throw new Exception("Thang nay da chot luong, khong duoc thu tien");
+            }
+
+
             if (soTien <= 0)
                 throw new Exception("So tien phai > 0");
 
