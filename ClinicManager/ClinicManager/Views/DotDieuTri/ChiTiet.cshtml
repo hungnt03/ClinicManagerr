@@ -1,7 +1,7 @@
 ﻿@model ClinicManager.ViewModels.DotDieuTri.DotDieuTriChiTietVm
 
 @{
-    ViewData["Title"] = "Chi tiet dot dieu tri";
+    ViewData["Title"] = "Chi tiết đợt điều trị";
 
     int soBuoiConLai = Model.TongSoBuoi - Model.SoBuoiDaDung;
 
@@ -12,22 +12,34 @@
         "";
 }
 
-<h3>Chi tiet dot dieu tri</h3>
+<h3>Chi tiết đợt điều trị</h3>
 
 <!-- ================== THONG TIN DOT ================== -->
 <div class="card mb-3 @cssCanhBao">
     <div class="card-body">
 
-        <p><b>Chan doan:</b> @Model.ChanDoan</p>
-        <p><b>Phac do dieu tri:</b> @Model.PhacDoDieuTri</p>
+        <div class="mb-2">
+            <b>Tiền sử bệnh:</b>
+            <div class="preserve-format text-muted ms-2">@Model.TienSuBenh</div>
+        </div>
 
-        <p>
-            <b>So buoi:</b>
+        <div class="mb-2">
+            <b>Chẩn đoán:</b>
+            <div class="preserve-format text-muted ms-2">@Model.ChanDoan</div>
+        </div>
+
+        <div class="mb-2">
+            <b>Phác đồ điều trị:</b>
+            <div class="preserve-format text-muted ms-2">@Model.PhacDoDieuTri</div>
+        </div>
+
+        <p class="mt-3">
+            <b>Số buổi:</b>
             @Model.SoBuoiDaDung / @Model.TongSoBuoi
         </p>
 
         <p>
-            <b>Trang thai:</b>
+            <b>Trạng thái:</b>
             <span class="badge bg-info">@Model.TrangThai</span>
         </p>
 
@@ -39,20 +51,26 @@
                asp-action="Create"
                asp-route-dotDieuTriId="@Model.DotDieuTriId"
                asp-route-benhNhanId="@Model.BenhNhanId">
-                + Tao buoi dieu tri
+                + Tạo buổi điều trị
             </a>
         }
         else
         {
             <button class="btn btn-secondary" disabled>
-                Da het so buoi dieu tri
+                Đã hết số buổi điều trị
             </button>
         }
 
         <button class="btn btn-success"
                 id="btnThuTien"
                 data-dotid="@Model.DotDieuTriId">
-            Thu tien goi
+            Thu tiền gói
+        </button>
+
+        <button class="btn btn-success"
+                id="btnPhieuKham"
+                data-dotid="@Model.DotDieuTriId">
+            Tạo phiếu khám
         </button>
 
         <div id="modalContainer"></div>
@@ -61,11 +79,11 @@
 
 <!-- ================== DANH SACH BUOI ================== -->
 
-<h4>Cac buoi dieu tri</h4>
+<h4>Danh sách cách buổi điều trị</h4>
 
 @if (Model.BuoiDieuTris == null || !Model.BuoiDieuTris.Any())
 {
-    <p class="text-muted">Chua co buoi dieu tri nao</p>
+    <p class="text-muted">Chưa có buổi điều trị nào</p>
 }
 else
 {
@@ -84,7 +102,7 @@ else
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#@collapseId">
-                        Buoi dieu tri - @buoi.NgayDieuTri.ToString("dd/MM/yyyy")
+                        Buổi điều trị - @buoi.NgayDieuTri.ToString("dd/MM/yyyy")
                     </button>
                 </h2>
 
@@ -95,14 +113,14 @@ else
                     <div class="accordion-body">
 
                         <p>
-                            <b>Bac si dieu tri tay:</b>
+                            <b>Bác sỹ điều trị tay:</b>
                             @(string.IsNullOrEmpty(buoi.TenBacSiDieuTriTay)
                                                 ? "—"
                                                 : buoi.TenBacSiDieuTriTay)
                         </p>
 
                         <p>
-                            <b>Nguoi tap:</b>
+                            <b>Bác sỹ tập:</b>
                             @(string.IsNullOrEmpty(buoi.TenNguoiTap)
                                                 ? "—"
                                                 : buoi.TenNguoiTap)
@@ -111,7 +129,7 @@ else
                         @if (!string.IsNullOrEmpty(buoi.NoiDungTap))
                         {
                             <p>
-                                <b>Noi dung tap:</b>
+                                <b>Nội dung tập:</b>
                                 @buoi.NoiDungTap
                             </p>
                         }
@@ -119,7 +137,7 @@ else
                         @if (!string.IsNullOrEmpty(buoi.NoiDungDieuTriTay))
                         {
                             <p>
-                                <b>Noi dung dieu tri tay:</b>
+                                <b>Nội dung điều trị tay:</b>
                                 @buoi.NoiDungDieuTriTay
                             </p>
                         }
@@ -127,13 +145,13 @@ else
                         @if (!string.IsNullOrEmpty(buoi.ChiDinhDacBiet))
                         {
                             <p class="text-danger">
-                                <b>Chi dinh dac biet:</b>
+                                <b>Chỉ định đặc biệt:</b>
                                 @buoi.ChiDinhDacBiet
                             </p>
                         }
 
                         <p>
-                            <b>Chi phi thuoc / vat tu:</b>
+                            <b>Chi phí thuốc / vật tư:</b>
                             @buoi.ChiPhiThuocVatTu.ToString("N0")
                         </p>
 
@@ -143,7 +161,7 @@ else
                                asp-controller="BuoiDieuTri"
                                asp-action="Edit"
                                asp-route-buoiDieuTriId="@buoi.BuoiDieuTriId">
-                                Quan ly buoi
+								Quản lý buổi điều trị
                             </a>
                         }
                     </div>
@@ -151,5 +169,50 @@ else
 
             </div>
         }
+    </div>
+
+    <div class="modal fade" id="modalPhieuKham" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">PHIẾU LƯỢNG GIÁ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formPhieuKham">
+                        <input type="hidden" id="modalDotDieuTriId" />
+                    
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label>Tên BN:</label>
+                                <input type="text" id="modalTenBN" class="form-control" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Số điện thoại:</label>
+                                <input type="text" id="modalSDT" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Tiền sử và hiện tại:</label>
+                            <textarea id="modalTienSu" class="form-control" rows="4" placeholder="Nhập tiền sử bệnh..."></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Tiên lượng:</label>
+                            <textarea id="modalTienLuong" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Phương án điều trị:</label>
+                            <textarea id="modalPhuongAn" class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="LuuPhieuKham()">Lưu và In</button>
+                </div>
+            </div>
+        </div>
     </div>
 }

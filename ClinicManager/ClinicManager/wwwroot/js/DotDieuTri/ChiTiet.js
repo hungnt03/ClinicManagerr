@@ -9,6 +9,15 @@ $(function () {
         });
     });
 
+    $('#btnPhieuKham').click(function () {
+        let dotId = $(this).data('dotid');
+
+        $.get('/ThanhToan/PhieuKham', { dotDieuTriId: dotId }, function (html) {
+            $('#modalContainer').html(html);
+            $('#modalPhieuKham').modal('show');
+        });
+    });
+
     $(document).on('submit', '#formThuTien', function (e) {
         e.preventDefault();
 
@@ -26,5 +35,11 @@ $(function () {
                 showToast('error', xhr.responseText || 'Thu tien that bai');
             }
         });
+    });
+
+    $('#btnPhieuKham').click(function () {
+        let dotId = $('#btnPhieuKham').data('dotid');
+        window.open('/ThanhToan/PhieuKham?id=' + dotId, '_blank');
+        setTimeout(() => location.reload(), 1000);
     });
 });

@@ -1,0 +1,109 @@
+﻿@model ClinicManager.ViewModels.ThanhToan.PhieuKhamVM
+
+@{
+    Layout = null; // Không dùng layout chung để tránh dính thanh menu khi in
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Phiếu Lượng Giá - @Model.TenBenhNhan</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body { font-family: "Times New Roman", Times, serif; font-size: 14pt; }
+        .phieu-container { width: 210mm; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background: #fff; }
+        
+        .header-table { width: 100%; border: none; margin-bottom: 20px; }
+        .center-text { text-align: center; }
+        .title { font-size: 18pt; font-weight: bold; text-transform: uppercase; margin-top: 10px; }
+        
+        /* Table Border Style giống Excel */
+        .content-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .content-table th, .content-table td { 
+            border: 1px solid black; 
+            padding: 8px 12px; 
+            vertical-align: top; 
+        }
+        .label-cell { font-weight: bold; width: 25%; background-color: #f2f2f2; }
+        .data-cell { width: 75%; white-space: pre-line; } /* Giữ format xuống dòng */
+
+        .signature-section { margin-top: 40px; display: flex; justify-content: flex-end; }
+        .signature-box { text-align: center; width: 250px; }
+
+        @@media print {
+            .no-print { display: none; }
+            .phieu-container { border: none; padding: 0; width: 100%; }
+            body { margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print text-center my-3">
+        <button class="btn btn-primary" onclick="window.print()">In Phiếu Khám</button>
+        <button class="btn btn-secondary" onclick="window.history.back()">Quay lại</button>
+    </div>
+
+    <div class="phieu-container">
+        <table class="header-table">
+            <tr>
+                <td width="50%" style="font-size: 11pt; font-weight: bold;">
+                    TRUNG TÂM VẬN ĐỘNG TRỊ LIỆU <br />
+                    VÀ PHỤC HỒI CHẤN THƯƠNG THỂ THAO
+                </td>
+                <td width="50%" class="text-end">
+                    <i>Ngày lập: @DateTime.Now.ToString("dd/MM/yyyy")</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="center-text">
+                    <div class="title">PHIẾU LƯỢNG GIÁ</div>
+                </td>
+            </tr>
+        </table>
+
+        <table class="content-table">
+            <tr>
+                <td class="label-cell">Tên Bệnh Nhân</td>
+                <td><b>@Model.TenBenhNhan</b></td>
+            </tr>
+            <tr>
+                <td class="label-cell">Số Điện Thoại</td>
+                <td>@Model.SoDienThoai</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Địa chỉ</td>
+                <td>@Model.DiaChi</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Gói Đăng Ký</td>
+                <td>@Model.TenGoiDangKy</td>
+            </tr>
+        </table>
+
+        <table class="content-table" style="margin-top: -1px;">
+            <tr>
+                <td class="label-cell" style="background-color: #e9ecef;">Tiền sử và hiện tại</td>
+                <td class="data-cell" style="min-height: 150px;">@Model.TienSuBenh</td>
+            </tr>
+            <tr>
+                <td class="label-cell" style="background-color: #e9ecef;">Tiên lượng</td>
+                <td class="data-cell">@Model.TienLuong</td>
+            </tr>
+            <tr>
+                <td class="label-cell" style="background-color: #e9ecef;">Phương án</td>
+                <td class="data-cell">@Model.PhuongAn</td>
+            </tr>
+        </table>
+
+        <div class="signature-section">
+            <div class="signature-box">
+                <i>Ngày .... tháng .... năm ....</i> <br />
+                <strong>Bác sĩ chuyên môn</strong> <br />
+                <br /><br /><br />
+                <span>(Ký và ghi rõ họ tên)</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

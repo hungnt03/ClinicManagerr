@@ -11,6 +11,7 @@ namespace ClinicManager.Services
             int benhNhanId,
             int bacSiKhamId,
             DateTime ngayKham,
+            string tienSuBenh,
             string chanDoan,
             string phacDoDieuTri,
             int goiDieuTriId,
@@ -47,6 +48,7 @@ namespace ClinicManager.Services
             int benhNhanId,
             int bacSiKhamId,
             DateTime ngayKham,
+            string tienSuBenh,
             string chanDoan,
             string phacDoDieuTri,
             int goiDieuTriId,
@@ -71,6 +73,7 @@ namespace ClinicManager.Services
                 benhNhanId = benhNhanId,
                 bacSiKhamId = bacSiKhamId,
                 ngayKham = ngayKham,
+                tienSuBenh = tienSuBenh,
                 chanDoan = chanDoan,
                 phacDoDieuTri = phacDoDieuTri,
 

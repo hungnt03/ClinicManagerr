@@ -16,6 +16,7 @@
 
         // ===== KHÁM =====
         public DateTime ngayKham { get; set; }
+        public string tienSuBenh { get; set; }
         public string chanDoan { get; set; }
         public string phacDoDieuTri { get; set; }
 

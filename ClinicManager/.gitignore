@@ -1,0 +1,13 @@
+# Các file tạm của Build
+[Bb]in/
+[Oo]bj/
+
+# Cấu hình của Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Cấu hình appsettings cá nhân (nếu cần bảo mật)
+# appsettings.Development.json

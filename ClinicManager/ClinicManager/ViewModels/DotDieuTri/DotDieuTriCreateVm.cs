@@ -15,7 +15,8 @@ namespace ClinicManager.ViewModels.DotDieuTri
         [Required]
         public DateTime NgayKham { get; set; }
 
-        [Required]
+        public string TienSuBenh { get; set; }
+
         public string ChanDoan { get; set; }
 
         public string PhacDoDieuTri { get; set; }

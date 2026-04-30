@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.preserve-format {
+    white-space: pre-line; /* Giữ dấu xuống dòng nhưng vẫn tự động ngắt dòng nếu quá dài */
+    word-wrap: break-word;
+}

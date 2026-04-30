@@ -58,15 +58,15 @@ namespace ClinicManager.Controllers
         public async Task<IActionResult> ThuTienGoi(ThuTienGoiVm vm)
         {
             var dot = await _dotDieuTriService.GetByIdAsync(vm.DotDieuTriId);
-            if (dot == null) return BadRequest("Dot dieu tri khong ton tai");
+            if (dot == null) return BadRequest("Đợt điều trị không tồn tại");
             var tongSauGiam =
                 dot.tongTien - (dot.tongTien * dot.phanTramGiamGia / 100);
             var conLai = tongSauGiam - dot.daThanhToan;
             if (vm.SoTienThu > conLai)
-                return BadRequest("So tien thu vuot qua so tien con lai");
+                return BadRequest("Số tiền thu vượt quá số tiền còn lại");
 
             if (!ModelState.IsValid)
-                return BadRequest("Du lieu khong hop le");
+                return BadRequest("Dữ liệu không hợp lệ");
 
             var thanhToanId = await _thanhToanService.ThuTienGoiAsync(
                 vm.DotDieuTriId,
@@ -114,7 +114,7 @@ namespace ClinicManager.Controllers
         public async Task<IActionResult> ThuTienThuoc(ThuTienThuocVm vm)
         {
             if (!ModelState.IsValid)
-                return BadRequest("Du lieu khong hop le");
+                return BadRequest("Dữ liệu không hợp lệ");
 
             var thanhToanId = await _thanhToanService.ThuTienThuocVatTuAsync(
                 vm.BuoiDieuTriId,
@@ -143,7 +143,7 @@ namespace ClinicManager.Controllers
                     .FirstAsync(x => x.dotDieuTriId == tt.dotDieuTriId);
 
                 tenBenhNhan = dot.BenhNhan.hoTen;
-                noiDung = $"Thu tien goi dieu tri (Dot #{dot.dotDieuTriId})";
+                noiDung = $"Thu tiền điều trị (Đợt #{dot.dotDieuTriId})";
             }
             else
             {
@@ -152,7 +152,7 @@ namespace ClinicManager.Controllers
                     .FirstAsync(x => x.buoiDieuTriId == tt.buoiDieuTriId);
 
                 tenBenhNhan = buoi.BenhNhan.hoTen;
-                noiDung = $"Thu tien thuoc/vat tu (Buoi #{buoi.buoiDieuTriId})";
+                noiDung = $"Thu tiền thuốc / vật tư (Buổi #{buoi.buoiDieuTriId})";
             }
 
             var vm = new PhieuThuVm
@@ -165,6 +165,34 @@ namespace ClinicManager.Controllers
                 SoTien = tt.soTien,
                 HinhThuc = tt.hinhThuc,
                 GhiChu = tt.ghiChu
+            };
+
+            return View(vm);
+        }
+
+        // =============================
+        // GET: MODAL PHIẾU KHÁM
+        // =============================
+        [HttpGet]
+        public async Task<IActionResult> PhieuKham(int id)
+        {
+            var dot = await _dotDieuTriService.GetByIdAsync(id);
+            if (dot == null) return NotFound();
+            var benhNhan = await _context.BenhNhans.FindAsync(dot.benhNhanId);
+            var goiDangKy = await _context.GoiDieuTris.FindAsync(dot.goiDieuTriId);
+            if (benhNhan == null) return BadRequest("Bệnh nhân không tồn tại");
+            if (goiDangKy == null) return BadRequest("Gói đăng ký không tồn tại");
+
+            var vm = new PhieuKhamVM
+            {
+                DotDieuTriId = dot.dotDieuTriId,
+                TenBenhNhan = benhNhan.hoTen,
+                DiaChi = benhNhan.diaChi,
+                SoDienThoai = benhNhan.soDienThoai,
+                TenGoiDangKy = goiDangKy.tenGoi,
+                TienSuBenh = dot.tienSuBenh,
+                TienLuong = dot.chanDoan,
+                PhuongAn = dot.phacDoDieuTri
             };
 
             return View(vm);

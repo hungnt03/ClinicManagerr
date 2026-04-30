@@ -66,6 +66,7 @@ namespace ClinicManager.Controllers
                 vm.BenhNhanId,
                 vm.BacSiKhamId,
                 vm.NgayKham,
+                vm.TienSuBenh,
                 vm.ChanDoan,
                 vm.PhacDoDieuTri,
                 vm.GoiDieuTriId,
@@ -86,6 +87,7 @@ namespace ClinicManager.Controllers
                     BenhNhanId = x.benhNhanId,
 
                     NgayKham = x.ngayKham,
+                    TienSuBenh = x.tienSuBenh,
                     ChanDoan = x.chanDoan,
                     PhacDoDieuTri = x.phacDoDieuTri,
 
