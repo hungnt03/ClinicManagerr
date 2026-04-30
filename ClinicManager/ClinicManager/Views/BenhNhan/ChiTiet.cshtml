@@ -1,9 +1,9 @@
 ﻿@model ClinicManager.ViewModels.BenhNhan.BenhNhanChiTietVm
 @{
-    ViewData["Title"] = "Chi tiet benh nhan";
+    ViewData["Title"] = "Chi tiết bệnh nhân";
 }
 
-<h3>Thong tin benh nhan</h3>
+<h3>Thông tin bệnh nhân</h3>
 
 <div class="card mb-3">
     <div class="card-body">
@@ -20,12 +20,12 @@
    asp-controller="DotDieuTri"
    asp-action="Create"
    asp-route-benhNhanId="@Model.BenhNhanId">
-    + Tao dot dieu tri moi
+    + Tạo đợt điều trị mới
 </a>
 <br />
 @if (!Model.DotDieuTris.Any())
 {
-    <p class="text-muted">Chua co dot dieu tri nao</p>
+    <p class="text-muted">Chưa có đợt điều trị nào</p>
 }
 else
 {
@@ -42,7 +42,7 @@ else
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#@collapseId">
-                        Dot kham @dot.NgayKham.ToString("dd/MM/yyyy")
+                        Đợt khám @dot.NgayKham.ToString("dd/MM/yyyy")
                         — @dot.TrangThai
                     </button>
                 </h2>
@@ -52,16 +52,16 @@ else
                      data-bs-parent="#accordionDotDieuTri">
                     <div class="accordion-body">
 
-                        <p><b>Chan doan:</b> @dot.ChanDoan</p>
-                        <p><b>Phac do:</b> @dot.PhacDoDieuTri</p>
+                        <p><b>Chẩn đoán:</b> @dot.ChanDoan</p>
+                        <p><b>Phác đồ:</b> @dot.PhacDoDieuTri</p>
 
                         <p>
-                            <b>So buoi:</b>
+                            <b>Số buổi:</b>
                             @dot.SoBuoiDaDung / @dot.TongSoBuoi
                         </p>
 
                         <p>
-                            <b>Thanh toan:</b>
+                            <b>Thanh toán:</b>
                             @dot.DaThanhToan.ToString("N0")
                             /
                             @dot.TongTien.ToString("N0")
@@ -71,7 +71,7 @@ else
                            asp-controller="DotDieuTri"
                            asp-action="ChiTiet"
                            asp-route-id="@dot.DotDieuTriId">
-                            Xem cac buoi dieu tri
+							Xem các buổi điều trị
                         </a>
 
                     </div>

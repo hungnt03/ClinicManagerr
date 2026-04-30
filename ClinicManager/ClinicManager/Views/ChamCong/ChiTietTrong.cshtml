@@ -1,19 +1,20 @@
-﻿<h3>Chua co cham cong</h3>
+﻿<h3>Chưa chấm công</h3>
 
 <p>
-    Ngay: @ViewBag.Ngay.ToString("dd/MM/yyyy")
+    Ngày: @ViewBag.Ngay.ToString("dd/MM/yyyy")
 </p>
 
 @if (User.IsInRole("Admin"))
 {
     <a class="btn btn-primary"
        asp-action="Index">
-        Tao cham cong moi
+        Tạo chấm công mới
     </a>
 }
 else
 {
     <p class="text-muted">
-        Chua co du lieu cham cong cho ngay nay
+		Chưa có dữ liệu chấm công cho ngày này. 
+        Vui lòng liên hệ Admin để tạo chấm công.
     </p>
 }

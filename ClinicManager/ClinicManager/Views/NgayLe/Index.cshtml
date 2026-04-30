@@ -1,21 +1,21 @@
 ﻿@model List<ClinicManager.ViewModels.Luong.NgayLeVm>
 
 @{
-    ViewData["Title"] = "Ngay le";
+    ViewData["Title"] = "Ngày lễ";
 }
 
-<h3>Danh sach ngay le</h3>
+<h3>Danh sách ngày lễ</h3>
 
 <a class="btn btn-primary mb-2" asp-action="Create">
-    + Them ngay le
+    + Thêm ngày lễ
 </a>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Ngay</th>
-            <th>Ten</th>
-            <th>Tinh luong</th>
+            <th>Ngày</th>
+            <th>Tên</th>
+            <th>Tính lương</th>
         </tr>
     </thead>
     <tbody>
@@ -27,11 +27,11 @@
                 <td>
                     @if (x.CoTinhLuong)
                     {
-                        <span class="badge bg-success">Co</span>
+                        <span class="badge bg-success">Có</span>
                     }
                     else
                     {
-                        <span class="badge bg-secondary">Khong</span>
+                        <span class="badge bg-secondary">Không</span>
                     }
                 </td>
             </tr>

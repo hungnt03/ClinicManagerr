@@ -1,10 +1,10 @@
 ﻿@model ClinicManager.ViewModels.Luong.BangLuongThangChiTietVm
 
 @{
-    ViewData["Title"] = $"Bang luong {Model.Thang}/{Model.Nam}";
+    ViewData["Title"] = $"Bảng lương {Model.Thang}/{Model.Nam}";
 }
 
-<h3>Bang luong thang @Model.Thang/@Model.Nam</h3>
+<h3>Bảng lương tháng @Model.Thang/@Model.Nam</h3>
 
 @if (User.IsInRole("Admin"))
 {
@@ -18,14 +18,14 @@
         {
             <button class="btn btn-danger"
                     onclick="return confirm('Chot bang luong? Sau khi chot se khong sua duoc!')">
-                🔒 Chot bang luong
+                🔒 Chốt bảng lương
             </button>
         }
         else
         {
             <button class="btn btn-warning"
                     onclick="return confirm('Mo chot bang luong?')">
-                🔓 Mo chot
+                🔓 Mở chốt
             </button>
         }
     </form>
@@ -51,9 +51,9 @@
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th>Loai</th>
-                                <th>Dien giai</th>
-                                <th>So tien</th>
+                                <th>Loại</th>
+                                <th>Diễn giải</th>
+                                <th>Số tiền</th>
                             </tr>
                         </thead>
                         <tbody>

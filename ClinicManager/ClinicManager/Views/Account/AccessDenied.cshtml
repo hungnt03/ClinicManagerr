@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Khong du quyen truy cap";
+    ViewData["Title"] = "Không đủ quyền truy cập";
 }
 
 <div class="container mt-5">
@@ -7,17 +7,17 @@
         <div class="col-md-8 text-center">
 
             <h1 class="text-danger">
-                🚫 Khong du quyen truy cap
+                🚫 Không đủ quyền truy cập
             </h1>
 
             <p class="mt-4">
-                Ban khong co quyen de truy cap chuc nang nay.
+                Bạn không có quyền để truy cập chức năng này.
             </p>
 
             @if (ViewBag.ReturnUrl != null)
             {
                 <p class="text-muted">
-                    Duong dan ban vua truy cap:
+                    Đường dẫn bạn vừa truy cập:
                     <br />
                     <code>@ViewBag.ReturnUrl</code>
                 </p>
@@ -27,13 +27,13 @@
                 <a asp-controller="Home"
                    asp-action="Index"
                    class="btn btn-primary">
-                    Quay ve trang chu
+                    Quay về trang chủ
                 </a>
 
                 <a asp-controller="Account"
                    asp-action="Logout"
                    class="btn btn-outline-secondary ml-2">
-                    Dang xuat
+                    Đăng xuất
                 </a>
             </div>
 

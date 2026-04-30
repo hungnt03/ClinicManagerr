@@ -1,17 +1,17 @@
 ﻿@model ClinicManager.ViewModels.NhapKho.NhapKhoCreateVm
 
-<h3>Nhap kho</h3>
+<h3>Nhập kho</h3>
 
 <form method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     <div class="row mb-3">
         <div class="col-md-4">
-            <label>Ngay nhap</label>
+            <label>Ngày nhập</label>
             <input asp-for="NgayNhap" type="date" class="form-control" />
         </div>
         <div class="col-md-8">
-            <label>Hoa don (PDF / Anh)</label>
+            <label>Hóa đơn (PDF / Ảnh)</label>
             <input asp-for="HoaDonFile" type="file"
                    class="form-control"
                    accept=".pdf,.jpg,.jpeg,.png" />
@@ -19,7 +19,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Ghi chu</label>
+        <label>Ghi chú</label>
         <textarea asp-for="GhiChu" class="form-control"></textarea>
     </div>
 
@@ -28,17 +28,17 @@
             class="btn btn-outline-primary mb-2"
             data-bs-toggle="modal"
             data-bs-target="#modalVatTu">
-        + Them vat tu
+        + Thêm vật tư
     </button>
 
     <!-- ===== TABLE CHI TIET ===== -->
     <table class="table table-bordered" id="tblVatTu">
         <thead>
             <tr>
-                <th>Vat tu</th>
-                <th>So luong</th>
-                <th>Don gia nhap</th>
-                <th>Thanh tien</th>
+                <th>Vật tư</th>
+                <th>Số lượng</th>
+                <th>Đơn giá nhập</th>
+                <th>Thành tiền</th>
                 <th></th>
             </tr>
         </thead>
@@ -46,7 +46,7 @@
     </table>
 
     <div class="text-end mb-3">
-        <strong>Tong tien: </strong>
+        <strong>Tổng tiền: </strong>
         <span id="tongTien">0</span>
     </div>
 
@@ -54,13 +54,13 @@
     <div id="itemsContainer"></div>
 
     <button class="btn btn-primary">
-        Luu phieu nhap
+        Lưu phiếu nhập
     </button>
 
     <a class="btn btn-secondary"
        asp-controller="VatTu"
        asp-action="Index">
-        Quay lai
+        Quay lại
     </a>
 </form>
 
@@ -69,30 +69,30 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Them vat tu</h5>
+                <h5>Thêm vật tư</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
 
                 <div class="mb-2">
-                    <label>Vat tu</label>
+                    <label>Vật tư</label>
                     <select id="vatTuId" class="form-control"></select>
                 </div>
 
                 <div class="mb-2">
-                    <label>So luong</label>
+                    <label>Số lượng</label>
                     <input id="soLuong" type="number" class="form-control" />
                 </div>
 
                 <div class="mb-2">
-                    <label>Don gia nhap</label>
+                    <label>Đơn giá nhập</label>
                     <input id="donGiaNhap" type="number" class="form-control" />
                 </div>
 
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" id="btnThem">
-                    Them
+                    Thêm
                 </button>
             </div>
         </div>

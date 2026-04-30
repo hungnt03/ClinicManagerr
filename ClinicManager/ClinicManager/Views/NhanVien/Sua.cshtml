@@ -1,10 +1,10 @@
 ﻿@model ClinicManager.ViewModels.NhanVien.SuaNhanVienVm
 
 @{
-    ViewData["Title"] = "Sua nhan vien";
+    ViewData["Title"] = "Sửa nhân viên";
 }
 
-<h2>Sua nhan vien</h2>
+<h2>Sửa nhân viên</h2>
 
 @if (TempData["Success"] != null)
 {
@@ -17,12 +17,12 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
-        <label>Ho ten</label>
+        <label>Họ tên</label>
         <input asp-for="HoTen" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Vai tro nhan vien</label>
+        <label>Vai trò nhân viên</label>
         <select asp-for="VaiTroNhanVien" class="form-control">
             @foreach (var v in Model.DanhSachVaiTroNhanVien)
             {
@@ -32,22 +32,22 @@
     </div>
 
     <div class="form-group">
-        <label>Luong co ban</label>
+        <label>Lương cơ bản</label>
         <input asp-for="LuongCoBan" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Trang thai</label>
+        <label>Trạng thái</label>
         <select asp-for="HoatDong" class="form-control">
-            <option value="true">Hoat dong</option>
-            <option value="false">Khoa</option>
+            <option value="true">Hoạt động</option>
+            <option value="false">Khóa</option>
         </select>
     </div>
 
     <hr />
 
     <div class="form-group">
-        <label>Role dang nhap</label>
+        <label>Role đăng nhập</label>
         <select asp-for="RoleDangNhap" class="form-control">
             @foreach (var r in Model.DanhSachRoleDangNhap)
             {
@@ -57,10 +57,10 @@
     </div>
 
     <button type="submit" class="btn btn-primary">
-        Luu thay doi
+        Lưu thay đổi
     </button>
 
     <a asp-action="Index" class="btn btn-secondary">
-        Quay lai
+        Quay lại
     </a>
 </form>

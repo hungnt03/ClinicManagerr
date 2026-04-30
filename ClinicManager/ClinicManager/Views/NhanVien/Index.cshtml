@@ -1,26 +1,26 @@
 ﻿@model List<ClinicManager.ViewModels.NhanVien.NhanVienListItemVm>
 
 @{
-    ViewData["Title"] = "Danh sach nhan vien";
+    ViewData["Title"] = "Danh sách nhân viên";
 }
 
 <h2>Danh sach nhan vien</h2>
 
 <p>
     <a class="btn btn-primary" asp-action="Tao">
-        + Tao nhan vien
+        + Tạo nhân viên
     </a>
 </p>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Ho ten</th>
-            <th>Vai tro</th>
-            <th>Luong co ban</th>
-            <th>Tai khoan</th>
-            <th>Trang thai</th>
-            <th style="width:120px">Thao tac</th>
+            <th>Họ tên</th>
+            <th>Vai trò</th>
+            <th>Lương cơ bản</th>
+            <th>Tài khoản</th>
+            <th>Trạng thái</th>
+            <th style="width:200px">Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -40,25 +40,25 @@
                     else
                     {
                         <span class="text-danger">
-                            Chua co tai khoan
+                            chưa có tài khoản
                         </span>
                     }
                 </td>
                 <td>
                     @if (item.HoatDong)
                     {
-                        <span class="badge badge-success">Hoat dong</span>
+                        <span class="">Hoạt động</span>
                     }
                     else
                     {
-                        <span class="badge badge-secondary">Khoa</span>
+                        <span class="">Khóa</span>
                     }
                 </td>
                 <td>
                     <a class="btn btn-sm btn-info"
                        asp-action="Sua"
                        asp-route-id="@item.NhanVienId">
-                        Sua
+                        Sửa
                     </a>
 
                     @if (item.CoTaiKhoan)
@@ -72,14 +72,14 @@
                             @if (item.BiKhoaTaiKhoan)
                             {
                                 <button class="btn btn-sm btn-success">
-                                    Mo
+                                    Mở
                                 </button>
                             }
                             else
                             {
                                 <button class="btn btn-sm btn-danger"
                                         onclick="return confirm('Khoa tai khoan nay?')">
-                                    Khoa
+                                    Khóa
                                 </button>
                             }
                         </form>

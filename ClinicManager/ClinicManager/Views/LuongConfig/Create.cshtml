@@ -1,38 +1,38 @@
 ﻿@model ClinicManager.ViewModels.Luong.CauHinhLuongVm
 
 @{
-    ViewData["Title"] = "Them cau hinh luong";
+    ViewData["Title"] = "Thêm cấu hình lương";
 }
 
-<h3>Them cau hinh luong</h3>
+<h3>Thêm cấu hình lương</h3>
 
 <form method="post">
     @Html.AntiForgeryToken()
 
     <fieldset class="border p-3 mb-3">
-        <legend class="w-auto px-2">Gio lam chuan</legend>
+        <legend class="w-auto px-2">Giờ làm việc</legend>
 
         <div class="row">
             <div class="col-md-3">
-                <label>Bat dau sang</label>
+                <label>Bắt đầu sáng</label>
                 <input asp-for="GioBatDauSang" type="time" class="form-control" />
             </div>
             <div class="col-md-3">
-                <label>Ket thuc sang</label>
+                <label>Kết thúc sáng</label>
                 <input asp-for="GioKetThucSang" type="time" class="form-control" />
             </div>
             <div class="col-md-3">
-                <label>Bat dau chieu</label>
+                <label>Bắt đầu chiều</label>
                 <input asp-for="GioBatDauChieu" type="time" class="form-control" />
             </div>
             <div class="col-md-3">
-                <label>Ket thuc chieu</label>
+                <label>Kết thúc chiều</label>
                 <input asp-for="GioKetThucChieu" type="time" class="form-control" />
             </div>
         </div>
 
         <div class="mt-2 col-md-3 p-0">
-            <label>So gio lam chuan / ngay</label>
+            <label>Số giờ làm chuẩn / ngày</label>
             <input asp-for="SoGioLamChuanNgay" class="form-control" />
         </div>
     </fieldset>
@@ -42,63 +42,63 @@
 
         <div class="row">
             <div class="col-md-4">
-                <label>Tien an trua / ngay</label>
+                <label>Tiền ăn trưa / ngày</label>
                 <input asp-for="TienAnTruaNgay" class="form-control" />
             </div>
             <div class="col-md-4">
-                <label>Tien xang xe / thang</label>
+                <label>Tiền xăng xe / tháng</label>
                 <input asp-for="TienXangXeThang" class="form-control" />
             </div>
             <div class="col-md-4">
-                <label>Tien chuyen can</label>
+                <label>Tiền chuyên cần</label>
                 <input asp-for="TienChuyenCan" class="form-control" />
             </div>
         </div>
     </fieldset>
 
     <fieldset class="border p-3 mb-3">
-        <legend class="w-auto px-2">Hoa hong</legend>
+        <legend class="w-auto px-2">Hoa hồng</legend>
 
         <div class="row">
             <div class="col-md-4">
-                <label>Dieu tri tay / buoi</label>
+                <label>Điều trị tay / buổi</label>
                 <input asp-for="TienDieuTriTayMoiBuoi" class="form-control" />
             </div>
             <div class="col-md-4">
-                <label>Tien tap / buoi</label>
+                <label>Tiền tập / buổi</label>
                 <input asp-for="TienTapMoiBuoi" class="form-control" />
             </div>
             <div class="col-md-4">
-                <label>% gioi thieu</label>
+                <label>% giới thiệu</label>
                 <input asp-for="PhanTramGioiThieu" class="form-control" />
             </div>
         </div>
     </fieldset>
 
     <fieldset class="border p-3 mb-3">
-        <legend class="w-auto px-2">Tang ca</legend>
+        <legend class="w-auto px-2">Tăng ca</legend>
 
         <div class="row">
             <div class="col-md-3">
-                <label>He so ngay le / CN</label>
+                <label>Hệ số ngày lễ / CN</label>
                 <input asp-for="DonGiaTangCaMoiGio" class="form-control" />
             </div>
             <div class="col-md-3">
-                <label>Lam tron (phut)</label>
+                <label>Làm tròn (phút)</label>
                 <input asp-for="SoPhutLamTronTangCa" class="form-control" />
             </div>
             <div class="col-md-3">
-                <label>Toi thieu tinh TC (phut)</label>
+                <label>Tối thiểu tính TC (phút)</label>
                 <input asp-for="SoPhutToiThieuTinhTangCa" class="form-control" />
             </div>
         </div>
     </fieldset>
 
     <div class="col-md-3 p-0 mb-3">
-        <label>Ap dung tu ngay</label>
+        <label>Áp dụng từ ngày</label>
         <input asp-for="ApDungTuNgay" type="date" class="form-control" />
     </div>
 
-    <button class="btn btn-primary">Luu cau hinh</button>
-    <a asp-action="Index" class="btn btn-secondary">Quay lai</a>
+    <button class="btn btn-primary">Lưu cấu hình</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
 </form>

@@ -1,6 +1,6 @@
 ﻿@model ClinicManager.ViewModels.BenhNhan.BenhNhanFormVm
 
-<h2>@(Model.BenhNhanId == 0 ? "Them benh nhan" : "Sua benh nhan")</h2>
+<h2>@(Model.BenhNhanId == 0 ? "Thêm bệnh nhân" : "Sửa bệnh nhân")</h2>
 
 <form method="post">
     <input type="hidden" asp-for="BenhNhanId" />
@@ -8,38 +8,38 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
-        <label>Ho ten</label>
+        <label>Họ tên</label>
         <input asp-for="HoTen" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Ngay sinh</label>
+        <label>Ngày sinh</label>
         <input asp-for="NgaySinh" type="date" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Gioi tinh</label>
+        <label>Giới tính</label>
         <select asp-for="GioiTinh" class="form-control">
             <option value="">--</option>
             <option>Nam</option>
-            <option>Nu</option>
+            <option>Nữ</option>
         </select>
     </div>
 
     <div class="form-group">
-        <label>Dien thoai</label>
+        <label>Số điện thoại</label>
         <input asp-for="SoDienThoai" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Dia chi</label>
+        <label>Địa chỉ</label>
         <input asp-for="DiaChi" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Nguoi gioi thieu</label>
+        <label>Người giới thiệu</label>
         <select asp-for="NguoiGioiThieuId" class="form-control">
-            <option value="">-- Khong co --</option>
+            <option value="">-- Không có --</option>
             @foreach (var nv in Model.DanhSachNhanVien)
             {
                 <option value="@nv.NhanVienId">@nv.HoTen</option>
@@ -48,10 +48,10 @@
     </div>
 
     <button type="submit" class="btn btn-primary">
-        Luu
+        Lưu
     </button>
 
     <a asp-action="Index" class="btn btn-secondary">
-        Quay lai
+        Quay lại
     </a>
 </form>

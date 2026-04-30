@@ -1,6 +1,6 @@
 ﻿@model ClinicManager.ViewModels.ChamCong.ChamCongHomNayVm
 
-<h2>Cham cong hom nay</h2>
+<h2>Chấm công hôm nay</h2>
 
 @if (TempData["Error"] != null)
 {
@@ -10,20 +10,20 @@
 @if (Model.NghiPhep)
 {
     <div class="alert alert-warning">
-        Hom nay ban dang nghi phep
+        Hôm nay bạn đang nghỉ phép
     </div>
 }
 else
 {
-    <p>Gio vao: @Model.GioVao</p>
-    <p>Gio ra: @Model.GioRa</p>
+    <p>Giờ vào: @Model.GioVao</p>
+    <p>Giờ ra: @Model.GioRa</p>
 
     @if (!Model.DaCheckIn)
     {
         <form asp-action="CheckIn" method="post">
             @Html.AntiForgeryToken()
             <label>
-                <input type="checkbox" name="anTrua" /> An trua
+                <input type="checkbox" name="anTrua" checked="checked"/> Ăn trưa
             </label>
             <br />
             <button class="btn btn-primary">Check In</button>

@@ -1,10 +1,10 @@
 ﻿@model List<ClinicManager.ViewModels.Luong.BangLuongThangListItemVm>
 
 @{
-    ViewData["Title"] = "Bang luong theo thang";
+    ViewData["Title"] = "Bảng lương theo tháng";
 }
 
-<h3>Bang luong theo thang</h3>
+<h3>Bảng lương theo tháng</h3>
 
 <form asp-action="TinhLuong" method="post" class="row g-2 mb-3">
     @Html.AntiForgeryToken()
@@ -15,18 +15,18 @@
         <input type="number" name="nam" class="form-control" placeholder="Nam" required />
     </div>
     <div class="col-auto">
-        <button class="btn btn-primary">Tinh luong</button>
+        <button class="btn btn-primary">Tính lương</button>
     </div>
 </form>
 
 <table class="table table-bordered table-hover">
     <thead class="table-light">
         <tr>
-            <th>Thang</th>
-            <th>Nam</th>
-            <th>So nhan vien</th>
-            <th>Tong luong</th>
-            <th>Trang thai</th>
+            <th>Tháng</th>
+            <th>Năm</th>
+            <th>Số nhân viên</th>
+            <th>Tổng lương</th>
+            <th>Trạng thái</th>
             <th></th>
         </tr>
     </thead>
@@ -41,18 +41,18 @@
                 <td>
                     @if (x.DaChot)
                     {
-                        <span class="badge bg-success">Da chot</span>
+                        <span class="badge bg-success">Đã chốt</span>
                     }
                     else
                     {
-                        <span class="badge bg-warning text-dark">Chua chot</span>
+                        <span class="badge bg-warning text-dark">Chưa chốt</span>
                     }
                 </td>
                 <td>
                     <a class="btn btn-sm btn-outline-primary"
                        asp-action="ChiTiet"
                        asp-route-id="@x.BangLuongThangId">
-                        Chi tiet
+                        Chi tiết
                     </a>
                 </td>
             </tr>

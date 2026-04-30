@@ -4,7 +4,7 @@
     bool daTaoBuoi = ViewBag.DaTaoBuoi == true;
 }
 
-<h3>Tao buoi dieu tri</h3>
+<h3>Tạo buổi điều trị</h3>
 
 <form asp-action="Create" method="post">
     @Html.AntiForgeryToken()
@@ -14,53 +14,53 @@
     <input type="hidden" asp-for="BuoiDieuTriId" />
 
     <div class="mb-2">
-        <label>Ngay dieu tri</label>
+        <label>Ngày điều trị</label>
         <input asp-for="NgayDieuTri" type="date" class="form-control" />
     </div>
 
     <div class="mb-2">
-        <label>Bac si dieu tri tay</label>
+        <label>Bác sỹ điều trị tay</label>
         <select asp-for="BacSiDieuTriTayId"
                 asp-items="Model.DanhSachBacSi"
                 class="form-control">
-            <option value="">-- Chon --</option>
+            <option value="">-- Chọn --</option>
         </select>
     </div>
 
     <div class="mb-2">
-        <label>Ky thuat vien tap</label>
+        <label>Kỹ thuật viên tập</label>
         <select asp-for="KyThuatVienTapId"
                 asp-items="Model.DanhSachKyThuatVien"
                 class="form-control">
-            <option value="">-- Chon --</option>
+            <option value="">-- Chọn --</option>
         </select>
     </div>
 
     <div class="mb-2">
-        <label>Noi dung dieu tri tay</label>
+        <label>Nội dung điều trị tay</label>
         <textarea asp-for="NoiDungDieuTriTay" class="form-control"></textarea>
     </div>
 
     <div class="mb-2">
-        <label>Noi dung tap</label>
+        <label>Nội dung tập</label>
         <textarea asp-for="NoiDungTap" class="form-control"></textarea>
     </div>    
 
     <div class="mb-3">
-        <label>Chi dinh dac biet</label>
+        <label>Chỉ định đặc biệt</label>
         <textarea asp-for="ChiDinhDacBiet" class="form-control"></textarea>
     </div>
 
     <div class="mt-3">
         <button class="btn btn-primary">
-            Luu buoi dieu tri
+            Lưu buổi điều trị
         </button>
 
         <a class="btn btn-secondary ms-2"
            asp-controller="BenhNhan"
            asp-action="ChiTiet"
            asp-route-id="@Model.BenhNhanId">
-            Quay lai benh nhan
+            Quay lại bệnh nhân
         </a>
     </div>
 
@@ -69,12 +69,12 @@
 @if (daTaoBuoi && Model.BuoiDieuTriId.HasValue)
 {
     <hr />
-    <h4>Vat tu / Thuoc</h4>
+    <h4>Vật tư / Thuốc</h4>
 
     <button class="btn btn-outline-primary mb-2"
             data-bs-toggle="modal"
             data-bs-target="#modalVatTu">
-        + Them vat tu
+        + Thêm vật tư
     </button>
 
     <div id="vatTuContainer"></div>
@@ -88,7 +88,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Them vat tu</h5>
+                <h5 class="modal-title">Thêm vật tư</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -96,7 +96,7 @@
                 <input id="soLuong" type="number" class="form-control" value="1" min="1" />
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="btnThemVatTu">Them</button>
+                <button class="btn btn-primary" id="btnThemVatTu">Thêm</button>
             </div>
         </div>
     </div>

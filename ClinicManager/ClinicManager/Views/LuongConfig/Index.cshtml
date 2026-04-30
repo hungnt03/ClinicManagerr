@@ -1,19 +1,19 @@
 ﻿@model List<ClinicManager.ViewModels.Luong.CauHinhLuongVm>
 
-<h3>Cau hinh luong</h3>
+<h3>Cấu hình lương</h3>
 
 <a class="btn btn-primary mb-2" asp-action="Create">
-    + Them cau hinh
+	+ Thêm cấu hình lương
 </a>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Ap dung tu</th>
-            <th>Gio lam</th>
-            <th>An trua</th>
-            <th>Tang ca</th>
-            <th>Thao tac</th>
+            <th>Áp dụng từ</th>
+            <th>Giờ làm</th>
+            <th>Ăn trưa</th>
+            <th>Tăng ca</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -28,7 +28,7 @@
                     <a class="btn btn-sm btn-info"
                        asp-action="ChiTiet"
                        asp-route-id="@x.CauHinhLuongId">
-                        Chi tiet
+                        Chi tiết
                     </a>
                 </td>
 

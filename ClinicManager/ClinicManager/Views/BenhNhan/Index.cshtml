@@ -1,21 +1,21 @@
 ﻿@model List<ClinicManager.ViewModels.BenhNhan.BenhNhanListItemVm>
 
-<h2>Danh sach benh nhan</h2>
+<h2>Danh sách bệnh nhân</h2>
 
 <p>
     <a class="btn btn-primary" asp-action="Tao">
-        + Them benh nhan
+        + Thêm bệnh nhân
     </a>
 </p>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Ho ten</th>
-            <th>Gioi tinh</th>
-            <th>Tuoi</th>
-            <th>Dien thoai</th>
-            <th>Nguoi gioi thieu</th>
+            <th>Họ tên</th>
+            <th>Giới tính</th>
+            <th>Tuổi</th>
+            <th>Số điện thoại</th>
+            <th>Người giới thiệu</th>
             <th></th>
         </tr>
     </thead>
@@ -37,7 +37,7 @@
                     <a asp-action="Sua"
                        asp-route-id="@b.BenhNhanId"
                        class="btn btn-sm btn-info">
-                        Sua
+                        Sửa
                     </a>
                 </td>
             </tr>

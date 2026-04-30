@@ -1,17 +1,16 @@
 ﻿@model ClinicManager.ViewModels.ChamCong.ChamCongChiTietVm
 
-<h3>Chi tiet cham cong</h3>
+<h3>Chi tiết chấm công</h3>
 
-<p><b>Ngay:</b> @Model.Ngay.ToString("dd/MM/yyyy")</p>
-<p><b>Gio vao:</b> @Model.GioVao</p>
-<p><b>Gio ra:</b> @Model.GioRa</p>
-
+<p><b>Ngày:</b> @Model.Ngay.ToString("dd/MM/yyyy")</p>
+<p><b>Giờ vào:</b> @Model.GioVao</p>
+<p><b>Giờ ra:</b> @Model.GioRa</p>
 @if (User.IsInRole("Admin"))
 {
     <button class="btn btn-warning"
             data-id="@Model.ChamCongId"
             id="btnEditChamCong">
-        Sua cham cong
+        Sửa chấm công
     </button>
 }
 
@@ -20,33 +19,33 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Sua cham cong</h5>
+                <h5>Sửa chấm công</h5>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="ChamCongId" />
 
-                <label>Gio vao</label>
+                <label>Giờ vào</label>
                 <input type="datetime-local" id="ThoiGianVao" class="form-control" />
 
-                <label class="mt-2">Gio ra</label>
+                <label class="mt-2">Giờ ra</label>
                 <input type="datetime-local" id="ThoiGianRa" class="form-control" />
                 <br />
                 <label>
                     <input type="checkbox" id="NghiPhep" />
-                    Nghi phep
+                    Nghỉ phép
                 </label>
                 <br />
                 <label class="ms-2">
                     <input type="checkbox" id="NghiPhepCoLuong" />
-                    Nghi phep co luong
+					Nghỉ phép có lương
                 </label>
                 <br />
-                <label class="mt-2">Ly do</label>
+                <label class="mt-2">Lý do</label>
                 <textarea id="LyDo" class="form-control"></textarea>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="btnSaveChamCong">Luu</button>
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Dong</button>
+                <button class="btn btn-primary" id="btnSaveChamCong">Lưu</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
