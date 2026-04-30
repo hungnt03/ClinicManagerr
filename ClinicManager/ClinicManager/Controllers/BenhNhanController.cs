@@ -4,6 +4,8 @@ using ClinicManager.ViewModels.BenhNhan;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
+using X.PagedList.EF;
 
 namespace ClinicManager.Controllers
 {
@@ -16,37 +18,75 @@ namespace ClinicManager.Controllers
             _context = context;
         }
         // GET: /BenhNhan
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? page)
         {
-            var benhNhans = await _context.BenhNhans
-                .OrderByDescending(x => x.taoLuc)
-                .ToListAsync();
+            // 1. Thiết lập thông số phân trang
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
 
-            var nhanViens = await _context.NhanViens.ToListAsync();
+            // 2. Xây dựng Query (Chưa thực thi xuống Database)
+            // Sử dụng Join trực tiếp trong Query để lấy tên Người giới thiệu, tránh loop trong memory
+            var query = from bn in _context.BenhNhans
+                        join nv in _context.NhanViens on bn.nguoiGioiThieuId equals nv.nhanVienId into nvGroup
+                        from nguoiGt in nvGroup.DefaultIfEmpty() // Left Join
+                        select new BenhNhanListItemVm
+                        {
+                            BenhNhanId = bn.benhNhanId,
+                            HoTen = bn.hoTen,
+                            GioiTinh = bn.gioiTinh,
+                            Tuoi = bn.ngaySinh.HasValue ? DateTime.Now.Year - bn.ngaySinh.Value.Year : (int?)null,
+                            SoDienThoai = bn.soDienThoai,
+                            NguoiGioiThieu = nguoiGt != null ? nguoiGt.hoTen : "Không có",
+                            TaoLuc = bn.taoLuc
+                        };
 
-            var result = benhNhans.Select(bn =>
+            // 3. Logic Tìm kiếm
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var nguoiGt = nhanViens
-                    .FirstOrDefault(x => x.nhanVienId == bn.nguoiGioiThieuId);
+                searchString = searchString.Trim();
+                query = query.Where(x => x.HoTen.Contains(searchString) || x.SoDienThoai.Contains(searchString));
+            }
 
-                int? tuoi = null;
-                if (bn.ngaySinh.HasValue)
-                {
-                    tuoi = DateTime.Now.Year - bn.ngaySinh.Value.Year;
-                }
+            // 4. Sắp xếp
+            query = query.OrderByDescending(x => x.TaoLuc);
 
-                return new BenhNhanListItemVm
-                {
-                    BenhNhanId = bn.benhNhanId,
-                    HoTen = bn.hoTen,
-                    GioiTinh = bn.gioiTinh,
-                    Tuoi = tuoi,
-                    SoDienThoai = bn.soDienThoai,
-                    NguoiGioiThieu = nguoiGt?.hoTen
-                };
-            }).ToList();
+            // 5. Thực thi phân trang và tính toán Tuổi
+            // Lưu ý: ToPagedListAsync sẽ thực thi câu lệnh SQL với OFFSET/FETCH
+            var pagedList = await query.ToPagedListAsync(pageNumber, pageSize);
 
-            return View(result);
+            // 6. Truyền dữ liệu ra View
+            ViewBag.CurrentSearch = searchString;
+            return View(pagedList);
+
+            //var benhNhans = await _context.BenhNhans
+            //    .OrderByDescending(x => x.taoLuc)
+            //    .ToListAsync();
+
+            //var nhanViens = await _context.NhanViens.ToListAsync();
+
+            //var result = benhNhans.Select(bn =>
+            //{
+            //    var nguoiGt = nhanViens
+            //        .FirstOrDefault(x => x.nhanVienId == bn.nguoiGioiThieuId);
+
+            //    int? tuoi = null;
+            //    if (bn.ngaySinh.HasValue)
+            //    {
+            //        tuoi = DateTime.Now.Year - bn.ngaySinh.Value.Year;
+            //    }
+
+            //    return new BenhNhanListItemVm
+            //    {
+            //        BenhNhanId = bn.benhNhanId,
+            //        HoTen = bn.hoTen,
+            //        GioiTinh = bn.gioiTinh,
+            //        Tuoi = tuoi,
+            //        SoDienThoai = bn.soDienThoai,
+            //        NguoiGioiThieu = nguoiGt?.hoTen
+            //    };
+            //}).ToList();
+
+            //return View(result);
         }
 
         // GET: /BenhNhan/Tao

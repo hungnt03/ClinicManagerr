@@ -7,15 +7,15 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <p><b>Ho ten:</b> @Model.HoTen</p>
-        <p><b>Ngay sinh:</b> @(Model.NgaySinh?.ToString("dd/MM/yyyy") ?? "—")</p>
-        <p><b>Gioi tinh:</b> @Model.GioiTinh</p>
-        <p><b>Dien thoai:</b> @Model.SoDienThoai</p>
-        <p><b>Dia chi:</b> @Model.DiaChi</p>
+        <p><b>Họ tên:</b> @Model.HoTen</p>
+        <p><b>Ngày sinh:</b> @(Model.NgaySinh?.ToString("dd/MM/yyyy") ?? "—")</p>
+        <p><b>Giới tính:</b> @Model.GioiTinh</p>
+        <p><b>Số điện thoại:</b> @Model.SoDienThoai</p>
+        <p><b>Địa chỉ:</b> @Model.DiaChi</p>
     </div>
 </div>
 
-<h4>Cac dot dieu tri</h4>
+<h4>Các đợt điều trị</h4>
 <a class="btn btn-success"
    asp-controller="DotDieuTri"
    asp-action="Create"
