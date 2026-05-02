@@ -62,19 +62,31 @@ namespace ClinicManager.Controllers
                 return View(vm);
             }
 
-            var dotId = await _dotDieuTriService.TaoDotDieuTriAsync(
-                vm.BenhNhanId,
-                vm.BacSiKhamId,
-                vm.NgayKham,
-                vm.TienSuBenh,
-                vm.ChanDoan,
-                vm.PhacDoDieuTri,
-                vm.GoiDieuTriId,
-                vm.PhanTramGiamGia
-            );
+            try
+            {
+                var dotId = await _dotDieuTriService.TaoDotDieuTriAsync(
+                    vm.BenhNhanId,
+                    vm.BacSiKhamId,
+                    vm.NgayKham,
+                    vm.TienSuBenh,
+                    vm.ChanDoan,
+                    vm.PhacDoDieuTri,
+                    vm.GoiDieuTriId,
+                    vm.PhanTramGiamGia
+                );
 
-            // 👉 sau khi khám xong → sang chi tiết đợt
-            return RedirectToAction("ChiTiet", new { id = dotId });
+                // 👉 sau khi khám xong → sang chi tiết đợt
+                return RedirectToAction("ChiTiet", new { id = dotId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+
+                vm.BacSiList = await _nhanVienService.GetDanhSachBacSiKyThuatViensync();
+                vm.GoiDieuTriList = await _goiDieuTriService.GetGoiHoatDongAsync();
+                return View(vm);
+            }
         }
 
         public async Task<IActionResult> ChiTiet(int id)

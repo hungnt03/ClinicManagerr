@@ -30,7 +30,7 @@ namespace ClinicManager.Services.Luong
             if (await _context.BangLuongThangs
                 .AnyAsync(x => x.thang == thang && x.nam == nam))
             {
-                throw new Exception("Bang luong thang nay da ton tai");
+                throw new Exception("Bảng lương tháng này đã tồn tại");
             }
 
             // 2️⃣ Cấu hình lương áp dụng
@@ -90,7 +90,7 @@ namespace ClinicManager.Services.Luong
                     nhanVienId = nv.nhanVienId,
                     loai = LoaiLuongChiTiet.LuongCoBan,
                     soTien = Math.Round(luongCoBan, 0),
-                    dienGiai = $"Luong co ban ({soNgayLam}/{soNgayLamChuan} ngay)"
+                    dienGiai = $"Lương cơ bản ({soNgayLam}/{soNgayLamChuan} ngày)"
                 });
 
                 // ===== ĂN TRƯA =====
@@ -102,7 +102,7 @@ namespace ClinicManager.Services.Luong
                         nhanVienId = nv.nhanVienId,
                         loai = LoaiLuongChiTiet.AnTrua,
                         soTien = soNgayAnTrua * 30000,
-                        dienGiai = $"An trua ({soNgayAnTrua} ngay)"
+                        dienGiai = $"Ăn trưa ({soNgayAnTrua} ngày)"
                     });
                 }
 
@@ -112,7 +112,7 @@ namespace ClinicManager.Services.Luong
                     nhanVienId = nv.nhanVienId,
                     loai = LoaiLuongChiTiet.XangXe,
                     soTien = 500000,
-                    dienGiai = "Xang xe"
+                    dienGiai = "Xăng xe"
                 });
 
                 // ===== CHUYÊN CẦN =====
@@ -123,7 +123,7 @@ namespace ClinicManager.Services.Luong
                         nhanVienId = nv.nhanVienId,
                         loai = LoaiLuongChiTiet.ChuyenCan,
                         soTien = 200000,
-                        dienGiai = "Chuyen can"
+                        dienGiai = "Chuyên cần"
                     });
                 }
 
@@ -144,7 +144,7 @@ namespace ClinicManager.Services.Luong
                         nhanVienId = nv.nhanVienId,
                         loai = LoaiLuongChiTiet.TangCa,
                         soTien = tongOT,
-                        dienGiai = "Tang ca (sau 18h)"
+                        dienGiai = "Tăng ca (sau 16h)"
                     });
                 }
             }
@@ -162,10 +162,10 @@ namespace ClinicManager.Services.Luong
                 .FirstOrDefaultAsync(x => x.bangLuongThangId == bangLuongThangId);
 
             if (bangLuong == null)
-                throw new Exception("Khong tim thay bang luong");
+                throw new Exception("Không tìm thấy bảng lương");
 
             if (bangLuong.daChot)
-                throw new Exception("Bang luong da duoc chot");
+                throw new Exception("Bảng lương đã được chốt");
 
             bangLuong.daChot = true;
 
@@ -184,7 +184,7 @@ namespace ClinicManager.Services.Luong
                 .FirstOrDefaultAsync(x => x.bangLuongThangId == bangLuongThangId);
 
             if (bangLuong == null)
-                throw new Exception("Khong tim thay bang luong");
+                throw new Exception("Không tim thấy bảng lương");
 
             bangLuong.daChot = false;
 

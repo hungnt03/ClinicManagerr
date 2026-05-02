@@ -134,7 +134,7 @@ namespace ClinicManager.Controllers
                     NgayDieuTri = x.ngayDieuTri,
                     DieuTriTay = x.bacSiDieuTriTayId.HasValue,
                     Tap = x.kyThuatVienTapId.HasValue,
-                    TrangThai = "Chua hoan thanh"
+                    TrangThai = "Chưa hoàn thành"
                 })
                 .ToListAsync();
 

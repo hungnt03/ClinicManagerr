@@ -89,8 +89,17 @@ namespace ClinicManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TinhLuong(int thang, int nam)
         {
-            await _luongService.TinhLuongThangAsync(thang, nam);
-            TempData["ToastSuccess"] = "Da tinh luong thang " + thang + "/" + nam;
+            try
+            {
+                await _luongService.TinhLuongThangAsync(thang, nam);
+                TempData["ToastType"] = "success";
+                TempData["ToastMessage"] = "Đã tính lương tháng " + thang + "/" + nam;
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -101,8 +110,17 @@ namespace ClinicManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChotLuong(int id)
         {
-            await _luongService.ChotLuongAsync(id);
-            TempData["ToastSuccess"] = "Da chot bang luong";
+            try
+            {
+                await _luongService.ChotLuongAsync(id);
+                TempData["ToastType"] = "success";
+                TempData["ToastMessage"] = "Đã chốt bảng lương";
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
             return RedirectToAction(nameof(ChiTiet), new { id });
         }
 
@@ -113,8 +131,17 @@ namespace ClinicManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MoChotLuong(int id)
         {
-            await _luongService.MoChotLuongAsync(id);
-            TempData["ToastWarning"] = "Da mo chot bang luong";
+            try
+            {
+                await _luongService.MoChotLuongAsync(id);
+                TempData["ToastType"] = "warning";
+                TempData["ToastMessage"] = "Đã mở chốt bảng lương";
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
             return RedirectToAction(nameof(ChiTiet), new { id });
         }
     }

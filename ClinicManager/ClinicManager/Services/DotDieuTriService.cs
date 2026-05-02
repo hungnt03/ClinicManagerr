@@ -60,13 +60,13 @@ namespace ClinicManager.Services
                 x.trangThai == TrangThaiDotDieuTri.DangDieuTri);
 
             if (dotDangMo)
-                throw new Exception("Benh nhan dang co dot dieu tri chua hoan thanh");
+                throw new Exception("Bệnh nhân đang có đợt điều trị chưa hoàn thành");
 
             var goi = await _context.GoiDieuTris
                 .FirstOrDefaultAsync(x => x.goiDieuTriId == goiDieuTriId && x.hoatDong);
 
             if (goi == null)
-                throw new Exception("Goi dieu tri khong hop le");
+                throw new Exception("Gói điều trị không hợp lệ");
 
             var dot = new DotDieuTri
             {
@@ -117,13 +117,13 @@ namespace ClinicManager.Services
             decimal soTien)
         {
             if (soBuoiThem <= 0)
-                throw new Exception("So buoi them phai > 0");
+                throw new Exception("Số buổi thêm phải > 0");
 
             var dot = await _context.DotDieuTris
                 .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
 
             if (dot == null)
-                throw new Exception("Khong tim thay dot dieu tri");
+                throw new Exception("Không tìm thấy đợt điều trị");
 
             dot.tongSoBuoi += soBuoiThem;
             dot.tongTien += soTien;
@@ -154,13 +154,13 @@ namespace ClinicManager.Services
                 .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
 
             if (dot == null)
-                throw new Exception("Khong tim thay dot dieu tri");
+                throw new Exception("Không tìm thấy đợt điều trị");
 
             if (dot.trangThai == TrangThaiDotDieuTri.HoanThanh)
-                throw new Exception("Dot dieu tri da hoan thanh");
+                throw new Exception("Đợt điều trị đã hoàn thành");
 
             if (dot.soBuoiDaDung >= dot.tongSoBuoi)
-                throw new Exception("Da het so buoi dieu tri");
+                throw new Exception("Đã hết số buỏi điều trị");
 
             dot.soBuoiDaDung += 1;
 

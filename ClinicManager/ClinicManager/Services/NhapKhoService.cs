@@ -29,7 +29,7 @@ namespace ClinicManager.Services
             int nhanVienNhapId)
         {
             if (vm.Items.Count == 0)
-                throw new Exception("Phieu nhap phai co it nhat 1 vat tu");
+                throw new Exception("Phiếu nhập phải có ít nhất 1 vật tư");
 
             string? duongDanHoaDon = null;
 
@@ -77,7 +77,7 @@ namespace ClinicManager.Services
                     .FirstOrDefaultAsync(x => x.vatTuId == item.VatTuId);
 
                 if (vatTu == null)
-                    throw new Exception("Vat tu khong ton tai");
+                    throw new Exception("Vật tư không tồn tại");
 
                 vatTu.tonKho += item.SoLuong;
 

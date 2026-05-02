@@ -111,8 +111,17 @@ namespace ClinicManager.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            await _vatTuService.UpdateAsync(vm);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _vatTuService.UpdateAsync(vm);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
+            return View(vm);
         }
     }
 }

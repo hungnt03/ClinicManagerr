@@ -39,8 +39,16 @@ public class NhapKhoController : Controller
 
         var nhanVienId = adminUser.nhanVienId.Value;
 
-        await _nhapKhoService.TaoPhieuNhapAsync(vm, nhanVienId);
-
-        return RedirectToAction("Index", "VatTu");
+        try
+        {
+            await _nhapKhoService.TaoPhieuNhapAsync(vm, nhanVienId);
+            return RedirectToAction("Index", "VatTu");
+        }
+        catch (Exception ex)
+        {
+            TempData["ToastType"] = "error";
+            TempData["ToastMessage"] = ex.Message;
+            return View(vm);
+        }
     }
 }

@@ -68,14 +68,23 @@ namespace ClinicManager.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Dữ liệu không hợp lệ");
 
-            var thanhToanId = await _thanhToanService.ThuTienGoiAsync(
+            try
+            {
+                var thanhToanId = await _thanhToanService.ThuTienGoiAsync(
                 vm.DotDieuTriId,
                 vm.SoTienThu,
                 vm.HinhThuc,
                 vm.GhiChu
             );
 
-            return Ok(new { thanhToanId });
+                return Ok(new { thanhToanId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
+            return View(vm);
         }
 
         // =============================
@@ -116,14 +125,23 @@ namespace ClinicManager.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Dữ liệu không hợp lệ");
 
-            var thanhToanId = await _thanhToanService.ThuTienThuocVatTuAsync(
+            try
+            {
+                var thanhToanId = await _thanhToanService.ThuTienThuocVatTuAsync(
                 vm.BuoiDieuTriId,
                 vm.SoTienThu,
                 vm.HinhThuc,
                 vm.GhiChu
             );
 
-            return Ok(new { thanhToanId });
+                return Ok(new { thanhToanId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
+            return View(vm);
         }
         [HttpGet]
         public async Task<IActionResult> PhieuThu(int id)

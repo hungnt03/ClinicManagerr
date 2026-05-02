@@ -42,21 +42,32 @@ namespace ClinicManager.Services
         {
             if (await LuongLockHelper.DaChotLuongAsync(_context, ngayDieuTri))
             {
-                throw new Exception("Thang nay da chot luong, khong duoc sua buoi dieu tri");
+                throw new Exception("Tháng này đã chốt, không được sửa buổi điều trị");
             }
 
             var dot = await _context.DotDieuTris
                 .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
 
             if (dot == null)
-                throw new Exception("Khong tim thay dot dieu tri");
+                throw new Exception("Không tìm thấy đợt điều trị");
 
             // ❗ ép nghiệp vụ
             if (dot.trangThai == TrangThaiDotDieuTri.HoanThanh)
-                throw new Exception("Dot dieu tri da hoan thanh");
+                throw new Exception("Đợt điều trị đã hoàn thành");
 
             if (dot.soBuoiDaDung >= dot.tongSoBuoi)
-                throw new Exception("Da het so buoi dieu tri");
+                throw new Exception("Đã hết số buổi điều trị");
+
+            // KIỂM TRA TRÙNG LẶP TRONG VÒNG 4 GIỜ
+            // Tìm buổi điều trị gần nhất của bệnh nhân này trong ngày hôm nay
+            var bonGioTruoc = DateTime.Now.AddHours(-4);
+            var trungBanGhi = await _context.BuoiDieuTris
+                .AnyAsync(x => x.benhNhanId == benhNhanId &&
+                               x.ngayDieuTri.Date == ngayDieuTri.Date &&
+                               x.taoLuc > bonGioTruoc);
+
+            if (trungBanGhi)
+                throw new Exception("Bệnh nhân này đã có buổi điều trị trong vòng 4 giờ qua. Vui lòng kiểm tra lại để tránh tạo trùng.");
 
             var buoi = new BuoiDieuTri
             {
@@ -93,21 +104,21 @@ namespace ClinicManager.Services
             int soLuong)
         {
             if (soLuong <= 0)
-                throw new Exception("So luong phai > 0");
+                throw new Exception("Số lượng phải > 0");
 
             var buoi = await _context.BuoiDieuTris
                 .FirstOrDefaultAsync(x => x.buoiDieuTriId == buoiDieuTriId);
 
             if (buoi == null)
-                throw new Exception("Khong tim thay buoi dieu tri");
+                throw new Exception("Không tìm thấy buổi điều trị");
 
             var vatTu = await _context.VatTus.FirstOrDefaultAsync(x => x.vatTuId == vatTuId);
 
             if (vatTu == null)
-                throw new Exception("Vat tu khong ton tai");
+                throw new Exception("Vật tư không tồn tại");
 
             if (vatTu.tonKho < soLuong)
-                throw new Exception("Ton kho khong du");
+                throw new Exception("Tồn kho không đủ");
 
             // trừ tồn kho
             vatTu.tonKho -= soLuong;
@@ -136,31 +147,31 @@ namespace ClinicManager.Services
             int soLuongMoi)
         {
             if (soLuongMoi <= 0)
-                throw new Exception("So luong moi phai > 0");
+                throw new Exception("Số lượng mới phải > 0");
 
             var dong = await _context.ThuocVatTuBuoiDieuTris
                 .FirstOrDefaultAsync(x => x.id == thuocVatTuBuoiDieuTriId);
 
             if (dong == null)
-                throw new Exception("Khong tim thay dong vat tu");
+                throw new Exception("Không tìm thấy vật tư trong buổi điều trị");
 
             var vatTu = await _context.VatTus
                 .FirstOrDefaultAsync(x => x.vatTuId == dong.vatTuId);
 
             if (vatTu == null)
-                throw new Exception("Vat tu khong ton tai");
+                throw new Exception("Vật tư không tồn tại");
 
             var buoi = await _context.BuoiDieuTris
                 .FirstOrDefaultAsync(x => x.buoiDieuTriId == dong.buoiDieuTriId);
 
             if (buoi == null)
-                throw new Exception("Khong tim thay buoi dieu tri");
+                throw new Exception("Không tìm thấy buổi điều trị");
 
             var chenhlech = soLuongMoi - dong.soLuong;
 
             // kiểm tra tồn kho nếu tăng
             if (chenhlech > 0 && vatTu.tonKho < chenhlech)
-                throw new Exception("Ton kho khong du");
+                throw new Exception("Không đủ tồn kho");
 
             // cập nhật tồn kho
             vatTu.tonKho -= chenhlech;
@@ -182,7 +193,7 @@ namespace ClinicManager.Services
                 .FirstOrDefaultAsync(x => x.id == thuocVatTuBuoiDieuTriId);
 
             if (dong == null)
-                throw new Exception("Khong tim thay dong vat tu");
+                throw new Exception("Không tìm thấy vật tư trong buổi điều trị");
 
             var vatTu = await _context.VatTus
                 .FirstOrDefaultAsync(x => x.vatTuId == dong.vatTuId);
@@ -215,11 +226,11 @@ namespace ClinicManager.Services
 
             if (await LuongLockHelper.DaChotLuongAsync(_context, buoi.ngayDieuTri))
             {
-                throw new Exception("Thang nay da chot luong, khong duoc sua buoi dieu tri");
+                throw new Exception("Tháng này đã chốt lương, không được sửa buổi điều trị");
             }
 
             if (buoi == null)
-                throw new Exception("Khong tim thay buoi dieu tri");
+                throw new Exception("Không tìm thấy buổi điều trị");
 
             // ===== LƯU AUDIT =====
             var audit = new BuoiDieuTriAudit

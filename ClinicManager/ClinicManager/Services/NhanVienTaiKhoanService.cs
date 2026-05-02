@@ -26,11 +26,11 @@ namespace ClinicManager.Services
         {
             // 1. Check role hợp lệ
             if (!await _roleManager.RoleExistsAsync(dto.role))
-                throw new Exception("Role khong hop le");
+                throw new Exception("Role không hợp lệ");
 
             // 2. Check email đã tồn tại
             if (await _userManager.FindByEmailAsync(dto.email) != null)
-                throw new Exception("Email da ton tai");
+                throw new Exception("Email đã tồn tại");
 
             using var tran = await _context.Database.BeginTransactionAsync();
 

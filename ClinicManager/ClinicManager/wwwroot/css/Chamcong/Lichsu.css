@@ -1,0 +1,14 @@
+﻿/* Làm cho event chiếm toàn bộ diện tích ô */
+.fc-daygrid-event {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Đẩy nội dung vào giữa ô cho đẹp */
+.fc-daygrid-event-indicator {
+    display: none; /* Ẩn cái chấm tròn nếu có */
+}

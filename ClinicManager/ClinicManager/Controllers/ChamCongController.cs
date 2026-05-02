@@ -1,7 +1,6 @@
 ﻿using ClinicManager.Data;
 using ClinicManager.Models;
 using ClinicManager.Models.Entities;
-using ClinicManager.Services;
 using ClinicManager.ViewModels.ChamCong;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -69,14 +68,15 @@ namespace ClinicManager.Controllers
         {
             var nhanVienId = await GetNhanVienIdAsync();
             var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
 
-            var tonTai = await _context.ChamCongs.AnyAsync(x =>
+            var banGhiHienTai = await _context.ChamCongs.FirstOrDefaultAsync(x =>
                 x.nhanVienId == nhanVienId &&
-                x.thoiGianVao.Date == today);
+                x.thoiGianVao >= today && x.thoiGianVao < tomorrow);
 
-            if (tonTai)
+            if (banGhiHienTai != null)
             {
-                TempData["Error"] = "Da cham cong hom nay";
+                TempData["Error"] = banGhiHienTai.nghiPhep ? "Hôm nay bạn đã đăng ký nghỉ phép." : "Bạn đã chấm công vào hôm nay.";
                 return RedirectToAction("Index");
             }
 
@@ -125,24 +125,24 @@ namespace ClinicManager.Controllers
             return View();
         }
 
-        // API cho FullCalendar
         [HttpGet]
         public async Task<IActionResult> CalendarData(
-            int month,
-            int year,
-            int? nhanVienId)
+    int month,
+    int year,
+    int? nhanVienId)
         {
             var user = await _userManager.GetUserAsync(User);
 
-            // user thường chỉ xem chính mình
+            // 1. Phân quyền: User thường chỉ xem chính mình
             if (!User.IsInRole("Admin"))
             {
-                nhanVienId = user!.nhanVienId;
+                nhanVienId = user?.nhanVienId;
             }
 
             if (nhanVienId == null)
                 return BadRequest();
 
+            // 2. Lấy dữ liệu từ Database
             var chamCongs = await _context.ChamCongs
                 .Where(x =>
                     x.nhanVienId == nhanVienId &&
@@ -150,37 +150,70 @@ namespace ClinicManager.Controllers
                     x.thoiGianVao.Year == year)
                 .ToListAsync();
 
+            // 3. Mapping dữ liệu sang format FullCalendar
             var events = chamCongs.Select(x =>
             {
-                var laCuoiTuan =
-                    x.thoiGianVao.DayOfWeek == DayOfWeek.Saturday ||
-                    x.thoiGianVao.DayOfWeek == DayOfWeek.Sunday;
+                // --- LOGIC KIỂM TRA NGHIỆP VỤ ---
+                var gioVaoChuan = new TimeSpan(8, 5, 0);  // Cho phép trễ 5 phút
+                var gioRaChuan = new TimeSpan(17, 0, 0);
 
-                var soGio =
-                    x.thoiGianRa.HasValue
+                var laCuoiTuan = x.thoiGianVao.DayOfWeek == DayOfWeek.Saturday ||
+                                 x.thoiGianVao.DayOfWeek == DayOfWeek.Sunday;
+
+                var diMuon = !x.nghiPhep && x.thoiGianVao.TimeOfDay > gioVaoChuan;
+
+                var veSom = !x.nghiPhep && x.thoiGianRa.HasValue &&
+                            x.thoiGianRa.Value.TimeOfDay < gioRaChuan;
+
+                // Quên checkout: Không nghỉ phép, không có giờ ra và đã qua ngày hôm đó
+                var quenCheckOut = !x.nghiPhep && !x.thoiGianRa.HasValue &&
+                                   x.thoiGianVao.Date < DateTime.Today;
+
+                var soGio = x.thoiGianRa.HasValue
                         ? (x.thoiGianRa.Value - x.thoiGianVao).TotalHours
                         : (double?)null;
 
-                var diMuon = x.thoiGianVao.TimeOfDay > new TimeSpan(8, 0, 0);
-                var veSom = x.thoiGianRa.HasValue &&
-                            x.thoiGianRa.Value.TimeOfDay < new TimeSpan(17, 0, 0);
+                // --- THIẾT LẬP MÀU SẮC THEO YÊU CẦU ---
+                string bg = "#d4edda"; // Mặc định: Xanh nhạt (Làm đủ/Tốt)
+                string textColor = "#155724";
 
-                var bg =
-                    x.nghiPhep ? "#fff3cd" :
-                    (diMuon || veSom) ? "#f8d7da" :
-                    laCuoiTuan ? "#e2e3e5" :
-                    "#d4edda";
+                if (x.nghiPhep)
+                {
+                    bg = "#e2e3e5"; // Xám (Nghỉ phép)
+                    textColor = "#383d41";
+                }
+                else if (quenCheckOut)
+                {
+                    bg = "#f8d7da"; // Đỏ nhạt (Cảnh báo quên Checkout)
+                    textColor = "#721c24";
+                }
+                else if (diMuon || veSom)
+                {
+                    bg = "#fff3cd"; // Vàng (Đi muộn hoặc về sớm)
+                    textColor = "#856404";
+                }
+                else if (laCuoiTuan && !soGio.HasValue)
+                {
+                    bg = "#f8f9fa"; // Xám rất nhạt cho cuối tuần không đi làm
+                    textColor = "#6c757d";
+                }
 
+                // --- TRẢ VỀ OBJECT CHO FRONTEND ---
                 return new
                 {
                     id = x.chamCongId,
-                    start = x.thoiGianVao.Date,
-                    title = soGio.HasValue ? $"{soGio:F1}h" : "",
+                    // Sử dụng format yyyy-MM-dd để tránh lệch múi giờ JS
+                    start = x.thoiGianVao.ToString("yyyy-MM-dd"),
+                    title = x.nghiPhep ? "NGHỈ" : (soGio.HasValue ? $"{soGio:F1}h" : "Thiếu giờ"),
                     backgroundColor = bg,
+                    borderColor = bg,
+                    textColor = textColor,
                     extendedProps = new
                     {
                         gioVao = x.thoiGianVao.ToString("HH:mm"),
-                        gioRa = x.thoiGianRa?.ToString("HH:mm")
+                        gioRa = x.thoiGianRa?.ToString("HH:mm") ?? "--:--",
+                        anTrua = x.anTrua ? "Có" : "Không",
+                        trangThai = x.nghiPhep ? "Nghỉ phép" : (diMuon ? "Đi muộn" : (veSom ? "Về sớm" : "Bình thường"))
                     }
                 };
             });
@@ -269,17 +302,25 @@ namespace ClinicManager.Controllers
             if (vm.NghiPhep &&
                 (vm.ThoiGianVao != default || vm.ThoiGianRa.HasValue))
             {
-                return BadRequest("Nghi phep khong duoc co gio vao/ra");
+                return BadRequest("Nghỉ phép không được có giờ vào / ra");
             }
 
             // đi làm mà không có giờ vào → SAI
             if (!vm.NghiPhep && vm.ThoiGianVao == default)
             {
-                return BadRequest("Di lam phai co gio vao");
+                return BadRequest("Đi làm phải có giờ vào");
+            }
+
+            if (!vm.NghiPhep)
+            {
+                if (vm.ThoiGianRa.HasValue && vm.ThoiGianRa <= vm.ThoiGianVao)
+                {
+                    return BadRequest("Giờ ra phải sau giờ vào");
+                }
             }
 
             if (!ModelState.IsValid)
-                return BadRequest("Du lieu khong hop le");
+                return BadRequest("Dữ liệu không hợp lệ");
 
             var chamCong = await _context.ChamCongs
                 .FirstOrDefaultAsync(x => x.chamCongId == vm.ChamCongId);

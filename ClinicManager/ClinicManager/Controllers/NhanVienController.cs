@@ -132,11 +132,16 @@ namespace ClinicManager.Controllers
         // GET: /NhanVien/Sua/5
         public async Task<IActionResult> Sua(int id)
         {
-            var nv = await _context.NhanViens
-                .FirstOrDefaultAsync(x => x.nhanVienId == id);
+            var nv = await _context.NhanViens.FirstOrDefaultAsync(x => x.nhanVienId == id);
+            if (nv == null) return NotFound();
 
-            if (nv == null)
-                return NotFound();
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.nhanVienId == id);
+            string roleName = string.Empty;
+            if (user != null) 
+            { 
+                var roles = await _userManager.GetRolesAsync(user);
+                roleName = roles.FirstOrDefault() ?? "";
+            }
 
             var vm = new SuaNhanVienVm
             {
@@ -145,6 +150,7 @@ namespace ClinicManager.Controllers
                 VaiTroNhanVien = nv.vaiTro,
                 LuongCoBan = nv.luongCoBan,
                 HoatDong = nv.hoatDong,
+                RoleDangNhap = roleName,
 
                 DanhSachVaiTroNhanVien = new[] { "BacSi", "KyThuatVien", "LeTan" },
                 DanhSachRoleDangNhap = new[] { "Admin", "BacSi", "KyThuatVien", "LeTan" }

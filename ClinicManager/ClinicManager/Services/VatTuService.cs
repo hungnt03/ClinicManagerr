@@ -79,7 +79,7 @@
                 .FirstOrDefaultAsync(x => x.vatTuId == vm.VatTuId);
 
             if (entity == null)
-                throw new Exception("Vat tu khong ton tai");
+                throw new Exception("Vật tư không tồn tại");
 
             entity.tenVatTu = vm.TenVatTu;
             entity.loai = vm.Loai;

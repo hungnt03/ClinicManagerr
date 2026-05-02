@@ -61,25 +61,32 @@ namespace ClinicManager.Controllers
                 vm.DanhSachKyThuatVien = await _nhanVienService.GetDanhSachBacSiKyThuatViensync();
                 return View(vm);
             }
-                
 
-            var buoiId = await _buoiDieuTriService.TaoBuoiDieuTriAsync(
-                vm.DotDieuTriId,
-                vm.BenhNhanId,
-                vm.NgayDieuTri,
-                vm.BacSiDieuTriTayId,
-                vm.KyThuatVienTapId,
-                vm.NoiDungTap,
-                vm.NoiDungDieuTriTay,
-                vm.ChiDinhDacBiet
-            );
-
+            int? buoiId = vm.BuoiDieuTriId;
+            try
+            {
+                buoiId = await _buoiDieuTriService.TaoBuoiDieuTriAsync(
+                    vm.DotDieuTriId,
+                    vm.BenhNhanId,
+                    vm.NgayDieuTri,
+                    vm.BacSiDieuTriTayId,
+                    vm.KyThuatVienTapId,
+                    vm.NoiDungTap,
+                    vm.NoiDungDieuTriTay,
+                    vm.ChiDinhDacBiet
+                );
+                ViewBag.DaTaoBuoi = true;
+            } 
+            catch(Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+            }
+            
             // ⭐ quay lại Create nhưng đã có BuoiDieuTriId để thêm vật tư
             vm.BuoiDieuTriId = buoiId;
             vm.DanhSachBacSi = await _nhanVienService.GetDanhSachBacSiKyThuatViensync();
             vm.DanhSachKyThuatVien = await _nhanVienService.GetDanhSachBacSiKyThuatViensync();
-
-            ViewBag.DaTaoBuoi = true;
 
             return View(vm);
         }
@@ -102,7 +109,9 @@ namespace ClinicManager.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+                return View(vm);
             }
         }
         public async Task<IActionResult> DanhSachVatTu(int buoiDieuTriId)
@@ -183,13 +192,18 @@ namespace ClinicManager.Controllers
             var adminUser = await _userManager.FindByIdAsync(userId);
             var adminNhanVienId = adminUser.nhanVienId.Value;
 
-            await _buoiDieuTriService.CapNhatBuoiDieuTriAsync(
-                vm,
-                adminNhanVienId
-            );
-
-            return RedirectToAction("ChiTiet", "DotDieuTri",
+            try
+            {
+                await _buoiDieuTriService.CapNhatBuoiDieuTriAsync(vm,adminNhanVienId);
+                return RedirectToAction("ChiTiet", "DotDieuTri",
                 new { id = vm.DotDieuTriId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ToastType"] = "error";
+                TempData["ToastMessage"] = ex.Message;
+                return View(vm);
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -202,7 +216,5 @@ namespace ClinicManager.Controllers
 
             return View(audits);
         }
-
-
     }
 }

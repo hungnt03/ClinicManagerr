@@ -45,26 +45,26 @@ namespace ClinicManager.Services
         {
             if (await LuongLockHelper.DaChotLuongAsync(_context, ngayThu ?? DateTime.Now))
             {
-                throw new Exception("Thang nay da chot luong, khong duoc thu tien");
+                throw new Exception("Tháng này đã chốt lương, không được thu tiền");
             }
 
 
             if (soTien <= 0)
-                throw new Exception("So tien phai > 0");
+                throw new Exception("Số tiền phải > 0");
 
             var dot = await _context.DotDieuTris
                 .FirstOrDefaultAsync(x => x.dotDieuTriId == dotDieuTriId);
 
             if (dot == null)
-                throw new Exception("Khong tim thay dot dieu tri");
+                throw new Exception("Không tìm thấy đợt điều trị");
 
             if (dot.trangThai == TrangThaiDotDieuTri.HoanThanh)
-                throw new Exception("Dot dieu tri da hoan thanh");
+                throw new Exception("Đợt điều trị đã hoàn thành");
 
             decimal conLai = dot.tongTien - dot.daThanhToan;
 
             if (soTien > conLai)
-                throw new Exception($"So tien vuot qua so tien con lai ({conLai:N0})");
+                throw new Exception($"Số tiền vượt quá số tiền còn lại ({conLai:N0})");
 
             var thanhToan = new ThanhToan
             {
@@ -104,21 +104,21 @@ namespace ClinicManager.Services
         {
             if (await LuongLockHelper.DaChotLuongAsync(_context, ngayThu ?? DateTime.Now))
             {
-                throw new Exception("Thang nay da chot luong, khong duoc thu tien");
+                throw new Exception("Tháng này đã chốt lương, không được thu tiền");
             }
 
 
             if (soTien <= 0)
-                throw new Exception("So tien phai > 0");
+                throw new Exception("Số tiền phải > 0");
 
             var buoi = await _context.BuoiDieuTris
                 .FirstOrDefaultAsync(x => x.buoiDieuTriId == buoiDieuTriId);
 
             if (buoi == null)
-                throw new Exception("Khong tim thay buoi dieu tri");
+                throw new Exception("Không tìm thấy đợt điều trị");
 
             if (soTien > buoi.chiPhiThuocVatTu)
-                throw new Exception("So tien thu vuot qua chi phi thuoc vat tu");
+                throw new Exception("Số tiền thu vượt quá chi phí thuốc / vật tư");
 
             var thanhToan = new ThanhToan
             {
