@@ -58,16 +58,16 @@ namespace ClinicManager.Services
             if (dot.soBuoiDaDung >= dot.tongSoBuoi)
                 throw new Exception("Đã hết số buổi điều trị");
 
-            // KIỂM TRA TRÙNG LẶP TRONG VÒNG 4 GIỜ
+            // KIỂM TRA TRÙNG LẶP TRONG VÒNG 1 GIỜ
             // Tìm buổi điều trị gần nhất của bệnh nhân này trong ngày hôm nay
-            var bonGioTruoc = DateTime.Now.AddHours(-4);
+            var bonGioTruoc = DateTime.Now.AddHours(-1);
             var trungBanGhi = await _context.BuoiDieuTris
                 .AnyAsync(x => x.benhNhanId == benhNhanId &&
                                x.ngayDieuTri.Date == ngayDieuTri.Date &&
                                x.taoLuc > bonGioTruoc);
 
             if (trungBanGhi)
-                throw new Exception("Bệnh nhân này đã có buổi điều trị trong vòng 4 giờ qua. Vui lòng kiểm tra lại để tránh tạo trùng.");
+                throw new Exception("Bệnh nhân này đã có buổi điều trị trong vòng 1 giờ qua. Vui lòng kiểm tra lại để tránh tạo trùng.");
 
             var buoi = new BuoiDieuTri
             {

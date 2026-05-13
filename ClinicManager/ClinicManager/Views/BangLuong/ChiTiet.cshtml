@@ -43,6 +43,12 @@
                         data-bs-target="#@collapseId">
                     @nv.TenNhanVien — <strong>@nv.TongLuong.ToString("N0")</strong>
                 </button>
+                <button type="button"
+                        class="btn btn-sm btn-outline-success ms-3 btn-them-phat-sinh"
+                        data-id="@nv.nhanVienId"
+                        data-ten="@nv.TenNhanVien">
+                    <i class="bi bi-plus-circle"></i> + Thêm phát sinh
+                </button>
             </h2>
 
             <div id="@collapseId"
@@ -71,4 +77,42 @@
             </div>
         </div>
     }
+</div>
+
+<!-- Modal Thêm Phát Sinh -->
+<div class="modal fade" id="modalPhatSinh" tabindex="-1">
+    <div class="modal-dialog">
+        <form asp-action="ThemPhatSinh" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm khoản phát sinh: <span id="spanTenNV"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="BangLuongThangId" value="@Model.BangLuongThangId" />
+                    <input type="hidden" name="NhanVienId" id="inputNhanVienId" />
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Loại</label>
+                        <select name="Loai" class="form-select">
+                            <option value="1">➕ Thưởng / Cộng thêm</option>
+                            <option value="2">➖ Phạt / Khấu trừ</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Số tiền</label>
+                        <input type="number" name="SoTien" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nội dung diễn giải</label>
+                        <textarea name="NoiDung" class="form-control" rows="2" required placeholder="Ví dụ: Thưởng dự án, Phạt đi muộn..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu phát sinh</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

@@ -6,10 +6,12 @@
         AnTrua = 2,
         XangXe = 3,
         ChuyenCan = 4,
-        HoaHongDieuTri = 5,
+        HoaHongDieuTriTay = 5,
         HoaHongTap = 6,
         HoaHongGioiThieu = 7,
-        TangCa = 8
+        TangCa = 8,
+        LuongNgayLe = 9,
+        PhatSinh = 10
     }
 
     public class BangLuongThangChiTiet

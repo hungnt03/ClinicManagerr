@@ -50,5 +50,26 @@ namespace ClinicManager.Services.Luong
 
             return gioOT * cfg.donGiaTangCaMoiGio;
         }
+
+        public static decimal GetGioOT(ChamCong cc, CauHinhLuong cfg)
+        {
+            if (!cc.thoiGianRa.HasValue)
+                return 0;
+
+            var gioKetThucChuan =
+                cc.thoiGianVao.Date + cfg.gioKetThucChieu;
+
+            if (cc.thoiGianRa.Value <= gioKetThucChuan)
+                return 0;
+
+            int phutOT =
+                (int)(cc.thoiGianRa.Value - gioKetThucChuan)
+                .TotalMinutes;
+
+            var gioOT = LamTronGioOT(
+                phutOT,
+                cfg.soPhutLamTronTangCa);
+            return gioOT;
+        }
     }
 }
